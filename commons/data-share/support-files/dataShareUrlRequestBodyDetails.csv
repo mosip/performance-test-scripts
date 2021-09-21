@@ -1,0 +1,4 @@
+policyId,subscriberId,filePath
+mpolicy-default-abis,mpartner-default-abis,C:/Apache/apache-jmeter-5.3/bin/filesize_1mb.txt
+mpolicy-default-adjudication,mpartner-default-adjudication,C:/Apache/apache-jmeter-5.3/bin/filesize_1mb.txt
+mpolicy-default-auth,mpartner-default-auth,C:/Apache/apache-jmeter-5.3/bin/filesize_1mb.txt
