@@ -1,0 +1,12 @@
+id,name,description,fileFormatCode,model,fileText,moduleId,moduleName,templateTypeCode,langCode,isActive
+registrationprocessor,otp service,OTP Send Service,txt,velocity,Please find the OTP $!otp,10003,login,otp-sms-template,eng,true
+1165,Authentication History Request Success EMAIL Subject,Authentication History Request Success EMAIL Subject,txt,velocity,Authentication History Request Success,10006,Resident Services,RS_AUTH_HIST_SUCCESS_EMAIL_SUB,eng,true
+1115,Template for new registration Email Content,Template for new registration Email Content,txt,velocity,Dear $name, 
+Thank you for registering with the digital identity platform. Your registration id is $RegistrationID. If there are any corrections to be made in your details, please contact the Registration centre within the next 4 days.,10003,Registration Client,NewReg-email-content-template,eng,true
+1197,Failure in Unlocking of Auth Types Email Subject,Failure in Unlocking of Auth Types Email Subject,txt,velocity,Unlocking of AUTH Type(s) Failed,10006,Resident Services,RS_UNLOCK_AUTH_FAILURE_EMAIL_SUB,eng,true
+1149,auth otp email service subject,auth otp email service subject,txt,velocity,Otp message,10004,ID Authentication,auth-otp-email-subject-template,eng,true
+1206,UIN Update Request Placed Successfully Email Subject,UIN Update Request Placed Successfully Email Subject,txt,velocity,UIN Update Request Placed Successfully,10006,Resident Services,RS_UIN_UPDATE_SUCCESS_EMAIL_SUB,eng,true
+1153,Template for OTP in SMS ,Template for OTP in SMS ,txt,velocity,OTP for UINÂ  $uin is $otp and is valid for $validTime minutes. (Generated on $date at $time Hrs),10004,ID Authentication,ida-auth-otp-sms-template,eng,true
+1119,Template for OTP generation Email Subject,Template for OTP generation Email Subject,txt,velocity,One time password from digital identify platfor,10003,Registration Client,OTP-email-subject-template,eng,true
+1194,Reprint Request Failure Email Subject,Reprint Request Failure Email Subject,txt,velocity,Reprint Request Failure,10006,Resident Services,RS_UIN_RPR_FAILURE_EMAIL_SUB,eng,true
+1231,De-activate Packet Validation Success Email Sub,De-activate Packet Validation Success Email Sub,txt,velocity,Deactivation Request Confirmation,10005,Registration Processor,RPR_DPV_SUC_EMAIL_SUB,eng,true

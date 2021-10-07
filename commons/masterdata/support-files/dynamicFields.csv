@@ -1,0 +1,11 @@
+id,name,langCode,dataType,description,code,value,langCode,active
+10006,residenceStatus,eng,string,Residence Status,107,AB,eng,true
+10001,bloodType,eng,string,Blood Type,103,Widowed,eng,true
+10004,modeOfClaim,eng,string,Mode of Claim,113,Unknown,eng,true
+10005,gender,eng,string,Gender,111,O+,eng,true
+10001,bloodType,eng,string,Blood Type,112,O-,eng,true
+10006,residenceStatus,eng,string,Residence Status,103,A-,eng,true
+10006,residenceStatus,eng,string,Residence Status,107,AB,eng,true
+10001,bloodType,eng,string,Blood Type,103,Claim at the registration Center (For residence outside of the country),eng,true
+10003,registrationType,eng,string,Registration Type,101,A,eng,true
+10002,maritalStatus,eng,string,Marital Status,102,A+,eng,true
