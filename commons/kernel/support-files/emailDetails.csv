@@ -1,0 +1,11 @@
+mailContent&mailSubject&mailTo&mailCc
+Dear $firstName_eng $middleName_eng $lastName_eng,Your request for UIN for Registration ID: $!RID has failed because a duplicate UIN has been found against your details. Please visit your nearest Registration office or visit https://mosip.io/grievances.Thank You&Template for duplicate UIN Email&abc@example.com&arc@example.com
+Dear $firstName_eng $middleName_eng $lastName_eng,Your request for UIN for Registration ID: $!RID has failed because of a technical issue. Please visit your nearest Registration office or visit https://mosip.io/grievances.Thank You&Template for Technical Issue Email&abc@example.com&arc@example.com
+Dear $firstName_eng $middleName_eng $lastName_eng,Your UIN for Registration ID: $!RID has been successfully generated and will reach soon at your postal address.Thank You&Template for UIN generation Email&abc@example.com&arc@example.com
+Dear $firstName_eng $middleName_eng $lastName_eng,Your UIN details for the Registration ID: $!RID have been updated and a physical copy of your UIN card will reach you soon at your postal address.Thank You&Template for update details Email&abc@example.com&arc@example.com
+Dear $name,Thank you for registering with the digital identity platform. Your registration id is $RegistrationID. If there are any corrections to be made in your details, please contact the Registration centre within the next 4 days.&Template for new registration Email Content&abc@example.com&arc@example.com
+Registration confirmation&Template for new registration Email Subject&abc@example.com&arc@example.com
+Dear $name,OTP for username $username is $otp and is valid for $validTime minutes (Generated on $date at $time hrs).&Template for OTP generation Email Content&abc@example.com&arc@example.com
+One time password from digital identify platform&Template for OTP generation Email Subject&abc@example.com&arc@example.com
+Dear $name,Your Pre-Registration for UIN is Completed Successfully on $Date at $Time. Your ID is #$PRID.Appointment is scheduled for $Appointmentdate at $Appointmenttime.You will also receive the details on your registered Mobile Number&Template for Email Acknowledgement&abc@example.com&arc@example.com
+Pre-Registration $PRID: Acknowledgement &Template for email subject of Acknowledgement&abc@example.com&arc@example.com
