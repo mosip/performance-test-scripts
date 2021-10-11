@@ -19,23 +19,33 @@
             <stringProp name="Argument.value">http</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="PacketUtilityPortNo" elementType="Argument">
-            <stringProp name="Argument.name">PacketUtilityPortNo</stringProp>
+          <elementProp name="packetUtilityPortNo" elementType="Argument">
+            <stringProp name="Argument.name">packetUtilityPortNo</stringProp>
             <stringProp name="Argument.value">8880</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="PacketUtilityserverIP" elementType="Argument">
-            <stringProp name="Argument.name">PacketUtilityserverIP</stringProp>
+          <elementProp name="packetUtilityServerIP" elementType="Argument">
+            <stringProp name="Argument.name">packetUtilityServerIP</stringProp>
             <stringProp name="Argument.value">localhost</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="serverIP" elementType="Argument">
+            <stringProp name="Argument.name">serverIP</stringProp>
+            <stringProp name="Argument.value">cellbox.mosip.net</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="serverPortNo" elementType="Argument">
+            <stringProp name="Argument.name">serverPortNo</stringProp>
+            <stringProp name="Argument.value">443</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
-      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Master Data Details From File" enabled="true">
-        <stringProp name="filename">./master_data_final.txt</stringProp>
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Context Details From File" enabled="true">
+        <stringProp name="filename">./contextDetails.csv</stringProp>
         <stringProp name="fileEncoding">UTF-8</stringProp>
-        <stringProp name="variableNames">user_id,machine_id,center_id,context</stringProp>
+        <stringProp name="variableNames">userID,machineID,centerID,context</stringProp>
         <boolProp name="ignoreFirstLine">false</boolProp>
         <stringProp name="delimiter">,</stringProp>
         <boolProp name="quotedData">false</boolProp>
@@ -45,9 +55,9 @@
       </CSVDataSet>
       <hashTree/>
       <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Document Path From File" enabled="true">
-        <stringProp name="filename">./doc_path.txt</stringProp>
+        <stringProp name="filename">./docPath.txt</stringProp>
         <stringProp name="fileEncoding"></stringProp>
-        <stringProp name="variableNames">doc_path</stringProp>
+        <stringProp name="variableNames">docPath</stringProp>
         <boolProp name="ignoreFirstLine">false</boolProp>
         <stringProp name="delimiter">,</stringProp>
         <boolProp name="quotedData">false</boolProp>
@@ -56,7 +66,7 @@
         <stringProp name="shareMode">shareMode.all</stringProp>
       </CSVDataSet>
       <hashTree/>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Packet Generation" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Packet Generation (Preparation)" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -77,24 +87,24 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-    &quot;urlBase&quot;:&quot;https://cellbox.mosip.net/&quot;,&#xd;
-    &quot;mosip.test.baseurl&quot;:&quot;https://cellbox.mosip.net/&quot;,&#xd;
-    &quot;mosip.test.regclient.machineid&quot;:&quot;${machine_id}&quot;,&#xd;
-    &quot;mosip.test.regclient.centerid&quot;:&quot;${center_id}&quot;,&#xd;
-    &quot;regclient.centerid&quot;:&quot;${center_id}&quot;,&#xd;
-    &quot;mosip.test.regclient.userid&quot;:&quot;${user_id}&quot;,&#xd;
-    &quot;rereg.operatorId&quot;:&quot;${user_id}&quot;,&#xd;
+    &quot;urlBase&quot;:&quot;${protocol}://${serverIP}/&quot;,&#xd;
+    &quot;mosip.test.baseurl&quot;:&quot;${protocol}://${serverIP}/&quot;,&#xd;
+    &quot;mosip.test.regclient.machineid&quot;:&quot;${machineID}&quot;,&#xd;
+    &quot;mosip.test.regclient.centerid&quot;:&quot;${centerID}&quot;,&#xd;
+    &quot;regclient.centerid&quot;:&quot;${centerID}&quot;,&#xd;
+    &quot;mosip.test.regclient.userid&quot;:&quot;${userID}&quot;,&#xd;
+    &quot;rereg.operatorId&quot;:&quot;${userID}&quot;,&#xd;
     &quot;mosip.test.regclient.password&quot;:&quot;mosip&quot;,&#xd;
     &quot;prereg.password&quot;:&quot;mosip&quot;,&#xd;
-    &quot;mosip.test.regclient.supervisorid&quot;:&quot;${user_id}&quot;,&#xd;
+    &quot;mosip.test.regclient.supervisorid&quot;:&quot;${userID}&quot;,&#xd;
     &quot;prereg.preconfiguredOtp&quot;:&quot;111111&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">${PacketUtilityserverIP}</stringProp>
-          <stringProp name="HTTPSampler.port">${PacketUtilityPortNo}</stringProp>
+          <stringProp name="HTTPSampler.domain">${packetUtilityServerIP}</stringProp>
+          <stringProp name="HTTPSampler.port">${packetUtilityPortNo}</stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">servercontext/${context}</stringProp>
@@ -128,7 +138,22 @@
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Resident path" enabled="true">
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Packet Generation (Execution)" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">10</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create persona " enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -149,8 +174,8 @@
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">${PacketUtilityserverIP}</stringProp>
-          <stringProp name="HTTPSampler.port">${PacketUtilityPortNo}</stringProp>
+          <stringProp name="HTTPSampler.domain">${packetUtilityServerIP}</stringProp>
+          <stringProp name="HTTPSampler.port">${packetUtilityPortNo}</stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">persona/1?contextKey=${context}</stringProp>
@@ -173,12 +198,12 @@
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract Resident Path" enabled="true">
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract Persona Path" enabled="true">
             <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">resident_path</stringProp>
+            <stringProp name="RegexExtractor.refname">personaPath</stringProp>
             <stringProp name="RegexExtractor.regex">{&quot;path&quot;:&quot;(.*?)&quot;,&quot;</stringProp>
             <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default">resident_path not found</stringProp>
+            <stringProp name="RegexExtractor.default">personaPath not found</stringProp>
             <stringProp name="RegexExtractor.match_number">1</stringProp>
           </RegexExtractor>
           <hashTree/>
@@ -193,7 +218,7 @@
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Add document" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Add document to persona" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -201,9 +226,9 @@
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">[&#xd;
     {&#xd;
-        &quot;personaFilePath&quot;: &quot;${resident_path}&quot;,&#xd;
+        &quot;personaFilePath&quot;: &quot;${personaPath}&quot;,&#xd;
         &quot;updateAttributeList&quot;: {&#xd;
-            &quot;por&quot;: &quot;{\&quot;typeCode\&quot;: \&quot;DOC016\&quot;,\&quot;docPath\&quot;: \&quot;${doc_path}\&quot;}&quot;&#xd;
+            &quot;por&quot;: &quot;{\&quot;typeCode\&quot;: \&quot;DOC016\&quot;,\&quot;docPath\&quot;: \&quot;${docPath}\&quot;}&quot;&#xd;
             &#xd;
         }&#xd;
     }&#xd;
@@ -212,8 +237,8 @@
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">${PacketUtilityserverIP}</stringProp>
-          <stringProp name="HTTPSampler.port">${PacketUtilityPortNo}</stringProp>
+          <stringProp name="HTTPSampler.domain">${packetUtilityServerIP}</stringProp>
+          <stringProp name="HTTPSampler.port">${packetUtilityPortNo}</stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">persona/regenerateOrMissingAttribute</stringProp>
@@ -236,8 +261,18 @@
             </collectionProp>
           </HeaderManager>
           <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-585137058">{Sucess}</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
+          <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Packet Template Path" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create Packet Template" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -245,15 +280,15 @@
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
   &quot;personaFilePath&quot;: [&#xd;
-    &quot;${resident_path}&quot;&#xd;
+    &quot;${personaPath}&quot;&#xd;
   ]&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">${PacketUtilityserverIP}</stringProp>
-          <stringProp name="HTTPSampler.port">${PacketUtilityPortNo}</stringProp>
+          <stringProp name="HTTPSampler.domain">${packetUtilityServerIP}</stringProp>
+          <stringProp name="HTTPSampler.port">${packetUtilityPortNo}</stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">packet/template/NEW?contextKey=${context}</stringProp>
@@ -278,10 +313,10 @@
           <hashTree/>
           <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract Template Path" enabled="true">
             <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">template_path</stringProp>
+            <stringProp name="RegexExtractor.refname">templatePath</stringProp>
             <stringProp name="RegexExtractor.regex">{&quot;path&quot;:&quot;(.*?)&quot;,&quot;</stringProp>
             <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default">template_path not found</stringProp>
+            <stringProp name="RegexExtractor.default">templatePath not found</stringProp>
             <stringProp name="RegexExtractor.match_number">1</stringProp>
           </RegexExtractor>
           <hashTree/>
@@ -296,7 +331,7 @@
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Registration without sync and upload" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Generate Packet" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -304,16 +339,16 @@
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
     &quot;process&quot;: &quot;NEW&quot;,&#xd;
-    &quot;idJsonPath&quot;:&quot;${template_path}/REGISTRATION_CLIENT/NEW/rid_id/ID.json&quot;,&#xd;
+    &quot;idJsonPath&quot;:&quot;${templatePath}/REGISTRATION_CLIENT/NEW/rid_id/ID.json&quot;,&#xd;
     &quot;source&quot;: &quot;REGISTRATION_CLIENT&quot;,&#xd;
-    &quot;templatePath&quot;: &quot;${template_path}&quot;&#xd;
+    &quot;templatePath&quot;: &quot;${templatePath}&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">${PacketUtilityserverIP}</stringProp>
-          <stringProp name="HTTPSampler.port">${PacketUtilityPortNo}</stringProp>
+          <stringProp name="HTTPSampler.domain">${packetUtilityServerIP}</stringProp>
+          <stringProp name="HTTPSampler.port">${packetUtilityPortNo}</stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">packetcreator/${context}</stringProp>
@@ -349,85 +384,85 @@
             <stringProp name="filename"></stringProp>
             <stringProp name="parameters"></stringProp>
             <boolProp name="resetInterpreter">false</boolProp>
-            <stringProp name="script">${__StringToFile(checksums1.txt,${registrationId}&amp;23&amp;23&amp;23|,true,)}</stringProp>
+            <stringProp name="script">${__StringToFile(checksums1.txt,${registrationId}&amp;23&amp;23&amp;23\n,true,)}</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
-        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
-          <boolProp name="ResultCollector.error_logging">true</boolProp>
-          <objProp>
-            <name>saveConfig</name>
-            <value class="SampleSaveConfiguration">
-              <time>true</time>
-              <latency>true</latency>
-              <timestamp>true</timestamp>
-              <success>true</success>
-              <label>true</label>
-              <code>true</code>
-              <message>true</message>
-              <threadName>true</threadName>
-              <dataType>true</dataType>
-              <encoding>false</encoding>
-              <assertions>true</assertions>
-              <subresults>true</subresults>
-              <responseData>false</responseData>
-              <samplerData>false</samplerData>
-              <xml>false</xml>
-              <fieldNames>true</fieldNames>
-              <responseHeaders>false</responseHeaders>
-              <requestHeaders>false</requestHeaders>
-              <responseDataOnError>false</responseDataOnError>
-              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
-              <assertionsResultsToSave>0</assertionsResultsToSave>
-              <bytes>true</bytes>
-              <sentBytes>true</sentBytes>
-              <url>true</url>
-              <threadCounts>true</threadCounts>
-              <idleTime>true</idleTime>
-              <connectTime>true</connectTime>
-            </value>
-          </objProp>
-          <stringProp name="filename"></stringProp>
-        </ResultCollector>
-        <hashTree/>
-        <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="true">
-          <boolProp name="ResultCollector.error_logging">false</boolProp>
-          <objProp>
-            <name>saveConfig</name>
-            <value class="SampleSaveConfiguration">
-              <time>true</time>
-              <latency>true</latency>
-              <timestamp>true</timestamp>
-              <success>true</success>
-              <label>true</label>
-              <code>true</code>
-              <message>true</message>
-              <threadName>true</threadName>
-              <dataType>true</dataType>
-              <encoding>false</encoding>
-              <assertions>true</assertions>
-              <subresults>true</subresults>
-              <responseData>false</responseData>
-              <samplerData>false</samplerData>
-              <xml>false</xml>
-              <fieldNames>true</fieldNames>
-              <responseHeaders>false</responseHeaders>
-              <requestHeaders>false</requestHeaders>
-              <responseDataOnError>false</responseDataOnError>
-              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
-              <assertionsResultsToSave>0</assertionsResultsToSave>
-              <bytes>true</bytes>
-              <sentBytes>true</sentBytes>
-              <url>true</url>
-              <threadCounts>true</threadCounts>
-              <idleTime>true</idleTime>
-              <connectTime>true</connectTime>
-            </value>
-          </objProp>
-          <stringProp name="filename"></stringProp>
-        </ResultCollector>
-        <hashTree/>
       </hashTree>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <boolProp name="ResultCollector.error_logging">true</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
     </hashTree>
   </hashTree>
 </jmeterTestPlan>
