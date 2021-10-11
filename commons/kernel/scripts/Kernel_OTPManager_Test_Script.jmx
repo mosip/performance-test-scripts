@@ -70,17 +70,14 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Key Values From File" enabled="true">
-          <stringProp name="filename">./KeyValues.txt</stringProp>
-          <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="variableNames">keyValues</stringProp>
-          <boolProp name="ignoreFirstLine">true</boolProp>
-          <stringProp name="delimiter">,</stringProp>
-          <boolProp name="quotedData">false</boolProp>
-          <boolProp name="recycle">true</boolProp>
-          <boolProp name="stopThread">false</boolProp>
-          <stringProp name="shareMode">shareMode.all</stringProp>
-        </CSVDataSet>
+        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Key Values Counter" enabled="true">
+          <stringProp name="CounterConfig.start">1000000000</stringProp>
+          <stringProp name="CounterConfig.end">9999999999</stringProp>
+          <stringProp name="CounterConfig.incr">1</stringProp>
+          <stringProp name="CounterConfig.name">keyValues</stringProp>
+          <stringProp name="CounterConfig.format"></stringProp>
+          <boolProp name="CounterConfig.per_user">false</boolProp>
+        </CounterConfig>
         <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Generate OTP API Execution" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -155,12 +152,14 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="Generate Unique Key Values" enabled="true">
-          <stringProp name="BeanShellSampler.query">vars.put(&quot;key&quot;,&quot;${__time(,)}&quot;);</stringProp>
-          <stringProp name="BeanShellSampler.filename"></stringProp>
-          <stringProp name="BeanShellSampler.parameters"></stringProp>
-          <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
-        </BeanShellSampler>
+        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Key Values Counter" enabled="true">
+          <stringProp name="CounterConfig.start">1100000000</stringProp>
+          <stringProp name="CounterConfig.end">9999999999</stringProp>
+          <stringProp name="CounterConfig.incr">1</stringProp>
+          <stringProp name="CounterConfig.name">keyValues</stringProp>
+          <stringProp name="CounterConfig.format"></stringProp>
+          <boolProp name="CounterConfig.per_user">false</boolProp>
+        </CounterConfig>
         <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Generate OTP API Request" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -172,7 +171,7 @@
   &quot;id&quot;: &quot;string&quot;,&#xd;
   &quot;metadata&quot;: {},&#xd;
   &quot;request&quot;: {&#xd;
-    &quot;key&quot;: &quot;${key}&quot;&#xd;
+    &quot;key&quot;: &quot;${keyValues}&quot;&#xd;
   },&#xd;
   &quot;requesttime&quot;: &quot;2018-12-10T06:12:52.994Z&quot;,&#xd;
   &quot;version&quot;: &quot;string&quot;&#xd;
