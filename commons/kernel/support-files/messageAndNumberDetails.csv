@@ -1,11 +1,11 @@
 message&number
-Dear $firstName_eng $middleName_eng $lastName_eng,Your request for UIN for Registration ID: $!RID has failed because of a technical issue. Please visit your nearest Registration office or visit https://mosip.io/grievances &+91-9877456785
-Dear $firstName_eng $middleName_eng $lastName_eng,Your UIN for Registration ID: $!RID has been successfully generated and will reach soon at your postal address.&+91-9877456785
-Dear $firstName_eng $middleName_eng $lastName_eng,Your UIN details for the Registration ID: $!RID have been updated and a physical copy of your UIN card will reach you soon at your postal address.&+91-9877456785
-Dear $name,Thank you for registering with the digital identity platform. Your registration id is $RegistrationID. If there are any corrections to be made in your details, please contact the Registration centre within the next 4 days. &+91-9877456785
-Dear $name,OTP for username $username is $otp and is valid for $validTime minutes (Generated on $date at $time hrs).&+91-9877456785
-Dear $name,Thank you for updating your details with the digital identity platform. Your registration id is $RegistrationID. If there are any corrections to be made in your details, please contact the Registration centre within the next 4 days.&+91-9877456785
-OTP for Pre-Registration  $PRID is $otp and is valid for $validTime minutes. (Generated on $date at $time Hrs)Your Pre-Registration for UIN is Completed Successfully on $Date at $Time. Your ID is #$PRID.&+91-9877456785
-Appointment is scheduled for $Appointmentdate at $Appointmenttime.You will also receive the details on your registered email address&+91-9877456785
-Hi $!fullName,We have received a request for $!credentialName from $!partnerName. The request id for the same is $!RID.The request could not be processed. Please try again later.Thank You&+91-9877456785
-Please find the OTP $!otp&+91-9877456785
+Dear $firstName_eng $middleName_eng $lastName_eng,Your request for UIN for Registration ID: $!RID has failed because of a technical issue. Please visit your nearest Registration office or visit https://mosip.io/grievances &+91-1234567890
+Dear $firstName_eng $middleName_eng $lastName_eng,Your UIN for Registration ID: $!RID has been successfully generated and will reach soon at your postal address.&+91-1234567890
+Dear $firstName_eng $middleName_eng $lastName_eng,Your UIN details for the Registration ID: $!RID have been updated and a physical copy of your UIN card will reach you soon at your postal address.&+91-1234567890
+Dear $name,Thank you for registering with the digital identity platform. Your registration id is $RegistrationID. If there are any corrections to be made in your details, please contact the Registration centre within the next 4 days. &+91-1234567890
+Dear $name,OTP for username $username is $otp and is valid for $validTime minutes (Generated on $date at $time hrs).&+91-1234567890
+Dear $name,Thank you for updating your details with the digital identity platform. Your registration id is $RegistrationID. If there are any corrections to be made in your details, please contact the Registration centre within the next 4 days.&+91-1234567890
+OTP for Pre-Registration  $PRID is $otp and is valid for $validTime minutes. (Generated on $date at $time Hrs)Your Pre-Registration for UIN is Completed Successfully on $Date at $Time. Your ID is #$PRID.&+91-1234567890
+Appointment is scheduled for $Appointmentdate at $Appointmenttime.You will also receive the details on your registered email address&+91-1234567890
+Hi $!fullName,We have received a request for $!credentialName from $!partnerName. The request id for the same is $!RID.The request could not be processed. Please try again later.Thank You&+91-1234567890
+Please find the OTP $!otp&+91-1234567890
