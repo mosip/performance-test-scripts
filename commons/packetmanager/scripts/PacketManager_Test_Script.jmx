@@ -56,16 +56,16 @@
         <stringProp name="shareMode">shareMode.all</stringProp>
       </CSVDataSet>
       <hashTree/>
-      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Reg ID Values From File" enabled="true">
-        <stringProp name="filename">./RID_list.txt</stringProp>
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Reg ID, Process And Source Values From File" enabled="true">
+        <stringProp name="filename">./ridProcess&amp;Source.txt</stringProp>
         <stringProp name="fileEncoding"></stringProp>
-        <stringProp name="variableNames">rid</stringProp>
+        <stringProp name="variableNames">rid,process,source</stringProp>
         <boolProp name="ignoreFirstLine">true</boolProp>
         <stringProp name="delimiter">,</stringProp>
         <boolProp name="quotedData">false</boolProp>
         <boolProp name="recycle">true</boolProp>
         <boolProp name="stopThread">false</boolProp>
-        <stringProp name="shareMode">shareMode.all</stringProp>
+        <stringProp name="shareMode">shareMode.group</stringProp>
       </CSVDataSet>
       <hashTree/>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Get Documents (Execution)" enabled="true">
@@ -82,7 +82,19 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Documents API " enabled="true">
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Document Names From File" enabled="true">
+          <stringProp name="filename">./documentNames.txt</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="variableNames">documentName</stringProp>
+          <boolProp name="ignoreFirstLine">true</boolProp>
+          <stringProp name="delimiter">,</stringProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Documents API Execution" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -92,10 +104,10 @@
   &quot;id&quot;: &quot;string&quot;,&#xd;
   &quot;metadata&quot;: {},&#xd;
   &quot;request&quot;: {&#xd;
-    &quot;documentName&quot;: &quot;string&quot;,&#xd;
+    &quot;documentName&quot;: &quot;${documentName}&quot;,&#xd;
     &quot;id&quot;: &quot;${rid}&quot;,&#xd;
-    &quot;process&quot;: &quot;NEW&quot;,&#xd;
-    &quot;source&quot;: &quot;REGISTRATION_CLIENT&quot;&#xd;
+    &quot;process&quot;: &quot;${process}&quot;,&#xd;
+    &quot;source&quot;: &quot;${source}&quot;&#xd;
   },&#xd;
   &quot;requesttime&quot;: &quot;2018-12-10T06:12:52.994Z&quot;,&#xd;
   &quot;version&quot;: &quot;string&quot;&#xd;
@@ -158,7 +170,7 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Validate Packet API" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Validate Packet API Execution" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -168,10 +180,10 @@
   &quot;id&quot;: &quot;string&quot;,&#xd;
   &quot;metadata&quot;: {},&#xd;
   &quot;request&quot;: {&#xd;
-    &quot;bypassCache&quot;: true,&#xd;
+    &quot;bypassCache&quot;: false,&#xd;
     &quot;id&quot;: &quot;${rid}&quot;,&#xd;
-    &quot;process&quot;: &quot;NEW&quot;,&#xd;
-    &quot;source&quot;: &quot;REGISTRATION_CLIENT&quot;&#xd;
+    &quot;process&quot;: &quot;${process}&quot;,&#xd;
+    &quot;source&quot;: &quot;${source}&quot;&#xd;
   },&#xd;
   &quot;requesttime&quot;: &quot;2018-12-10T06:12:52.994Z&quot;,&#xd;
   &quot;version&quot;: &quot;string&quot;&#xd;
@@ -234,7 +246,19 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Search Field API" enabled="true">
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Field Names From File" enabled="true">
+          <stringProp name="filename">./fieldNames.txt</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="variableNames">fieldName</stringProp>
+          <boolProp name="ignoreFirstLine">true</boolProp>
+          <stringProp name="delimiter">,</stringProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Search Field API Execution" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -244,11 +268,11 @@
   &quot;id&quot;: &quot;string&quot;,&#xd;
   &quot;metadata&quot;: {},&#xd;
   &quot;request&quot;: {&#xd;
-    &quot;bypassCache&quot;: true,&#xd;
-    &quot;field&quot;: &quot;string&quot;,&#xd;
+    &quot;bypassCache&quot;: false,&#xd;
+    &quot;field&quot;: &quot;${fieldName}&quot;,&#xd;
     &quot;id&quot;: &quot;${rid}&quot;,&#xd;
-    &quot;process&quot;: &quot;NEW&quot;,&#xd;
-    &quot;source&quot;: &quot;REGISTRATION_CLIENT&quot;&#xd;
+    &quot;process&quot;: &quot;${process}&quot;,&#xd;
+    &quot;source&quot;: &quot;${source}&quot;&#xd;
   },&#xd;
   &quot;requesttime&quot;: &quot;2018-12-10T06:12:52.994Z&quot;,&#xd;
   &quot;version&quot;: &quot;string&quot;&#xd;
@@ -297,6 +321,56 @@
           <hashTree/>
         </hashTree>
       </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Search Fields (Preparation)" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">10</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">10</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration">900</stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Field Names From File" enabled="true">
+          <stringProp name="filename">./fieldNames.txt</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="variableNames">fieldName</stringProp>
+          <boolProp name="ignoreFirstLine">true</boolProp>
+          <stringProp name="delimiter">,</stringProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="Construct Search Fields Request Body" enabled="true">
+          <stringProp name="BeanShellSampler.query">vars.put(&quot;comma&quot;,&quot;,&quot;)
+
+
+
+
+</stringProp>
+          <stringProp name="BeanShellSampler.filename"></stringProp>
+          <stringProp name="BeanShellSampler.parameters"></stringProp>
+          <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
+        </BeanShellSampler>
+        <hashTree>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="Store Search Fields Request Body To File" enabled="true">
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">${__StringToFile(searchFieldsRequestBody.csv,&quot;${fieldName}&quot;${comma},true,)}
+
+
+</stringProp>
+          </BeanShellPostProcessor>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Search Fields (Execution)" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
@@ -311,7 +385,31 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Search Fields API" enabled="true">
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Search Fields Request Body From File" enabled="true">
+          <stringProp name="filename">./searchFieldsRequestBody.csv</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="variableNames">header,fields</stringProp>
+          <boolProp name="ignoreFirstLine">false</boolProp>
+          <stringProp name="delimiter">${comma}</stringProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Field Names From File" enabled="true">
+          <stringProp name="filename">./fieldNames.txt</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="variableNames">fieldName</stringProp>
+          <boolProp name="ignoreFirstLine">true</boolProp>
+          <stringProp name="delimiter">,</stringProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Search Fields API Execution" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -321,13 +419,13 @@
   &quot;id&quot;: &quot;string&quot;,&#xd;
   &quot;metadata&quot;: {},&#xd;
   &quot;request&quot;: {&#xd;
-    &quot;bypassCache&quot;: true,&#xd;
+    &quot;bypassCache&quot;: false,&#xd;
     &quot;fields&quot;: [&#xd;
-      &quot;string&quot;&#xd;
+      ${fields}&quot;${fieldName}&quot;&#xd;
     ],&#xd;
     &quot;id&quot;: &quot;${rid}&quot;,&#xd;
-    &quot;process&quot;: &quot;NEW&quot;,&#xd;
-    &quot;source&quot;: &quot;REGISTRATION_CLIENT&quot;&#xd;
+    &quot;process&quot;: &quot;${process}&quot;,&#xd;
+    &quot;source&quot;: &quot;${source}&quot;&#xd;
   },&#xd;
   &quot;requesttime&quot;: &quot;2018-12-10T06:12:52.994Z&quot;,&#xd;
   &quot;version&quot;: &quot;string&quot;&#xd;
@@ -390,7 +488,19 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Biometrics API" enabled="true">
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Modality Values From File" enabled="true">
+          <stringProp name="filename">./modalityValues.txt</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="variableNames">modalityValues</stringProp>
+          <boolProp name="ignoreFirstLine">true</boolProp>
+          <stringProp name="delimiter">,</stringProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Biometrics API Execution" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -400,14 +510,14 @@
   &quot;id&quot;: &quot;string&quot;,&#xd;
   &quot;metadata&quot;: {},&#xd;
   &quot;request&quot;: {&#xd;
-    &quot;bypassCache&quot;: true,&#xd;
+    &quot;bypassCache&quot;: false,&#xd;
     &quot;id&quot;: &quot;${rid}&quot;,&#xd;
     &quot;modalities&quot;: [&#xd;
-      &quot;string&quot;&#xd;
+      &quot;${modalityValues}&quot;&#xd;
     ],&#xd;
-    &quot;person&quot;: &quot;string&quot;,&#xd;
-    &quot;process&quot;: &quot;NEW&quot;,&#xd;
-    &quot;source&quot;: &quot;REGISTRATION_CLIENT&quot;&#xd;
+    &quot;person&quot;: &quot;individualBiometrics&quot;,&#xd;
+    &quot;process&quot;: &quot;${process}&quot;,&#xd;
+    &quot;source&quot;: &quot;${source}&quot;&#xd;
   },&#xd;
   &quot;requesttime&quot;: &quot;2018-12-10T06:12:52.994Z&quot;,&#xd;
   &quot;version&quot;: &quot;string&quot;&#xd;
@@ -470,7 +580,7 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Audits API" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Audits API Execution" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -480,10 +590,10 @@
   &quot;id&quot;: &quot;string&quot;,&#xd;
   &quot;metadata&quot;: {},&#xd;
   &quot;request&quot;: {&#xd;
-    &quot;bypassCache&quot;: true,&#xd;
+    &quot;bypassCache&quot;: false,&#xd;
     &quot;id&quot;: &quot;${rid}&quot;,&#xd;
-    &quot;process&quot;: &quot;NEW&quot;,&#xd;
-    &quot;source&quot;: &quot;REGISTRATION_CLIENT&quot;&#xd;
+    &quot;process&quot;: &quot;${process}&quot;,&#xd;
+    &quot;source&quot;: &quot;${source}&quot;&#xd;
   },&#xd;
   &quot;requesttime&quot;: &quot;2018-12-10T06:12:52.994Z&quot;,&#xd;
   &quot;version&quot;: &quot;string&quot;&#xd;
@@ -546,7 +656,7 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get MetaInfo API" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get MetaInfo API Execution" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -556,10 +666,10 @@
   &quot;id&quot;: &quot;string&quot;,&#xd;
   &quot;metadata&quot;: {},&#xd;
   &quot;request&quot;: {&#xd;
-    &quot;bypassCache&quot;: true,&#xd;
+    &quot;bypassCache&quot;: false,&#xd;
     &quot;id&quot;: &quot;${rid}&quot;,&#xd;
-    &quot;process&quot;: &quot;NEW&quot;,&#xd;
-    &quot;source&quot;: &quot;REGISTRATION_CLIENT&quot;&#xd;
+    &quot;process&quot;: &quot;${process}&quot;,&#xd;
+    &quot;source&quot;: &quot;${source}&quot;&#xd;
   },&#xd;
   &quot;requesttime&quot;: &quot;2018-12-10T06:12:52.994Z&quot;,&#xd;
   &quot;version&quot;: &quot;string&quot;&#xd;
@@ -609,7 +719,7 @@
         </hashTree>
       </hashTree>
       <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
-        <boolProp name="ResultCollector.error_logging">true</boolProp>
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
           <name>saveConfig</name>
           <value class="SampleSaveConfiguration">
