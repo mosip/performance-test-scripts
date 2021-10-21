@@ -47,12 +47,12 @@
         <stringProp name="CounterConfig.start">1</stringProp>
         <stringProp name="CounterConfig.end">99999999</stringProp>
         <stringProp name="CounterConfig.incr">1</stringProp>
-        <stringProp name="CounterConfig.name">userid_ctr</stringProp>
+        <stringProp name="CounterConfig.name">userIdCtr</stringProp>
         <stringProp name="CounterConfig.format">10000000</stringProp>
         <boolProp name="CounterConfig.per_user">false</boolProp>
       </CounterConfig>
       <hashTree/>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="PreReg" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="PreReg UI (Execution)" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -61,8 +61,8 @@
         <stringProp name="ThreadGroup.num_threads">10</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">true</boolProp>
-        <stringProp name="ThreadGroup.duration">3600</stringProp>
-        <stringProp name="ThreadGroup.delay">0</stringProp>
+        <stringProp name="ThreadGroup.duration">900</stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
@@ -71,7 +71,7 @@
           <boolProp name="TransactionController.parent">true</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net/pre-registration-ui" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PreReg UI Launch" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -104,36 +104,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/login/config" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
-            <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
-            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/preregistration/v1/login/config</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/login/config" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Login Config" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -168,13 +139,13 @@
           <boolProp name="TransactionController.parent">true</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/login/sendOtp/langcode" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Provide Langcode &amp; User ID Details" enabled="true">
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;id&quot;:&quot;mosip.pre-registration.login.sendotp&quot;,&quot;request&quot;:{&quot;langCode&quot;:&quot;eng&quot;,&quot;userId&quot;:&quot;ptload${userid_ctr}@gmail.com&quot;},&quot;version&quot;:&quot;1.0&quot;,&quot;requesttime&quot;:&quot;${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.sss&apos;Z&apos;,)}&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;id&quot;:&quot;mosip.pre-registration.login.sendotp&quot;,&quot;request&quot;:{&quot;langCode&quot;:&quot;eng&quot;,&quot;userId&quot;:&quot;ptload${userIdCtr}@gmail.com&quot;},&quot;version&quot;:&quot;1.0&quot;,&quot;requesttime&quot;:&quot;${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.sss&apos;Z&apos;,)}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -214,13 +185,13 @@
           <boolProp name="TransactionController.parent">true</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/login/validateOtp" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Validate OTP" enabled="true">
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;id&quot;:&quot;mosip.pre-registration.login.useridotp&quot;,&quot;request&quot;:{&quot;otp&quot;:&quot;111111&quot;,&quot;userId&quot;:&quot;ptload${userid_ctr}@gmail.com&quot;},&quot;version&quot;:&quot;1.0&quot;,&quot;requesttime&quot;:&quot;${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.sss&apos;Z&apos;,)}&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;id&quot;:&quot;mosip.pre-registration.login.useridotp&quot;,&quot;request&quot;:{&quot;otp&quot;:&quot;111111&quot;,&quot;userId&quot;:&quot;ptload${userIdCtr}@gmail.com&quot;},&quot;version&quot;:&quot;1.0&quot;,&quot;requesttime&quot;:&quot;${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.sss&apos;Z&apos;,)}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -254,36 +225,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net/pre-registration-ui/assets/i18n/eng.json" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
-            <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
-            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">pre-registration-ui/assets/i18n/eng.json</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/applications" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Applications" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -312,7 +254,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/applications/config" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Applications Config" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -347,7 +289,7 @@
           <boolProp name="TransactionController.parent">true</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1//proxy/masterdata/locations/immediatechildren/1001/eng" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Province Details" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -385,7 +327,7 @@
             </RegexExtractor>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1//proxy/masterdata/locations/immediatechildren/100002/eng" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get City Details" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -423,7 +365,7 @@
             </RegexExtractor>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1//proxy/masterdata/locations/immediatechildren/100567/eng" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Municipality Details" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -461,7 +403,7 @@
             </RegexExtractor>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1//proxy/masterdata/locations/immediatechildren/103497/eng" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Zipcode Details" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -499,13 +441,13 @@
             </RegexExtractor>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/applications" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Provide Prereg Application Details" enabled="true">
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;id&quot;:&quot;mosip.pre-registration.demographic.create&quot;,&quot;request&quot;:{&quot;langCode&quot;:&quot;eng&quot;,&quot;demographicDetails&quot;:{&quot;identity&quot;:{&quot;IDSchemaVersion&quot;:0.1,&quot;firstName&quot;:[{&quot;language&quot;:&quot;eng&quot;,&quot;value&quot;:&quot;PT${userid_ctr}&quot;}],&quot;middleName&quot;:[{&quot;language&quot;:&quot;eng&quot;,&quot;value&quot;:&quot;testing${userid_ctr}&quot;}],&quot;lastName&quot;:[{&quot;language&quot;:&quot;eng&quot;,&quot;value&quot;:&quot;team${userid_ctr}&quot;}],&quot;dateOfBirth&quot;:&quot;1995/01/01&quot;,&quot;gender&quot;:[{&quot;language&quot;:&quot;eng&quot;,&quot;value&quot;:&quot;101&quot;}],&quot;residenceStatus&quot;:[{&quot;language&quot;:&quot;eng&quot;,&quot;value&quot;:&quot;101&quot;}],&quot;bloodType&quot;:[{&quot;language&quot;:&quot;eng&quot;,&quot;value&quot;:&quot;103&quot;}],&quot;presentCountry&quot;:[{&quot;language&quot;:&quot;eng&quot;,&quot;value&quot;:&quot;1001&quot;}],&quot;presentProvince&quot;:[{&quot;language&quot;:&quot;eng&quot;,&quot;value&quot;:&quot;${province}&quot;}],&quot;presentCity&quot;:[{&quot;language&quot;:&quot;eng&quot;,&quot;value&quot;:&quot;${city}&quot;}],&quot;presentMunicipality&quot;:[{&quot;language&quot;:&quot;eng&quot;,&quot;value&quot;:&quot;${municipality}&quot;}],&quot;presentZipcode&quot;:[{&quot;language&quot;:&quot;eng&quot;,&quot;value&quot;:&quot;${zipcode}&quot;}]}}},&quot;version&quot;:&quot;1.0&quot;,&quot;requesttime&quot;:&quot;${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.sss&apos;Z&apos;,)}&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;id&quot;:&quot;mosip.pre-registration.demographic.create&quot;,&quot;request&quot;:{&quot;langCode&quot;:&quot;eng&quot;,&quot;demographicDetails&quot;:{&quot;identity&quot;:{&quot;IDSchemaVersion&quot;:0.1,&quot;firstName&quot;:[{&quot;language&quot;:&quot;eng&quot;,&quot;value&quot;:&quot;PT${userIdCtr}&quot;}],&quot;middleName&quot;:[{&quot;language&quot;:&quot;eng&quot;,&quot;value&quot;:&quot;testing${userIdCtr}&quot;}],&quot;lastName&quot;:[{&quot;language&quot;:&quot;eng&quot;,&quot;value&quot;:&quot;team${userid_ctr}&quot;}],&quot;dateOfBirth&quot;:&quot;1995/01/01&quot;,&quot;gender&quot;:[{&quot;language&quot;:&quot;eng&quot;,&quot;value&quot;:&quot;101&quot;}],&quot;residenceStatus&quot;:[{&quot;language&quot;:&quot;eng&quot;,&quot;value&quot;:&quot;101&quot;}],&quot;bloodType&quot;:[{&quot;language&quot;:&quot;eng&quot;,&quot;value&quot;:&quot;103&quot;}],&quot;presentCountry&quot;:[{&quot;language&quot;:&quot;eng&quot;,&quot;value&quot;:&quot;1001&quot;}],&quot;presentProvince&quot;:[{&quot;language&quot;:&quot;eng&quot;,&quot;value&quot;:&quot;${province}&quot;}],&quot;presentCity&quot;:[{&quot;language&quot;:&quot;eng&quot;,&quot;value&quot;:&quot;${city}&quot;}],&quot;presentMunicipality&quot;:[{&quot;language&quot;:&quot;eng&quot;,&quot;value&quot;:&quot;${municipality}&quot;}],&quot;presentZipcode&quot;:[{&quot;language&quot;:&quot;eng&quot;,&quot;value&quot;:&quot;${zipcode}&quot;}]}}},&quot;version&quot;:&quot;1.0&quot;,&quot;requesttime&quot;:&quot;${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.sss&apos;Z&apos;,)}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -538,7 +480,7 @@
               </collectionProp>
             </HeaderManager>
             <hashTree/>
-            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="preRegistrationId" enabled="true">
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract PreRegistrationId" enabled="true">
               <stringProp name="RegexExtractor.useHeaders">false</stringProp>
               <stringProp name="RegexExtractor.refname">preRegistrationId</stringProp>
               <stringProp name="RegexExtractor.regex">{&quot;preRegistrationId&quot;:&quot;(.*?)&quot;,&quot;</stringProp>
@@ -548,7 +490,7 @@
             </RegexExtractor>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/applications/64592470687037" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Application Details" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -577,7 +519,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/applications/config" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Applications Config" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -606,7 +548,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/documents/preregistration/64592470687037" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Document Details for the Applicant" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -635,7 +577,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1//proxy/masterdata/getApplicantType" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Provide Applicant Type Details" enabled="true">
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
@@ -675,7 +617,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/applications" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Applications" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -704,7 +646,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1//proxy/masterdata/applicanttype/002/languages?languages=eng" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Languages" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="languages" elementType="HTTPArgument">
@@ -747,7 +689,7 @@
           <boolProp name="TransactionController.parent">true</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/documents/64592470687037" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Upload POI Document" enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="C:\Users\Administrator\Desktop\Document1.pdf" elementType="HTTPFileArg">
@@ -793,7 +735,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/documents/64592470687037" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Upload POA Document" enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="C:\Users\Administrator\Desktop\Document2.pdf" elementType="HTTPFileArg">
@@ -839,7 +781,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/documents/64592470687037" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Upload POR Document" enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="C:\Users\Administrator\Desktop\Document3.pdf" elementType="HTTPFileArg">
@@ -885,7 +827,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/documents/64592470687037" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Upload POE Document" enabled="true">
             <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
               <collectionProp name="HTTPFileArgs.files">
                 <elementProp name="C:\Users\Administrator\Desktop\Document4.pdf" elementType="HTTPFileArg">
@@ -937,7 +879,7 @@
           <boolProp name="TransactionController.parent">true</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/applications/config" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Applications Config" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -966,7 +908,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1//proxy/masterdata/dynamicfields?pageNumber=0&amp;pageSize=10" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Dynamic Fields" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="pageNumber" elementType="HTTPArgument">
@@ -1010,7 +952,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/applications/64592470687037" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Application Details" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -1039,7 +981,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/documents/preregistration/64592470687037" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Document Details for the Applicant" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -1068,7 +1010,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1//proxy/masterdata/applicanttype/002/languages?languages=eng" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Language Details For The Applicant Type" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="languages" elementType="HTTPArgument">
@@ -1105,7 +1047,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1//proxy/masterdata/locations/info/1001/eng" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Country Details" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -1134,7 +1076,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1//proxy/masterdata/locations/info/100002/eng" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Province Details" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -1163,7 +1105,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1//proxy/masterdata/locations/info/100567/eng" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get City Details" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -1192,7 +1134,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1//proxy/masterdata/locations/info/103497/eng" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Municipality Details" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -1221,7 +1163,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1//proxy/masterdata/locations/info/145565/eng" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Zipcode Details" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -1256,7 +1198,7 @@
           <boolProp name="TransactionController.parent">true</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/applications/64592470687037" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Application Details" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -1285,7 +1227,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1//proxy/masterdata/locations/eng" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Location Details" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -1314,7 +1256,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1//proxy/masterdata/locations/info/100567/eng" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Province Name" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -1344,21 +1286,21 @@
             <hashTree/>
             <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract Province Name" enabled="true">
               <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-              <stringProp name="RegexExtractor.refname">province_name</stringProp>
+              <stringProp name="RegexExtractor.refname">provinceName</stringProp>
               <stringProp name="RegexExtractor.regex">&quot;,&quot;name&quot;:&quot;(.*?)&quot;,&quot;</stringProp>
               <stringProp name="RegexExtractor.template">$1$</stringProp>
-              <stringProp name="RegexExtractor.default">province_name not found</stringProp>
+              <stringProp name="RegexExtractor.default">provinceName not found</stringProp>
               <stringProp name="RegexExtractor.match_number">1</stringProp>
             </RegexExtractor>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1//proxy/masterdata/registrationcenters/eng/3/names?name=MOSIP-City481" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Registration Center Details" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="name" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
                   <stringProp name="Argument.name">name</stringProp>
-                  <stringProp name="Argument.value">${province_name}</stringProp>
+                  <stringProp name="Argument.value">${provinceName}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                   <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 </elementProp>
@@ -1390,15 +1332,15 @@
             <hashTree/>
             <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract CenterID" enabled="true">
               <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-              <stringProp name="RegexExtractor.refname">center_id</stringProp>
+              <stringProp name="RegexExtractor.refname">centerId</stringProp>
               <stringProp name="RegexExtractor.regex">{&quot;id&quot;:&quot;(.*?)&quot;,&quot;</stringProp>
               <stringProp name="RegexExtractor.template">$1$</stringProp>
-              <stringProp name="RegexExtractor.default">center_id not found</stringProp>
+              <stringProp name="RegexExtractor.default">centerId not found</stringProp>
               <stringProp name="RegexExtractor.match_number">0</stringProp>
             </RegexExtractor>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1//proxy/masterdata/workingdays/10001/eng" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Working Days Details" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -1427,71 +1369,13 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1//proxy/masterdata/workingdays/10002/eng" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
-            <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
-            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/preregistration/v1//proxy/masterdata/workingdays/10002/eng</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1//proxy/masterdata/workingdays/10052/eng" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
-            <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
-            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/preregistration/v1//proxy/masterdata/workingdays/10052/eng</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">application/json, text/plain, */*</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="PreReg Select Center And Continue" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
           <boolProp name="TransactionController.parent">true</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/applications/64592470687037" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Application Details" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -1520,7 +1404,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1//proxy/masterdata/registrationcenters/10002/eng" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Registration Center Details" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -1528,7 +1412,7 @@
             <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
             <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/preregistration/v1//proxy/masterdata/registrationcenters/${center_id}/eng</stringProp>
+            <stringProp name="HTTPSampler.path">/preregistration/v1//proxy/masterdata/registrationcenters/${centerId}/eng</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -1549,7 +1433,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/appointment/availability/10002" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Registration Center Slot Availability Details" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -1557,7 +1441,7 @@
             <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
             <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/preregistration/v1/appointment/availability/${center_id}</stringProp>
+            <stringProp name="HTTPSampler.path">/preregistration/v1/appointment/availability/${centerId}</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -1578,22 +1462,22 @@
             </HeaderManager>
             <hashTree/>
             <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Appointment Date" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">appointment_date</stringProp>
+              <stringProp name="JSONPostProcessor.referenceNames">appointmentDate</stringProp>
               <stringProp name="JSONPostProcessor.jsonPathExprs">$.response.centerDetails[?(@.holiday ==false)].date</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">appointment_date_not_found</stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">appointmentDate_not_found</stringProp>
             </JSONPostProcessor>
             <hashTree/>
             <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract From Time" enabled="true">
               <stringProp name="JSONPostProcessor.referenceNames">fromTime</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$.response.centerDetails[*].[?(@.date ==&apos;${appointment_date}&apos;)].timeSlots[?(@.availability&gt;=1)].fromTime</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.response.centerDetails[*].[?(@.date ==&apos;${appointmentDate}&apos;)].timeSlots[?(@.availability&gt;=1)].fromTime</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
               <stringProp name="JSONPostProcessor.defaultValues">fromTime_not_found</stringProp>
             </JSONPostProcessor>
             <hashTree/>
             <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract To Time" enabled="true">
               <stringProp name="JSONPostProcessor.referenceNames">toTime</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$.response.centerDetails[*].[?(@.date ==&apos;${appointment_date}&apos;)].timeSlots[?(@.fromTime ==&apos;${fromTime}&apos;)].toTime</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.response.centerDetails[*].[?(@.date ==&apos;${appointmentDate}&apos;)].timeSlots[?(@.fromTime ==&apos;${fromTime}&apos;)].toTime</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
               <stringProp name="JSONPostProcessor.defaultValues">toTime_not_found</stringProp>
             </JSONPostProcessor>
@@ -1605,13 +1489,13 @@
           <boolProp name="TransactionController.parent">true</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/appointment" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Book Appointment For Available Slot" enabled="true">
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;id&quot;:&quot;mosip.pre-registration.booking.book&quot;,&quot;request&quot;:{&quot;bookingRequest&quot;:[{&quot;preRegistrationId&quot;:&quot;${preRegistrationId}&quot;,&quot;registration_center_id&quot;:&quot;${center_id}&quot;,&quot;appointment_date&quot;:&quot;${appointment_date}&quot;,&quot;time_slot_from&quot;:&quot;${fromTime}&quot;,&quot;time_slot_to&quot;:&quot;${toTime}&quot;}]},&quot;version&quot;:&quot;1.0&quot;,&quot;requesttime&quot;:&quot;${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.sss&apos;Z&apos;,)}&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;id&quot;:&quot;mosip.pre-registration.booking.book&quot;,&quot;request&quot;:{&quot;bookingRequest&quot;:[{&quot;preRegistrationId&quot;:&quot;${preRegistrationId}&quot;,&quot;registration_center_id&quot;:&quot;${centerId}&quot;,&quot;appointment_date&quot;:&quot;${appointmentDate}&quot;,&quot;time_slot_from&quot;:&quot;${fromTime}&quot;,&quot;time_slot_to&quot;:&quot;${toTime}&quot;}]},&quot;version&quot;:&quot;1.0&quot;,&quot;requesttime&quot;:&quot;${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.sss&apos;Z&apos;,)}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -1655,7 +1539,7 @@
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/applications/64592470687037" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Application Details" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -1685,15 +1569,15 @@
             <hashTree/>
             <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract PreRegistrationId Generated" enabled="true">
               <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-              <stringProp name="RegexExtractor.refname">preRegistrationId_generated</stringProp>
+              <stringProp name="RegexExtractor.refname">preRegistrationIdGenerated</stringProp>
               <stringProp name="RegexExtractor.regex">{&quot;preRegistrationId&quot;:&quot;(.*?)&quot;,&quot;</stringProp>
               <stringProp name="RegexExtractor.template">$1$</stringProp>
-              <stringProp name="RegexExtractor.default">preRegistrationId_generated not found</stringProp>
+              <stringProp name="RegexExtractor.default">preRegistrationIdGenerated not found</stringProp>
               <stringProp name="RegexExtractor.match_number">1</stringProp>
             </RegexExtractor>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/appointment/64592470687037" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Appointment Details" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -1701,7 +1585,7 @@
             <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
             <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/preregistration/v1/appointment/${preRegistrationId}</stringProp>
+            <stringProp name="HTTPSampler.path">/preregistration/v1/appointment/${preRegistrationIdGenerated}</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -1722,7 +1606,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1//proxy/masterdata/registrationcenters/10002/eng" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Registration Center Details" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -1730,7 +1614,7 @@
             <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
             <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/preregistration/v1//proxy/masterdata/registrationcenters/${center_id}/eng</stringProp>
+            <stringProp name="HTTPSampler.path">/preregistration/v1//proxy/masterdata/registrationcenters/${centerId}/eng</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -1751,13 +1635,13 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/qrCode/generate" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Generate QR Code" enabled="true">
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;id&quot;:&quot;mosip.pre-registration.qrcode.generate&quot;,&quot;request&quot;:&quot;${preRegistrationId}&quot;,&quot;version&quot;:&quot;1.0&quot;,&quot;requesttime&quot;:&quot;${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.sss&apos;Z&apos;,)}&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;id&quot;:&quot;mosip.pre-registration.qrcode.generate&quot;,&quot;request&quot;:&quot;${preRegistrationIdGenerated}&quot;,&quot;version&quot;:&quot;1.0&quot;,&quot;requesttime&quot;:&quot;${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.sss&apos;Z&apos;,)}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -1791,7 +1675,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1//proxy/masterdata/templates/eng/Onscreen-Acknowledgement" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Onscreen Acknowledgement For Slot Booking" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -1826,7 +1710,7 @@
           <boolProp name="TransactionController.parent">true</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/login/invalidateToken" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Prereg Logout" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -1859,7 +1743,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="https://cellbox.mosip.net//preregistration/v1/login/config" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Login Config" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
@@ -1891,7 +1775,7 @@
         </hashTree>
       </hashTree>
       <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
-        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <boolProp name="ResultCollector.error_logging">true</boolProp>
         <objProp>
           <name>saveConfig</name>
           <value class="SampleSaveConfiguration">
