@@ -46,6 +46,11 @@
             <stringProp name="Argument.value">5</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="{       &quot;registrationId&quot;: &quot;${regID}&quot;     }" elementType="Argument">
+            <stringProp name="Argument.name">{       &quot;registrationId&quot;: &quot;${regID}&quot;     }</stringProp>
+            <stringProp name="Argument.value"></stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -318,7 +323,7 @@
             <boolProp name="ignoreFirstLine">false</boolProp>
             <boolProp name="quotedData">false</boolProp>
             <boolProp name="recycle">true</boolProp>
-            <stringProp name="shareMode">shareMode.all</stringProp>
+            <stringProp name="shareMode">shareMode.thread</stringProp>
             <boolProp name="stopThread">false</boolProp>
             <stringProp name="variableNames">regID,encryptedData,packetPath,machineRefId</stringProp>
           </CSVDataSet>
@@ -346,7 +351,9 @@ fWriter.close();
           <hashTree/>
         </hashTree>
         <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="Extract Packet Status Request Body String From File" enabled="true">
-          <stringProp name="BeanShellSampler.query">${__StringFromFile(packetStatusRequestBody.csv,reqBody,,)};
+          <stringProp name="BeanShellSampler.query">${__StringFromFile(packetStatusRequestBody.csv,packetStatusReqBodyRid,,)}
+
+
 
 
 
@@ -365,7 +372,7 @@ fWriter.close();
             <boolProp name="resetInterpreter">false</boolProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
-            <stringProp name="script">${__StringToFile(multiplePacketStatusRequestBody.csv,${reqBody}\n,true,)}</stringProp>
+            <stringProp name="script">${__StringToFile(multiplePacketStatusRequestBody.csv,${packetStatusReqBodyRid},true,)}</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
@@ -458,7 +465,7 @@ fWriter.close();
         </hashTree>
       </hashTree>
       <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
-        <boolProp name="ResultCollector.error_logging">true</boolProp>
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
           <name>saveConfig</name>
           <value class="SampleSaveConfiguration">
