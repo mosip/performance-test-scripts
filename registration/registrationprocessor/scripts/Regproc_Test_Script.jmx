@@ -46,11 +46,6 @@
             <stringProp name="Argument.value">5</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="{       &quot;registrationId&quot;: &quot;${regID}&quot;     }" elementType="Argument">
-            <stringProp name="Argument.name">{       &quot;registrationId&quot;: &quot;${regID}&quot;     }</stringProp>
-            <stringProp name="Argument.value"></stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -350,8 +345,12 @@ fWriter.close();
           </BeanShellSampler>
           <hashTree/>
         </hashTree>
-        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="Extract Packet Status Request Body String From File" enabled="true">
-          <stringProp name="BeanShellSampler.query">${__StringFromFile(packetStatusRequestBody.csv,packetStatusReqBodyRid,,)}
+        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="Extract Packet Status Request Body String From File And Construct Body For Multiple Lines" enabled="true">
+          <stringProp name="BeanShellSampler.query">${__StringFromFile(packetStatusRequestBody.csv,packetStatusReqBodyRid,,)};
+
+${__strLen(${packetStatusReqBodyRid},strLen)};
+
+${__javaScript(&apos;${packetStatusReqBodyRid}&apos;.substring(0\,${strLen}-1),replacedStr)};
 
 
 
@@ -372,7 +371,7 @@ fWriter.close();
             <boolProp name="resetInterpreter">false</boolProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
-            <stringProp name="script">${__StringToFile(multiplePacketStatusRequestBody.csv,${packetStatusReqBodyRid},true,)}</stringProp>
+            <stringProp name="script">${__StringToFile(multiplePacketStatusRequestBody.csv,${replacedStr}\n,true,)}</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
@@ -413,9 +412,6 @@ fWriter.close();
   &quot;id&quot;: &quot;mosip.registration.status&quot;,&#xd;
   &quot;request&quot;: [&#xd;
     ${reqBody}&#xd;
- {&#xd;
-      &quot;registrationId&quot;: &quot;${regID}&quot;&#xd;
-    }&#xd;
   ],&#xd;
   &quot;requesttime&quot;: &quot;${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.sss&apos;Z&apos;,)}&quot;,&#xd;
   &quot;version&quot;: &quot;1.0&quot;&#xd;
@@ -465,7 +461,7 @@ fWriter.close();
         </hashTree>
       </hashTree>
       <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
-        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <boolProp name="ResultCollector.error_logging">true</boolProp>
         <objProp>
           <name>saveConfig</name>
           <value class="SampleSaveConfiguration">
