@@ -350,7 +350,7 @@ fWriter.close();
 
 ${__strLen(${packetStatusReqBodyRid},strLen)};
 
-${__javaScript(&apos;${packetStatusReqBodyRid}&apos;.substring(0\,${strLen}-1),replacedStr)};
+${__javaScript(&apos;${packetStatusReqBodyRid}&apos;.substring(0\,${strLen}-1),multipleLinesPacketStatusReqBody)};
 
 
 
@@ -371,7 +371,7 @@ ${__javaScript(&apos;${packetStatusReqBodyRid}&apos;.substring(0\,${strLen}-1),r
             <boolProp name="resetInterpreter">false</boolProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
-            <stringProp name="script">${__StringToFile(multiplePacketStatusRequestBody.csv,${replacedStr}\n,true,)}</stringProp>
+            <stringProp name="script">${__StringToFile(multiplePacketStatusRequestBody.csv,${multipleLinesPacketStatusReqBody}\n,true,)}</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
