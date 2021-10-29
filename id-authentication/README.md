@@ -33,5 +33,5 @@ https://mosip.atlassian.net/wiki/spaces/QT/pages/670597144/Auth+using+the+New+Pa
 
 (14) Also for viewing the results or output of our test we have added certain listener test elements at the end of our test script which are - View Results Tree, Aggregate Report, Active Threads Over Time graph, Response Times Percentiles graph, Response Times vs Threads graph & Transaction Throughput vs Threads graph.
 
-(15) We have a test element named 'User Defined Variables' in both the helper & test scripts where the server IP, server port, protocol, ida utility port & ida utility server IP all these are parameterized & can be changed based on our requirements which will further reflect in the entire script.
+(15) We have a test element named 'User Defined Variables' in both the helper & test scripts where the server IP, server port, protocol, ida utility port, ida utility server IP, clientId, secretKey & appId all these are parameterized & can be changed based on our requirements which will further reflect in the entire script.
 
