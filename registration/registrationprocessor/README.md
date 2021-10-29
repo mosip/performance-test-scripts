@@ -47,7 +47,7 @@ How to run JMeter Helper & Test scripts:-
 
 (8) For GET Packet status api we are first creating the request body based on the number of RID's we want to search at once in the preparation group & store it in a file which gets further used by the execution group for the execution of the test.
 
-(9) We have a test element named 'User Defined Variables' in both the helper & test scripts where the server IP, server port, protocol & packetStatusReqBodyRidCount (creating the packet status request body based on the number of RID's we want to search at once) all these are parameterized & can be changed based on our requirements which will further reflect in the entire script.
+(9) We have a test element named 'User Defined Variables' in both the helper & test scripts where the server IP, server port, protocol, clientId, secretKey, appId & packetStatusReqBodyRidCount (creating the packet status request body based on the number of RID's we want to search at once) all these are parameterized & can be changed based on our requirements which will further reflect in the entire script.
 
 (10) All the thread groups will run in a sequential manner & if we don't want to run all of them we can disable the one which we don't want to run.
 
