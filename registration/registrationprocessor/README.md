@@ -1,6 +1,6 @@
 Contains:-
 
-This folder contains performance test scripts & test data for Registration Processor.
+This folder contains performance test scripts & test data for Registration Processor Module.
 
 How to create test data:-
 
