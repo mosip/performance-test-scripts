@@ -13,7 +13,7 @@
 
 ### How to run JMeter scripts:-
 
-* Once the Partner Demo/IDA Utility is started we need to take care of the prerequisites before running our tests. So for that we have a helper script by the name of [IDA_Helper_script.jmx](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/id-authentication/scripts/IDA_Helper_script.jmx).
+* We need to take care of the prerequisites before running our tests. So for that we have a helper script by the name of [IDA_Helper_script.jmx](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/id-authentication/scripts/IDA_Helper_script.jmx).
 
 * In the helper script we have three thread groups which we will run in a sequential manner & if we don't want to run all the three we can disable the one which we don't want to run.
 
