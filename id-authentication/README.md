@@ -4,6 +4,7 @@
 * Websub
 * Kernel notification service
 * Kernel audit service
+* Kernel authmanager service
 * Biosdk service
 * Kernel OTP manager
 * We need to start the [Partner Demo/IDA utility](https://mosip.atlassian.net/wiki/spaces/QT/pages/670597144/Auth+using+the+New+Partner+Demo+service+with+external+Certificate)
