@@ -9,7 +9,7 @@
 * We need to start the [Partner Demo/IDA utility](https://mosip.atlassian.net/wiki/spaces/QT/pages/670597144/Auth+using+the+New+Partner+Demo+service+with+external+Certificate)
 
 ### Data prerequisite:-
-* List of RID's as per environment which is valid in idrepo and IDA and we can edit the this list from [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/id-authentication/support-files/RID_list.txt)
+* List of RID's as per environment which is valid in idrepo and IDA and we can edit this list from [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/id-authentication/support-files/RID_list.txt)
 
 ### How to run JMeter scripts:-
 
