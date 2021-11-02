@@ -23,7 +23,7 @@
 
 * The first thread group is for the creation of authorization token which we will further use in our execution.
 
-* The second thread group is for the creation of UIN by using existing RID's for which a text file is there in the support files folder by the name of 'RID_list.txt'.
+* The second thread group is for the creation of UIN by using existing RID's for which a text file is there in the support files folder [RID_list.txt](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/id-authentication/support-files/RID_list.txt).
 
 * The third thread group is basically for setting up the third party certificates which are required for running the IDA api scripts & also for creating and publishing policy & then creating various partner certificates based on the policy created.
 
