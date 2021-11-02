@@ -13,7 +13,7 @@
 (1) First we need to start the Partner Demo/IDA utility - You can refer the the below link for reference:
 https://mosip.atlassian.net/wiki/spaces/QT/pages/670597144/Auth+using+the+New+Partner+Demo+service+with+external+Certificate
 
-(2) Once the Partner Demo/IDA Utility is started we need to take care of the prerequisites before running our tests. So for that we have a helper script by the name of 'IDA_Helper_script.jmx' in the scripts folder.
+* Once the Partner Demo/IDA Utility is started we need to take care of the prerequisites before running our tests. So for that we have a helper script by the name of 'IDA_Helper_script.jmx' in the scripts folder.
 
 (3) In the helper script we have three thread groups which we will run in a sequential manner & if we don't want to run all the three we can disable the one which we don't want to run.
 
