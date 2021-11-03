@@ -84,6 +84,6 @@
 * Calculate the transaction times by running the [RegProcTransactionDataUtil](https://github.com/mosip/mosip-performance-tests-mt/tree/1.1.5/utilities/regproc_transactiondata_util_v2.2).
 
 * Check below property in config.properties file located in src/main/resources of [RegProcTransactionDataUtil](https://github.com/mosip/mosip-performance-tests-mt/tree/1.1.5/utilities/regproc_transactiondata_util_v2.2)-
-  1. ENVIRONMENT= environment_name
+  1. ENVIRONMENT= environment name
   2. REGID_LOG_FILE= C:\\MOSIP_PT\\test1\\kafka_softHSM\\regid_file1.csv (Provide generated regids in regid_file.csv)
   3. EXCEL_FILE = C:\\MOSIP_PT\\test1\\kafka_softHSM\\regid_transaction_data.xlsx (Once above java utility is executed ,It will generate the transaction_times.xlsx which has all the transaction times of each stages of each packets)
