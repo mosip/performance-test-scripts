@@ -29,8 +29,8 @@
 * It contains one thread group named 'Select PreRegIds From DB' (for getting the prereg id's from the DB).
 
 * Set the parameters of the environment database like dbHost, dbPort, dbName, dbUser & dbPassword in the test element named 'User Defined Variables'-
-      * dbHost -- host name of the database
-      * dbPort -- port number of the database
-      * dbName -- name of the database
-      * dbUser -- user name of the database
-      * dbPassword -- password of the database
+      1. dbHost -- host name of the database
+      2. dbPort -- port number of the database
+      3. dbName -- name of the database
+      4. dbUser -- user name of the database
+      5. dbPassword -- password of the database
