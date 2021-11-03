@@ -30,8 +30,8 @@
 
 * Set the parameters of the environment database like dbHost,dbPort,dbName,dbUser & dbPassword in the test element named 'User Defined Variables'-
 
-** dbHost -- host name of the database
-** dbPort -- port number of the database
-** dbName -- name of the database
-** dbUser -- user name of the database
-** dbPassword -- password of the database
+* dbHost -- host name of the database
+* dbPort -- port number of the database
+* dbName -- name of the database
+* dbUser -- user name of the database
+* dbPassword -- password of the database
