@@ -10,11 +10,11 @@
 * All pre reg services
 
 ### Data prerequisite:-
-* Sample documents are required for uploading in the upload document section of Prereg UI booking appointment slot end to end flow. The documents can be found & edited from [here](https://github.com/mosip/mosip-performance-tests-mt/tree/sabya-123-patch-preregREADME/pre-registration/support-files)
+* Sample documents are required for uploading in the upload document section of Prereg UI booking appointment slot end to end flow. The documents can be found & edited from [here](https://github.com/mosip/mosip-performance-tests-mt/tree/1.1.5/pre-registration/support-files)
 
 ### How to run JMeter Test script:-
 
-* We have a test script [Prereg_Test_script.jmx](https://github.com/mosip/mosip-performance-tests-mt/blob/sabya-123-patch-preregREADME/pre-registration/scripts/Prereg_Test_Script.jmx) which is used for our test execution of the Preregistration UI end to end flow.
+* We have a test script [Prereg_Test_script.jmx](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/pre-registration/scripts/Prereg_Test_Script.jmx) which is used for our test execution of the Preregistration UI end to end flow.
 
 * It consists of one thread group named 'PreReg UI (Execution)' which consists of all the transactions involved for the Preregistration UI end to end flow.
 
@@ -24,14 +24,14 @@
 
 ### How to run JMeter DB script:-
 
-* The JMeter DB script named [Prereg Get PreIDs From DB.jmx](https://github.com/mosip/mosip-performance-tests-mt/blob/sabya-123-patch-preregREADME/pre-registration/scripts/Prereg%20Get%20PreIDs%20From%20DB.jmx) is used for getting the prereg id's from the DB which were created through our test script.
+* The JMeter DB script named [Prereg Get PreIDs From DB.jmx](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/pre-registration/scripts/Prereg%20Get%20PreIDs%20From%20DB.jmx) is used for getting the prereg id's from the DB which were created through our test script.
 
 * It contains one thread group named 'Select PreRegIds From DB' (for getting the prereg id's from the DB).
 
 * Set the parameters of the environment database like dbHost,dbPort,dbName,dbUser & dbPassword in the test element named 'User Defined Variables'-
 
-* dbHost -- host name of the database
-* dbPort -- port number of the database
-* dbName -- name of the database
-* dbUser -- user name of the database
-* dbPassword -- password of the database
+- dbHost -- host name of the database
+- dbPort -- port number of the database
+- dbName -- name of the database
+- dbUser -- user name of the database
+- dbPassword -- password of the database
