@@ -9,7 +9,7 @@
 * Kernel Audit manager
 * All pre reg services
 
-## Data prerequisite:-
+### Data prerequisite:-
 * Sample documents are required for uploading in the upload document section of Prereg UI booking appointment slot end to end flow. The documents can be found & edited from [here](https://github.com/mosip/mosip-performance-tests-mt/tree/sabya-123-patch-preregREADME/pre-registration/support-files)
 
 ### How to run JMeter Test script:-
@@ -30,8 +30,8 @@
 
 * Set the parameters of the environment database like dbHost,dbPort,dbName,dbUser & dbPassword in the test element named 'User Defined Variables'-
 
-dbHost -- host name of the database
-dbPort -- port number of the database
-dbName -- name of the database
-dbUser -- user name of the database
-dbPassword -- password of the database
+** dbHost -- host name of the database
+** dbPort -- port number of the database
+** dbName -- name of the database
+** dbUser -- user name of the database
+** dbPassword -- password of the database
