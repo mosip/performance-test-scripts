@@ -1,4 +1,4 @@
-## This Folder contains performance test scripts and test data of ID-Repository module.
+## This folder contains performance test scripts and test data of ID-Repository module.
 
 ### Environment Required:-
 * Websub
