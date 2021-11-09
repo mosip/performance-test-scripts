@@ -1,4 +1,4 @@
-## This Folder contains performance test scripts and test data of Datashare module.
+## This folder contains performance test scripts and test data of Datashare module.
 
 ### Environment Required:-
 * Websub
