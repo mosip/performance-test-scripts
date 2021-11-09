@@ -10,7 +10,7 @@
 * Datashare service
 
 ### Data prequisite:-
-* * All the credential request variables like credential id, credential type, issuer etc are needed for generating credential request or for issuing credential service. These values can be modified from [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/commons/credential/support-files/credRequestVariables.csv) based on which environment we are working.
+* All the credential request variables like credential id, credential type, issuer etc are needed for generating credential request or for issuing credential service. These values can be modified from [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/commons/credential/support-files/credRequestVariables.csv) based on which environment we are working.
 
 ### How to run JMeter scripts:-
 * We need to take care of the prerequisites first for which we a helper script [Credential_Helper_Script.jmx](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/commons/credential/scripts/Credential_Helper_Script.jmx).
