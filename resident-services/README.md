@@ -41,7 +41,7 @@
 
 * There will be some delay between the two preparation groups & the value of the delay we have to give in the test element 'User Defined Variables' in milliseconds.
 
-***NOTE: The delay value entirely depends on how much time the credential request generator takes to make all the VID's generated to ISSUED state from NEW and this can be checked from the credential_transaction table in DB.***
+***NOTE: The delay value entirely depends on how much time the credential request generator takes to make all the VID's generated to ISSUED state from NEW and this can be checked in the credential_transaction table from the DB.***
 
 * The Resident module api's which we are targetting in this test script are - Revoke VID api, Request OTP api, RID Check Status api, Auth Lock API api, Auth Unlock API api, Request Credential api, Generate VID api & Auth History api.
 
