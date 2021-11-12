@@ -14,5 +14,7 @@ public class ResultMetadata {
 	private double avgTurnAroundTime;
 	
 	private long ninetiethPercentile;
+	
+	private String subID;
 
 }

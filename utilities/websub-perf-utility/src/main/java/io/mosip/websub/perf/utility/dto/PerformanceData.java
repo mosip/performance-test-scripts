@@ -9,7 +9,7 @@ import lombok.Data;
 
 
 @Data
-public class PerformenceData {
+public class PerformanceData {
 
 	
 List<Long> turnAroundTime = new ArrayList<>();

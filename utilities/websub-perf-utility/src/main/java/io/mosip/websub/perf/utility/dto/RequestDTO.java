@@ -12,6 +12,6 @@ public class RequestDTO {
 	private String timestamp;
 	
 	@NotBlank
-	private String messageID;
+	private String messageString;
 
 }
