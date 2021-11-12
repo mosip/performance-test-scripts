@@ -35,7 +35,8 @@
    6. Kernel idgenerator service
    7. Kernel pridgenerator service
    8. Kernel otpmanager service
-  All these scripts can be found [here](https://github.com/mosip/mosip-performance-tests-mt/tree/1.1.5/commons/kernel/scripts).
+  
+  ***All these scripts can be found [here](https://github.com/mosip/mosip-performance-tests-mt/tree/1.1.5/commons/kernel/scripts).***
 * All the thread groups will run in a sequential manner & if we don't want to run all of them we can disable the one which we don't want to run.
 * Also for viewing the results or output of our test we have added certain listener test elements at the end of our 8 test scripts which are - View Results Tree, Aggregate Report, Active Threads Over Time graph, Response Times Percentiles graph, Response Times vs Threads graph & Transaction Throughput vs Threads graph.
 * We have a test element named 'User Defined Variables' in both the helper & test scripts where the server IP, server port, protocol, clientId, secretKey & appId all these are parameterized & can be changed based on our requirements which will further reflect in the entire script.
