@@ -7,13 +7,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.scheduling.annotation.EnableAsync;
 
-/**
- * Mail notifier application
- * 
- * @author Sagar Mahapatra
- * @since 1.0.0
- *
- */
+
 @SpringBootApplication(scanBasePackages = { "io.mosip.websub.perf.utility.*"})
 public class WebsubPerfUtility {
 
