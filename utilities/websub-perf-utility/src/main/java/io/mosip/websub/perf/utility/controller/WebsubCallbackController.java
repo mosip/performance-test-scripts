@@ -64,7 +64,7 @@ public class WebsubCallbackController {
 			@ApiResponse(responseCode = "401", description = "Unauthorized" ,content = @Content(schema = @Schema(hidden = true))),
 			@ApiResponse(responseCode = "403", description = "Forbidden" ,content = @Content(schema = @Schema(hidden = true))),
 			@ApiResponse(responseCode = "404", description = "Not Found" ,content = @Content(schema = @Schema(hidden = true)))})
-	@GetMapping(value = "/reset/")
+	@GetMapping(value = "/reset")
 	public @ResponseBody ResponseEntity<Void> reset() {
 		
 		websubCallbackService.reset();
