@@ -33,7 +33,7 @@
           </elementProp>
           <elementProp name="clientId" elementType="Argument">
             <stringProp name="Argument.name">clientId</stringProp>
-            <stringProp name="Argument.value">mosip-crereq-client</stringProp>
+            <stringProp name="Argument.value">mosip-resident-client</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="secretKey" elementType="Argument">
@@ -43,7 +43,7 @@
           </elementProp>
           <elementProp name="appId" elementType="Argument">
             <stringProp name="Argument.name">appId</stringProp>
-            <stringProp name="Argument.value">crereq</stringProp>
+            <stringProp name="Argument.value">resident</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="serverIP" elementType="Argument">
@@ -141,7 +141,7 @@
             <stringProp name="filename"></stringProp>
             <stringProp name="parameters"></stringProp>
             <boolProp name="resetInterpreter">false</boolProp>
-            <stringProp name="script">${__StringToFile(authorization_token_idrepo.txt,${authToken}\n,true,)}</stringProp>
+            <stringProp name="script">${__StringToFile(authorization_token_idrepo.txt,${authToken}\n,false,)}</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
