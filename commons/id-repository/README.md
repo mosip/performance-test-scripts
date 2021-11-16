@@ -32,4 +32,5 @@
   6. appId
   7. vidType - (This is specifically used for Create VID api where we can basically set the type of VID we want to use eg: Temporary or Perpetual)
   8. lockStatus - (This is specifically used for Auth type status api where we can basically mention the auth status either it will be locked or unlocked)
+  
   ***All these are parameterized & can be changed based on our requirements which will further reflect in the entire script***
