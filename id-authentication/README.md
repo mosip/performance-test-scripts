@@ -1,6 +1,8 @@
-## This folder contains performance test scripts and test data for ID Authentication module.
+This folder contains performance test scripts and test data for ID Authentication module.
 
 ### Environment Required:-
+***Below utilities should be configured and run in Jmeter test setup***
+
 * Websub
 * Kernel notification service
 * Kernel audit service
@@ -10,6 +12,7 @@
 * ida auth service
 * ida kyc service
 * ida otp service
+****Below utilities should be configured and run in Jmeter test setup****
 * We need to start the [Partner Demo/IDA utility](https://mosip.atlassian.net/wiki/spaces/QT/pages/670597144/Auth+using+the+New+Partner+Demo+service+with+external+Certificate)
 
 ### Data prerequisite:-
@@ -25,19 +28,19 @@
 
 * The second thread group is for the creation of UIN by using existing RID's for which a text file is there in the support files folder [RID_list.txt](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/id-authentication/support-files/RID_list.txt).
 
-* The third thread group is basically for setting up the third party certificates which are required for running the IDA api scripts & also for creating and publishing policy & then creating various partner certificates based on the policy created.
+* The third thread group is basically for setting up the third party certificates which are required for running the IDA API scripts & also for creating and publishing policy & then creating various partner certificates based on the policy created.
 
 * All the creation tasks which will happen that will automatically save the tokens and id's created to a file in the bin folder of JMeter which will be used further by our test script for execution.
 
-* Once all the prerequisites are taken care we will jump to the test script where our actual execution will take place for all the IDA api's. It is saved by the name of [IDA_Test_script.jmx](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/id-authentication/scripts/IDA_Test_script.jmx).
+* Once all the prerequisites are taken care we will jump to the test script where our actual execution will take place for all the IDA API's. It is saved by the name of [IDA_Test_script.jmx](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/id-authentication/scripts/IDA_Test_script.jmx).
 
-* In the test script we have total 10 thread groups which contains one preparation & execution thread group for all the IDA module api's for which performance testing has to be done.
+* In the test script we have total 10 thread groups which contains one preparation & execution thread group for all the IDA module API's for which performance testing has to be done.
 
-* The preparation thread group takes care of the data preparation of the api for which we want to do our test & then saves the data to a file in the bin folder of JMeter which is further being used by our execution group.
+* The preparation thread group takes care of the data preparation of the API for which we want to do our test & then saves the data to a file in the bin folder of JMeter which is further being used by our execution group.
 
-* The execution group is the group where the actual test execution will take place for the api which needs performance testing.
+* The execution group is the group where the actual test execution will take place for the API which needs performance testing.
 
-* The IDA module api's which we are targetting in this test script are - Send OTP api, Auth with OTP api, Ekyc with OTP api, Auth with Biometrics api & Ekyc with Biometrics api.
+* The IDA module API's which we are targetting in this test script are - Send OTP API, Auth with OTP API, Ekyc with OTP API, Auth with Biometrics API & Ekyc with Biometrics API.
 
 * All the thread groups will run in a sequential manner & if we don't want to run all of them we can disable the one which we don't want to run.
 
