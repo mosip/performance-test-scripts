@@ -1,6 +1,8 @@
-## This folder contains performance test scripts and test data for Resident Services module
+This folder contains performance test scripts and test data for Resident Services module
 
 ### Environment Required:-
+***Below modules should be running in kubernetes setup***
+
 * Websub
 * ida-internal-service
 * idrepo-identity-service
@@ -29,21 +31,21 @@
 
 * All the creation tasks which will happen that will automatically save the tokens and id's created to a file in the bin folder of JMeter which will be used further by our test script for execution.
 
-* Once all the prerequisites are taken care we will jump to the test script where our actual execution will take place for all the Resident api's. It is saved by the name of [Resident_Test_script.jmx](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/resident-services/scripts/Resident_Test_script.jmx).
+* Once all the prerequisites are taken care we will jump to the test script where our actual execution will take place for all the Resident API's. It is saved by the name of [Resident_Test_script.jmx](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/resident-services/scripts/Resident_Test_script.jmx).
 
-* In the test script we have total 15 thread groups which contains one preparation & execution thread group for all the Resident module api's for which performance testing has to be done.
+* In the test script we have total 15 thread groups which contains one preparation & execution thread group for all the Resident module API's for which performance testing has to be done.
 
-* The preparation thread group takes care of the data preparation of the api for which we want to do our test & then saves the data to a file in the bin folder of JMeter which is further being used by our execution group.
+* The preparation thread group takes care of the data preparation of the API for which we want to do our test & then saves the data to a file in the bin folder of JMeter which is further being used by our execution group.
 
-* The execution group is the group where the actual test execution will take place for the api which needs performance testing.
+* The execution group is the group where the actual test execution will take place for the API which needs performance testing.
 
-* Only for Revoke VID api we have two preparation groups where in the first preparation thread group VID's will get generated & saved to a file in bin folder of JMeter which will be taken further by the second preparation thread group which will basically send otp as type VID & store the the VID's along with the transaction ID's used to a file which will finally be used by our execution group.
+* Only for Revoke VID API we have two preparation groups where in the first preparation thread group VID's will get generated & saved to a file in bin folder of JMeter which will be taken further by the second preparation thread group which will basically send otp as type VID & store the the VID's along with the transaction ID's used to a file which will finally be used by our execution group.
 
 * There will be some delay between the two preparation groups & the value of the delay we have to give in the test element 'User Defined Variables' in milliseconds.
 
 ***NOTE: The delay value entirely depends on how much time the credential request generator takes to make all the VID's generated to ISSUED state from NEW and this can be checked in credential_transaction table from the DB.***
 
-* The Resident module api's which we are targetting in this test script are - Revoke VID api, Request OTP api, RID Check Status api, Auth Lock API api, Auth Unlock API api, Request Credential api, Generate VID api & Auth History api.
+* The Resident module API's which we are targetting in this test script are - Revoke VID API, Request OTP API, RID Check Status API, Auth Lock API, Auth Unlock API, Request Credential API, Generate VID API & Auth History API.
 
 * All the thread groups will run in a sequential manner & if we don't want to run all of them we can disable the one which we don't want to run.
 
