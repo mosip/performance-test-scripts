@@ -12,6 +12,9 @@ This folder contains performance test scripts and test data for ID Authenticatio
 * ida auth service
 * ida kyc service
 * ida otp service
+
+***Below utilities should be configured on the test environment where Jmeter runs***
+
 * We need to start the [Partner Demo/IDA utility](https://mosip.atlassian.net/wiki/spaces/QT/pages/670597144/Auth+using+the+New+Partner+Demo+service+with+external+Certificate)
 
 ### Data prerequisite:-
