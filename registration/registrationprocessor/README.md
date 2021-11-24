@@ -13,6 +13,8 @@ This folder contains performance test scripts & test data for Registration Proce
 
 ### Data prerequisite:-
 * Context details needs to be updated based on the environment which we are using. It can be updated from [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/registration/registrationprocessor/support-files/contextDetails.csv).
+***Note: The centers, machines and users should be onboarded in the system before using.***
+
 * Sample 2 MB document used for increasing the packet size. This can be found [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/registration/registrationprocessor/support-files/document.pdf).
 * Document path can be updated from [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/registration/registrationprocessor/support-files/documentPath.txt).
 
@@ -32,8 +34,6 @@ This folder contains performance test scripts & test data for Registration Proce
 * A sample document is also added to our packet through a file named [docPath.txt](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/registration/registrationprocessor/support-files/documentPath.txt) in order to increase the size of the packet to around 2 MB.
 
 * We have a test element named 'User Defined Variables' in the script where the server IP, server port, protocol, packet utility port & packet utility server IP all these are parameterized & can be changed based on our requirements which will further reflect in the entire script.
-
-****Below utilities should be configured and run in Eclipse setup****
 
 * Create the encrypted data for the packets & for that we have an utility [RegProcessorpacketGenUtil](https://github.com/mosip/mosip-performance-tests-mt/tree/1.1.5/utilities/regprocessorpacketgenutil) which will basically create a file with the encrypted data's for all the packets created.
 
@@ -85,8 +85,6 @@ This folder contains performance test scripts & test data for Registration Proce
   7. delay-- delay value in milliseconds between each packets processing
 
 * Execute the script for desired number of packets uploaded.
-
-****Below utilities should be configured and run in Eclipse setup****
 
 * Calculate the transaction times by running the [RegProcTransactionDataUtil](https://github.com/mosip/mosip-performance-tests-mt/tree/1.1.5/utilities/regproc_transactiondata_util_v2.2).
 
