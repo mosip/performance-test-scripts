@@ -13,6 +13,7 @@ This folder contains performance test scripts & test data for Registration Proce
 
 ### Data prerequisite:-
 * Context details needs to be updated based on the environment which we are using. It can be updated from [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/registration/registrationprocessor/support-files/contextDetails.csv).
+
 ***Note: The centers, machines and users should be onboarded in the system before using.***
 
 * Sample 2 MB document used for increasing the packet size. This can be found [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/registration/registrationprocessor/support-files/document.pdf).
