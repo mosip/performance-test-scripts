@@ -3,12 +3,9 @@ This folder contains performance test scripts and test data of Packet manager mo
 ### Environment Required:-
 ***Below modules should be running in kubernetes setup***
 
-* Websub
-* Kernel notification service
 * Kernel audit service
 * Kernel authmanager service
 * Packetmanager service
-* All regproc & dmzregproc services
 
 ### Data prequisite:-
 * Reg ID's, process and source request values are stored [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/commons/packetmanager/support-files/ridProcess%26Source.txt) and can be updated based on the environment.
