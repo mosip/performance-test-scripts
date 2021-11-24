@@ -1,6 +1,8 @@
-## This folder contains performance test scripts for Preregistration module.
+This folder contains performance test scripts for Preregistration module.
 
 ### Environment Required:-
+***Below modules should be running in kubernetes setup***
+
 * Kernel Otp manager
 * Kernel Syncdata
 * Kernel Notification Manager
