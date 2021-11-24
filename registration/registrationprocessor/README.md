@@ -1,6 +1,8 @@
-## This folder contains performance test scripts & test data for Registration Processor Module.
+This folder contains performance test scripts & test data for Registration Processor Module.
 
 ### Environment Required:-
+***Below modules should be running in kubernetes setup***
+
 * Kernel Auth manager
 * Kernel Syncdata
 * Kernel Notification Manager
@@ -15,6 +17,7 @@
 * Document path can be updated from [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/registration/registrationprocessor/support-files/documentPath.txt).
 
 ### How to create test data:-
+****Below utilities should be configured and run in Eclipse setup****
 
 * We need to run the packet generation utility. You can refer to the Part A section of [Packet Generation utility](https://mosip.atlassian.net/wiki/spaces/R1/pages/330825775/Automation+release+notes+and+deliverables). 
 
@@ -29,6 +32,8 @@
 * A sample document is also added to our packet through a file named [docPath.txt](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/registration/registrationprocessor/support-files/documentPath.txt) in order to increase the size of the packet to around 2 MB.
 
 * We have a test element named 'User Defined Variables' in the script where the server IP, server port, protocol, packet utility port & packet utility server IP all these are parameterized & can be changed based on our requirements which will further reflect in the entire script.
+
+****Below utilities should be configured and run in Eclipse setup****
 
 * Create the encrypted data for the packets & for that we have an utility [RegProcessorpacketGenUtil](https://github.com/mosip/mosip-performance-tests-mt/tree/1.1.5/utilities/regprocessorpacketgenutil) which will basically create a file with the encrypted data's for all the packets created.
 
@@ -48,15 +53,15 @@
 
 * The token created will be saved to a file in the bin folder of JMeter which will be used further by our test script for execution.
 
-* Once all the prerequisites are taken care we will jump to the test script where our actual execution will take place for all the Regproc api's. The script is [Regproc_Test_script.jmx](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/registration/registrationprocessor/scripts/Regproc_Test_Script.jmx).
+* Once all the prerequisites are taken care we will jump to the test script where our actual execution will take place for all the Regproc API's. The script is [Regproc_Test_script.jmx](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/registration/registrationprocessor/scripts/Regproc_Test_Script.jmx).
 
-* In the test script we have total 4 thread groups where only for GET Packet Status api we have both preparation & execution thread groups.
+* In the test script we have total 4 thread groups where only for GET Packet Status API we have both preparation & execution thread groups.
 
-* The Regrpoc module api's which we are targetting in this test script are - Sync Registration Packet Details api, Upload Registration Packet api & GET Packet Status api.
+* The Regrpoc module API's which we are targetting in this test script are - Sync Registration Packet Details API, Upload Registration Packet API & GET Packet Status API.
 
-* For both Sync Registration Packet Details api & Upload Registration Packet api we are reading the encrypted data & packet path from a file which is created through the [RegProcessorpacketGenUtil](https://github.com/mosip/mosip-performance-tests-mt/tree/1.1.5/utilities/regprocessorpacketgenutil) .
+* For both Sync Registration Packet Details API & Upload Registration Packet API we are reading the encrypted data & packet path from a file which is created through the [RegProcessorpacketGenUtil](https://github.com/mosip/mosip-performance-tests-mt/tree/1.1.5/utilities/regprocessorpacketgenutil) .
 
-* For GET Packet status api we are first creating the request body based on the number of RID's we want to search at once in the preparation group & store it in a file which gets further used by the execution group for the execution of the test.
+* For GET Packet status API we are first creating the request body based on the number of RID's we want to search at once in the preparation group & store it in a file which gets further used by the execution group for the execution of the test.
 
 * We have a test element named 'User Defined Variables' in both the helper & test scripts where the server IP, server port, protocol, clientId, secretKey, appId & packetStatusReqBodyRidCount (creating the packet status request body based on the number of RID's we want to search at once) all these are parameterized & can be changed based on our requirements which will further reflect in the entire script.
 
@@ -80,6 +85,8 @@
   7. delay-- delay value in milliseconds between each packets processing
 
 * Execute the script for desired number of packets uploaded.
+
+****Below utilities should be configured and run in Eclipse setup****
 
 * Calculate the transaction times by running the [RegProcTransactionDataUtil](https://github.com/mosip/mosip-performance-tests-mt/tree/1.1.5/utilities/regproc_transactiondata_util_v2.2).
 
