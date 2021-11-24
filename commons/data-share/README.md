@@ -3,12 +3,11 @@ This folder contains performance test scripts and test data of Datashare module.
 ### Environment Required:-
 ***Below modules should be running in kubernetes setup***
 
-* Websub
 * Kernel notification service
 * Kernel audit service
 * Kernel authmanager service
-* Biosdk service
 * Datashare service
+* PMS partner manager service
 
 ### Data prequisite:-
 * A sample text file of 1 MB size is used for creating the data share URL. It can be found [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/commons/data-share/support-files/filesize_1mb.txt).
