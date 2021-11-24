@@ -1,6 +1,8 @@
-## This folder contains performance test scripts and test data of Masterdata module.
+This folder contains performance test scripts and test data of Masterdata module.
 
 ### Environment Required:-
+***Below modules should be running in kubernetes setup***
+
 * Websub
 * Kernel notification service
 * Kernel audit service
@@ -18,8 +20,8 @@
 * The helper script has one thread group for the creation of authorization token which we will further use in our execution.
 * All the creation tasks which will happen that will automatically save the tokens created to a file in the bin folder of JMeter which will be used further by our test script for execution.
 * For the test execution part we have a script [Masterdata_Test_Script.jmx](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/commons/masterdata/scripts/Masterdata_Test_Script.jmx) which will do all the execution tasks.
-* In the test script we have preparation & execution thread groups for each of the api's, such that in preparation group the data preparation part will happen & in the execution group the main test execution will take place.
-* The Masterdata module api's which we are considering here are - Get Templates api, Get Templates By Lang & Temp Code api, Get Latest ID Schema api, Get Dynamic Fields api, Get Registration Centers api and Get Users api.
+* In the test script we have preparation & execution thread groups for each of the API's, such that in preparation group the data preparation part will happen & in the execution group the main test execution will take place.
+* The Masterdata module API's which we are considering here are - Get Templates API, Get Templates By Lang & Temp Code API, Get Latest ID Schema API, Get Dynamic Fields API, Get Registration Centers API and Get Users API.
 * All the thread groups will run in a sequential manner & if we don't want to run all of them we can disable the one which we don't want to run.
 * Also for viewing the results or output of our test we have added certain listener test elements at the end of our test script which are - View Results Tree, Aggregate Report, Active Threads Over Time graph, Response Times Percentiles graph, Response Times vs Threads graph & Transaction Throughput vs Threads graph.
 * We have a test element named 'User Defined Variables' in both the helper & test scripts where the server IP, server port, protocol, clientId, secretKey & appId all these are parameterized & can be changed based on our requirements which will further reflect in the entire script.
