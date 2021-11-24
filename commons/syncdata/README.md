@@ -3,8 +3,6 @@ This folder contains performance test scripts and test data of Syncdata module.
 ### Environment Required:-
 ***Below modules should be running in kubernetes setup***
 
-* Websub
-* Kernel notification service
 * Kernel audit service
 * Kernel authmanager service
 * Kernel syncdata service
