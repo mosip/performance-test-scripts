@@ -1,6 +1,8 @@
-## This folder contains performance test scripts and test data of Kernel module.
+This folder contains performance test scripts and test data of Kernel module.
 
 ### Environment Required:-
+***Below modules should be running in kubernetes setup***
+
 * Websub
 * Kernel notification service
 * Kernel audit service
@@ -16,16 +18,16 @@
 * Audit manager request variable details are stored [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/commons/kernel/support-files/auditManagerRequestDetails.csv) and can be be modified based on requirements.
 * Auth manager request client id & secret key details are stored [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/commons/kernel/support-files/authManagerClientIdSecretKeyDetails.csv) and can be be modified based on environment.
 * Auth manager request user id & password details are stored [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/commons/kernel/support-files/authManagerUserIdPasswordDetails.csv) and can be be modified based on environment.
-* Message & number details for notification manager sms api request are stored [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/commons/kernel/support-files/messageAndNumberDetails.csv) and can be be modified based on requirements.
-* Email details for notification manager email api request are stored [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/commons/kernel/support-files/emailDetails.csv) and can be be modified based on requirements.
-* Encrypt data request variable details for Keymanager api's are stored [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/commons/kernel/support-files/encryptDataRequestVariations.csv)and can be modified based on the requirements.
+* Message & number details for notification manager sms API request are stored [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/commons/kernel/support-files/messageAndNumberDetails.csv) and can be be modified based on requirements.
+* Email details for notification manager email API request are stored [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/commons/kernel/support-files/emailDetails.csv) and can be be modified based on requirements.
+* Encrypt data request variable details for Keymanager API's are stored [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/commons/kernel/support-files/encryptDataRequestVariations.csv)and can be modified based on the requirements.
 
 ### How to run JMeter scripts:-
 * We need to take care of the prerequisites first for which we a helper script [Kernel_Helper_Script.jmx](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/commons/kernel/scripts/Kernel_Helper_Script.jmx).
 * The helper script has one thread group for the creation of authorization token which we will further use in our execution.
 * All the creation tasks which will happen that will automatically save the tokens created to a file in the bin folder of JMeter which will be used further by our test script for execution.
 * For the test execution part we have total 8 test scripts which will do all the execution tasks for all the kernel services.
-* In the test scripts we have preparation thread group for some of the api's & execution thread groups for all the api's, where in preparation group the data preparation part will happen & in the execution group the main test execution will take place.
+* In the test scripts we have preparation thread group for some of the API's & execution thread groups for all the API's, where in preparation group the data preparation part will happen & in the execution group the main test execution will take place.
 * The Kernel module test scripts which we are considering here are below-
    1. Kernel notification service
    2. Kernel audit service
