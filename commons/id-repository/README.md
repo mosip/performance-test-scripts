@@ -9,7 +9,6 @@ This folder contains performance test scripts and test data of ID-Repository mod
 * Kernel authmanager service
 * Biosdk service
 * All IDrepo services
-* All regproc & dmzregproc services
 
 ### Data prequisite:-
 * Center & Machine ID details are required for the RID Generation. This values can be updated based on the environment from [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/commons/id-repository/support-files/Center-MachineIDValues.csv).
