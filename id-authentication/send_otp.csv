@@ -1,0 +1,4 @@
+Label,# Samples,Average,Median,90% Line,95% Line,99% Line,Min,Max,Error %,Throughput,Received KB/sec,Sent KB/sec
+Create OTP Request Body,63955,279,117,681,823,1124,97,2181,0.000%,35.52793,82.29,25.92
+Send OTP Execution,19648,1831,1708,3507,3786,4287,93,5905,0.005%,5.45368,15.23,31.87
+TOTAL,83603,644,172,2110,3201,3799,93,5905,0.001%,15.47385,37.57,29.89
