@@ -33,7 +33,7 @@
           </elementProp>
           <elementProp name="idaUtilityPortNo" elementType="Argument">
             <stringProp name="Argument.name">idaUtilityPortNo</stringProp>
-            <stringProp name="Argument.value">8082</stringProp>
+            <stringProp name="Argument.value">8083</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="serverIP" elementType="Argument">
@@ -48,14 +48,14 @@
           </elementProp>
           <elementProp name="idaUtilityserverIP" elementType="Argument">
             <stringProp name="Argument.name">idaUtilityserverIP</stringProp>
-            <stringProp name="Argument.value">65.0.120.180</stringProp>
+            <stringProp name="Argument.value">localhost</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
       <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load UIN From File" enabled="true">
-        <stringProp name="filename">./UIN_list.txt</stringProp>
+        <stringProp name="filename">./UIN_list1.txt</stringProp>
         <stringProp name="fileEncoding"></stringProp>
         <stringProp name="variableNames">UIN</stringProp>
         <boolProp name="ignoreFirstLine">true</boolProp>
@@ -70,7 +70,7 @@
         <stringProp name="filename">./authorization_token_ida.txt</stringProp>
         <stringProp name="fileEncoding"></stringProp>
         <stringProp name="variableNames">authToken</stringProp>
-        <boolProp name="ignoreFirstLine">false</boolProp>
+        <stringProp name="ignoreFirstLine">${}</stringProp>
         <stringProp name="delimiter">,</stringProp>
         <boolProp name="quotedData">false</boolProp>
         <boolProp name="recycle">true</boolProp>
@@ -172,12 +172,12 @@ new File(&quot;sendOtpRequestDetails.txt&quot;).delete();</stringProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1500</stringProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">10</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
-        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.duration">300</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
@@ -199,7 +199,7 @@ new File(&quot;sendOtpRequestDetails.txt&quot;).delete();</stringProp>
           <stringProp name="HTTPSampler.port">${idaUtilityPortNo}</stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">v1/identity/createOtpReqest?id=${UIN}&amp;transactionId=${tranIdSo}</stringProp>
+          <stringProp name="HTTPSampler.path">v1/identity/createOtpReqest?id=${UIN}&amp;transactionId=${tranIdSo}&amp;isEmail=true&amp;isPhone=false</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -234,15 +234,15 @@ new File(&quot;sendOtpRequestDetails.txt&quot;).delete();</stringProp>
               </elementProp>
               <elementProp name="Host" elementType="Header">
                 <stringProp name="Header.name">Host</stringProp>
-                <stringProp name="Header.value">${idaUtilityserverIP}:8082</stringProp>
+                <stringProp name="Header.value">${idaUtilityserverIP}:8083</stringProp>
               </elementProp>
               <elementProp name="Origin" elementType="Header">
                 <stringProp name="Header.name">Origin</stringProp>
-                <stringProp name="Header.value">http://${idaUtilityserverIP}:8082</stringProp>
+                <stringProp name="Header.value">http://${idaUtilityserverIP}:8083</stringProp>
               </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://${idaUtilityserverIP}:8082/v1/identity/swagger-ui.html</stringProp>
+                <stringProp name="Header.value">http://${idaUtilityserverIP}:8083/v1/identity/swagger-ui.html</stringProp>
               </elementProp>
               <elementProp name="sec-ch-ua" elementType="Header">
                 <stringProp name="Header.name">sec-ch-ua</stringProp>
@@ -293,7 +293,7 @@ new File(&quot;sendOtpRequestDetails.txt&quot;).delete();</stringProp>
             <stringProp name="filename"></stringProp>
             <stringProp name="parameters"></stringProp>
             <boolProp name="resetInterpreter">false</boolProp>
-            <stringProp name="script">${__StringToFile(sendOtpRequestDetails.txt,${sendOtpBody}&amp;${signature}\n,true,)}</stringProp>
+            <stringProp name="script">${__StringToFile(sendOtpRequestDetails3.txt,${sendOtpBody}&amp;${signature}\n,true,)}</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
@@ -302,18 +302,18 @@ new File(&quot;sendOtpRequestDetails.txt&quot;).delete();</stringProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">500</stringProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">30</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
-        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.duration">300</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Signature And Body Details From File" enabled="true">
-          <stringProp name="filename">./sendOtpRequestDetails.txt</stringProp>
+          <stringProp name="filename">./sendOtpRequestDetails3.txt</stringProp>
           <stringProp name="fileEncoding"></stringProp>
           <stringProp name="variableNames">sendOtpBody,signature</stringProp>
           <boolProp name="ignoreFirstLine">true</boolProp>
@@ -383,12 +383,12 @@ new File(&quot;sendOtpRequestDetails.txt&quot;).delete();</stringProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">900</stringProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">10</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
-        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.duration">3600</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
@@ -445,15 +445,15 @@ new File(&quot;sendOtpRequestDetails.txt&quot;).delete();</stringProp>
               </elementProp>
               <elementProp name="Host" elementType="Header">
                 <stringProp name="Header.name">Host</stringProp>
-                <stringProp name="Header.value">${idaUtilityserverIP}:8082</stringProp>
+                <stringProp name="Header.value">${idaUtilityserverIP}:8083</stringProp>
               </elementProp>
               <elementProp name="Origin" elementType="Header">
                 <stringProp name="Header.name">Origin</stringProp>
-                <stringProp name="Header.value">http://${idaUtilityserverIP}:8082</stringProp>
+                <stringProp name="Header.value">http://${idaUtilityserverIP}:8083</stringProp>
               </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://${idaUtilityserverIP}:8082/v1/identity/swagger-ui.html</stringProp>
+                <stringProp name="Header.value">http://${idaUtilityserverIP}:8083/v1/identity/swagger-ui.html</stringProp>
               </elementProp>
               <elementProp name="sec-ch-ua" elementType="Header">
                 <stringProp name="Header.name">sec-ch-ua</stringProp>
@@ -610,7 +610,7 @@ new File(&quot;sendOtpRequestDetails.txt&quot;).delete();</stringProp>
             <stringProp name="filename"></stringProp>
             <stringProp name="parameters"></stringProp>
             <boolProp name="resetInterpreter">false</boolProp>
-            <stringProp name="script">${__StringToFile(auth.txt,${reqBody}&amp;${signature}\n,true,)}</stringProp>
+            <stringProp name="script">${__StringToFile(auth1.txt,${reqBody}&amp;${signature}\n,true,)}</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
@@ -619,18 +619,18 @@ new File(&quot;sendOtpRequestDetails.txt&quot;).delete();</stringProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">300</stringProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">30</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
-        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.duration">3600</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Request And Signature From File" enabled="true">
-          <stringProp name="filename">./auth.txt</stringProp>
+          <stringProp name="filename">./auth1.txt</stringProp>
           <stringProp name="fileEncoding"></stringProp>
           <stringProp name="variableNames">reqBody,signature</stringProp>
           <boolProp name="ignoreFirstLine">true</boolProp>
@@ -696,7 +696,7 @@ new File(&quot;sendOtpRequestDetails.txt&quot;).delete();</stringProp>
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="eKYC with OTP (Preparation)" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="eKYC with OTP (Preparation)" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -932,7 +932,7 @@ new File(&quot;sendOtpRequestDetails.txt&quot;).delete();</stringProp>
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="eKYC with OTP (Execution)" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="eKYC with OTP (Execution)" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -1017,9 +1017,9 @@ new File(&quot;sendOtpRequestDetails.txt&quot;).delete();</stringProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">300</stringProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">10</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
@@ -1231,11 +1231,11 @@ new File(&quot;sendOtpRequestDetails.txt&quot;).delete();</stringProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <intProp name="LoopController.loops">-1</intProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">30</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
-        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration">900</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
@@ -1308,7 +1308,7 @@ new File(&quot;sendOtpRequestDetails.txt&quot;).delete();</stringProp>
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="eKYC with Biometrics (Preparation Data)" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="eKYC with Biometrics (Preparation Data)" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -1522,7 +1522,7 @@ new File(&quot;sendOtpRequestDetails.txt&quot;).delete();</stringProp>
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="eKYC with Biometrics (Execution)" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="eKYC with Biometrics (Execution)" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -1604,7 +1604,7 @@ new File(&quot;sendOtpRequestDetails.txt&quot;).delete();</stringProp>
         </hashTree>
       </hashTree>
       <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
-        <boolProp name="ResultCollector.error_logging">true</boolProp>
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
           <name>saveConfig</name>
           <value class="SampleSaveConfiguration">

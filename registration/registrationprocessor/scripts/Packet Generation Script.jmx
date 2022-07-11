@@ -21,7 +21,7 @@
           </elementProp>
           <elementProp name="packetUtilityPortNo" elementType="Argument">
             <stringProp name="Argument.name">packetUtilityPortNo</stringProp>
-            <stringProp name="Argument.value">8880</stringProp>
+            <stringProp name="Argument.value">8771</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="packetUtilityServerIP" elementType="Argument">
@@ -31,7 +31,7 @@
           </elementProp>
           <elementProp name="serverIP" elementType="Argument">
             <stringProp name="Argument.name">serverIP</stringProp>
-            <stringProp name="Argument.value">cellbox.mosip.net</stringProp>
+            <stringProp name="Argument.value">api-internal.qa5.mosip.net</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="serverPortNo" elementType="Argument">
@@ -43,7 +43,7 @@
       </Arguments>
       <hashTree/>
       <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Context Details From File" enabled="true">
-        <stringProp name="filename">./contextDetails.csv</stringProp>
+        <stringProp name="filename">C:/apache-jmeter-5.3/apache-jmeter-5.3/bin/contextDetails.csv</stringProp>
         <stringProp name="fileEncoding">UTF-8</stringProp>
         <stringProp name="variableNames">userID,machineID,centerID,context</stringProp>
         <boolProp name="ignoreFirstLine">false</boolProp>
@@ -55,7 +55,7 @@
       </CSVDataSet>
       <hashTree/>
       <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Document Path From File" enabled="true">
-        <stringProp name="filename">./docPath.txt</stringProp>
+        <stringProp name="filename">C:/apache-jmeter-5.3/apache-jmeter-5.3/bin/documentPath.txt</stringProp>
         <stringProp name="fileEncoding"></stringProp>
         <stringProp name="variableNames">docPath</stringProp>
         <boolProp name="ignoreFirstLine">false</boolProp>
@@ -70,7 +70,7 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">5000</stringProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
@@ -143,7 +143,7 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">5000</stringProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>

@@ -12,12 +12,12 @@ This folder contains performance test scripts & test data for Registration Proce
 * All regproc & dmzregproc services
 
 ### Data prerequisite:-
-* Context details needs to be updated based on the environment which we are using. It can be updated from [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/registration/registrationprocessor/support-files/contextDetails.csv).
+* Context details needs to be updated based on the environment which we are using. It can be updated from [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.2.0/registration/registrationprocessor/support-files/contextDetails.csv).
 
 ***Note: The centers, machines and users should be onboarded in the system before using.***
 
-* Sample 2 MB document used for increasing the packet size. This can be found [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/registration/registrationprocessor/support-files/document.pdf).
-* Document path can be updated from [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/registration/registrationprocessor/support-files/documentPath.txt).
+* Sample 2 MB document used for increasing the packet size. This can be found [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.2.0/registration/registrationprocessor/support-files/document.pdf).
+* Document path can be updated from [here](https://github.com/mosip/mosip-performance-tests-mt/blob/1.2.0/registration/registrationprocessor/support-files/documentPath.txt).
 
 ### How to create test data:-
 ****Below utilities should be configured and run in Eclipse setup****
@@ -28,17 +28,17 @@ This folder contains performance test scripts & test data for Registration Proce
 
 * This script basically has two thread groups - Packet Generation (Preparation) & Packet Generation (Execution).
 
-* In the preparation thread group we will basically create the context with the help of existing center id's, machine id's & user id's present in our current environment & we will read them through a file named [contextDetails.csv](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/registration/registrationprocessor/support-files/contextDetails.csv).
+* In the preparation thread group we will basically create the context with the help of existing center id's, machine id's & user id's present in our current environment & we will read them through a file named [contextDetails.csv](https://github.com/mosip/mosip-performance-tests-mt/blob/1.2.0/registration/registrationprocessor/support-files/contextDetails.csv).
 
 * Once the contexts are created we will use the same in the execution thread group where basically the packet generation happens & then the RID's created gets stored in a file of the bin folder of JMeter.
 
-* A sample document is also added to our packet through a file named [docPath.txt](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/registration/registrationprocessor/support-files/documentPath.txt) in order to increase the size of the packet to around 2 MB.
+* A sample document is also added to our packet through a file named [docPath.txt](https://github.com/mosip/mosip-performance-tests-mt/blob/1.2.0/registration/registrationprocessor/support-files/documentPath.txt) in order to increase the size of the packet to around 2 MB.
 
 * We have a test element named 'User Defined Variables' in the script where the server IP, server port, protocol, packet utility port & packet utility server IP all these are parameterized & can be changed based on our requirements which will further reflect in the entire script.
 
-* Create the encrypted data for the packets & for that we have an utility [RegProcessorpacketGenUtil](https://github.com/mosip/mosip-performance-tests-mt/tree/1.1.5/utilities/regprocessorpacketgenutil) which will basically create a file with the encrypted data's for all the packets created.
+* Create the encrypted data for the packets & for that we have an utility [RegProcessorpacketGenUtil](https://github.com/mosip/mosip-performance-tests-mt/tree/1.2.0/utilities/regprocessorpacketgenutil) which will basically create a file with the encrypted data's for all the packets created.
 
-* Check below property in config.properties file located in src/main/resources of [RegProcessorpacketGenUtil](https://github.com/mosip/mosip-performance-tests-mt/tree/1.1.5/utilities/regprocessorpacketgenutil)-
+* Check below property in config.properties file located in src/main/resources of [RegProcessorpacketGenUtil](https://github.com/mosip/mosip-performance-tests-mt/tree/1.2.0/utilities/regprocessorpacketgenutil)-
    1. NUMBER_OF_TEST_PACKETS=100 (number of packets)
    2. ENVIRONMENT= environment name
    3. BASE_URL= environment url
@@ -48,19 +48,19 @@ This folder contains performance test scripts & test data for Registration Proce
 
 ### How to run JMeter Helper & Test scripts:-
 
-* We need to take care of the prerequisites before running our tests. So for that we have a helper script [Regproc_Helper_script.jmx](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/registration/registrationprocessor/scripts/Regproc_Helper_Script.jmx).
+* We need to take care of the prerequisites before running our tests. So for that we have a helper script [Regproc_Helper_script.jmx](https://github.com/mosip/mosip-performance-tests-mt/blob/1.2.0/registration/registrationprocessor/scripts/Regproc_Helper_Script.jmx).
 
 * In the helper script we have one thread group for the creation of authorization token which we will further use in our execution.
 
 * The token created will be saved to a file in the bin folder of JMeter which will be used further by our test script for execution.
 
-* Once all the prerequisites are taken care we will jump to the test script where our actual execution will take place for all the Regproc API's. The script is [Regproc_Test_script.jmx](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/registration/registrationprocessor/scripts/Regproc_Test_Script.jmx).
+* Once all the prerequisites are taken care we will jump to the test script where our actual execution will take place for all the Regproc API's. The script is [Regproc_Test_script.jmx](https://github.com/mosip/mosip-performance-tests-mt/blob/1.2.0/registration/registrationprocessor/scripts/Regproc_Test_Script.jmx).
 
 * In the test script we have total 4 thread groups where only for GET Packet Status API we have both preparation & execution thread groups.
 
-* The Regrpoc module API's which we are targetting in this test script are - Sync Registration Packet Details API, Upload Registration Packet API & GET Packet Status API.
+* The Regrpoc module API's which we are targetting in this test script are - Sync Registration Packet Details API, Upload Registration Packet API, GET Packet Status API, External Status Search API, Packet External Status API & Synchronizing Registration Entity API.
 
-* For both Sync Registration Packet Details API & Upload Registration Packet API we are reading the encrypted data & packet path from a file which is created through the [RegProcessorpacketGenUtil](https://github.com/mosip/mosip-performance-tests-mt/tree/1.1.5/utilities/regprocessorpacketgenutil) .
+* For both Sync Registration Packet Details API & Upload Registration Packet API we are reading the encrypted data & packet path from a file which is created through the [RegProcessorpacketGenUtil](https://github.com/mosip/mosip-performance-tests-mt/tree/1.2.0/utilities/regprocessorpacketgenutil) .
 
 * For GET Packet status API we are first creating the request body based on the number of RID's we want to search at once in the preparation group & store it in a file which gets further used by the execution group for the execution of the test.
 
@@ -72,7 +72,7 @@ This folder contains performance test scripts & test data for Registration Proce
 
 ### How to run JMeter DB script:-
 
-* The JMeter DB script [Regproc Packets Processing Details From DB.jmx](https://github.com/mosip/mosip-performance-tests-mt/blob/1.1.5/registration/registrationprocessor/scripts/Regproc%20Packets%20Processing%20Details%20From%20DB.jmx) is used for getting the packet processing status of the packets uploaded to the packet receiver.
+* The JMeter DB script [Regproc Packets Processing Details From DB.jmx](https://github.com/mosip/mosip-performance-tests-mt/blob/1.2.0/registration/registrationprocessor/scripts/Regproc%20Packets%20Processing%20Details%20From%20DB.jmx) is used for getting the packet processing status of the packets uploaded to the packet receiver.
 
 * It contains two thread groups 'RegProc PacketProcessing Status From DB' (for getting packet status) & 'RegProc ProcessedPackets Details' (All details of the packets uploaded).
 
@@ -87,9 +87,9 @@ This folder contains performance test scripts & test data for Registration Proce
 
 * Execute the script for desired number of packets uploaded.
 
-* Calculate the transaction times by running the [RegProcTransactionDataUtil](https://github.com/mosip/mosip-performance-tests-mt/tree/1.1.5/utilities/regproc_transactiondata_util_v2.2).
+* Calculate the transaction times by running the [RegProcTransactionDataUtil](https://github.com/mosip/mosip-performance-tests-mt/tree/1.2.0/utilities/regproc_transactiondata_util_v2.2).
 
-* Check below property in config.properties file located in src/main/resources of [RegProcTransactionDataUtil](https://github.com/mosip/mosip-performance-tests-mt/tree/1.1.5/utilities/regproc_transactiondata_util_v2.2)-
+* Check below property in config.properties file located in src/main/resources of [RegProcTransactionDataUtil](https://github.com/mosip/mosip-performance-tests-mt/tree/1.2.0/utilities/regproc_transactiondata_util_v2.2)-
   1. ENVIRONMENT= environment name
   2. REGID_LOG_FILE= C:\\MOSIP_PT\\test1\\kafka_softHSM\\regid_file1.csv (Provide generated regids in regid_file.csv)
   3. EXCEL_FILE = C:\\MOSIP_PT\\test1\\kafka_softHSM\\regid_transaction_data.xlsx (Once above java utility is executed ,It will generate the transaction_times.xlsx which has all the transaction times of each stages of each packets)

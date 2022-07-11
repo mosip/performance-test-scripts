@@ -26,7 +26,7 @@
           </elementProp>
           <elementProp name="idaUtilityPortNo" elementType="Argument">
             <stringProp name="Argument.name">idaUtilityPortNo</stringProp>
-            <stringProp name="Argument.value">8082</stringProp>
+            <stringProp name="Argument.value">8083</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="pmsUser" elementType="Argument">
@@ -56,7 +56,7 @@
           </elementProp>
           <elementProp name="idaUtilityserverIP" elementType="Argument">
             <stringProp name="Argument.name">idaUtilityserverIP</stringProp>
-            <stringProp name="Argument.value">cellbox2.mosip.net</stringProp>
+            <stringProp name="Argument.value">localhost</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="serverPortNo" elementType="Argument">
@@ -110,7 +110,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.num_threads">20</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
@@ -195,9 +195,9 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">10</stringProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.num_threads">20</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
@@ -230,7 +230,7 @@
         </CSVDataSet>
         <hashTree/>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Biometrics Details From File" enabled="true">
-          <stringProp name="filename">./biometrics.txt</stringProp>
+          <stringProp name="filename">./biometrics_mb.txt</stringProp>
           <stringProp name="fileEncoding"></stringProp>
           <stringProp name="variableNames">biometrics</stringProp>
           <boolProp name="ignoreFirstLine">false</boolProp>
@@ -359,8 +359,25 @@
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Generate UIN" enabled="true">
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
-            <collectionProp name="Arguments.arguments"/>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;id&quot;: &quot;string&quot;,&#xd;
+  &quot;metadata&quot;: {},&#xd;
+  &quot;request&quot;: {&#xd;
+    &quot;clientId&quot;: &quot;mosip-idrepo-client&quot;,&#xd;
+    &quot;secretKey&quot;: &quot;abc123&quot;,&#xd;
+    &quot;appId&quot;: &quot;idrepo&quot;&#xd;
+  },&#xd;
+  &quot;requesttime&quot;: &quot;${__time(YYYY-MM-dd&apos;T&apos;HH:mm:ss.SSS,)}Z&quot;,&#xd;
+  &quot;version&quot;: &quot;1.0&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
           </elementProp>
           <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
           <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
@@ -417,87 +434,86 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	&quot;id&quot;: &quot;mosip.id.create&quot;,&#xd;
-	&quot;request&quot;: {&#xd;
-		&quot;registrationId&quot;: &quot;${rid}&quot;,&#xd;
-		&quot;identity&quot;: {&#xd;
-			&quot;IDSchemaVersion&quot;: 0.1,&#xd;
-			&quot;UIN&quot;: &quot;${uin}&quot;,&#xd;
-			&quot;firstName&quot;: [{&#xd;
-				&quot;language&quot;: &quot;eng&quot;,&#xd;
-				&quot;value&quot;: &quot;${firstName}&quot;&#xd;
-			}],&#xd;
-			&quot;dateOfBirth&quot;: &quot;${dateOfBirth}&quot;,&#xd;
-			&quot;pobCountry&quot;: [{&#xd;
-				&quot;language&quot;: &quot;eng&quot;,&#xd;
-				&quot;value&quot;: &quot;MOSIP-Country&quot;&#xd;
-			}],&#xd;
-			&quot;permanentCountry&quot;: [{&#xd;
-				&quot;language&quot;: &quot;eng&quot;,&#xd;
-				&quot;value&quot;: &quot;MOSIP-Country&quot;&#xd;
-			}],&#xd;
-			&quot;mobileno&quot;: &quot;${__RandomString(10,1234567890,)}&quot;,&#xd;
-			&quot;email&quot;: &quot;abc@gmail${__Random(100,999999999999,)}.com&quot;,&#xd;
-			&quot;presentCountry&quot;: [{&#xd;
-				&quot;language&quot;: &quot;eng&quot;,&#xd;
-				&quot;value&quot;: &quot;MOSIP-Country&quot;&#xd;
-			}],&#xd;
-			&quot;pobProvince&quot;: [{&#xd;
-				&quot;language&quot;: &quot;eng&quot;,&#xd;
-				&quot;value&quot;: &quot;MOSIP-Province1&quot;&#xd;
-			}],&#xd;
-			&quot;pobCity&quot;: [{&#xd;
-				&quot;language&quot;: &quot;eng&quot;,&#xd;
-				&quot;value&quot;: &quot;MOSIP-City1&quot;&#xd;
-			}],&#xd;
-			&quot;gender&quot;: [{&#xd;
-				&quot;language&quot;: &quot;eng&quot;,&#xd;
-				&quot;value&quot;: &quot;${gender}&quot;&#xd;
-			}],&#xd;
-			&quot;residenceStatus&quot;: [{&#xd;
-				&quot;language&quot;: &quot;eng&quot;,&#xd;
-				&quot;value&quot;: &quot;Foreigner&quot;&#xd;
-			}],&#xd;
-			&quot;bloodType&quot;: [{&#xd;
-				&quot;language&quot;: &quot;eng&quot;,&#xd;
-				&quot;value&quot;: &quot;MOSIP-Country&quot;&#xd;
-			}],&#xd;
-			&quot;permanentAddressLine1&quot;: [{&#xd;
+  &quot;id&quot;: &quot;mosip.id.create&quot;,&#xd;
+  &quot;request&quot;: {&#xd;
+    &quot;registrationId&quot;: &quot;${rid}&quot;,&#xd;
+    &quot;biometricReferenceId&quot;: &quot;${__RandomString(7,1234567890,)}&quot;,&#xd;
+    &quot;identity&quot;: {&#xd;
+      &quot;residenceStatus&quot;: [&#xd;
+        {&#xd;
+          &quot;language&quot;: &quot;eng&quot;,&#xd;
+          &quot;value&quot;: &quot;Foreigner&quot;&#xd;
+        }&#xd;
+      ],&#xd;
+      &quot;IDSchemaVersion&quot;: 0.1,&#xd;
+      &quot;UIN&quot;: &quot;${uin}&quot;,&#xd;
+      &quot;fullName&quot;: [&#xd;
+        {&#xd;
+          &quot;language&quot;: &quot;eng&quot;,&#xd;
+          &quot;value&quot;: &quot;${firstName}&quot;&#xd;
+        }&#xd;
+      ],&#xd;
+      &quot;dateOfBirth&quot;: &quot;${dateOfBirth}&quot;,&#xd;
+      &quot;gender&quot;: [&#xd;
+        {&#xd;
+          &quot;language&quot;: &quot;eng&quot;,&#xd;
+          &quot;value&quot;: &quot;${gender}&quot;&#xd;
+        }&#xd;
+      ],&#xd;
+      &quot;region&quot;: [&#xd;
+        {&#xd;
+          &quot;language&quot;: &quot;eng&quot;,&#xd;
+          &quot;value&quot;: &quot;FR&quot;&#xd;
+        }&#xd;
+      ],&#xd;
+      &quot;province&quot;: [&#xd;
+        {&#xd;
+          &quot;language&quot;: &quot;eng&quot;,&#xd;
+          &quot;value&quot;: &quot;FR&quot;&#xd;
+        }&#xd;
+      ],&#xd;
+      &quot;city&quot;: [&#xd;
+        {&#xd;
+          &quot;language&quot;: &quot;eng&quot;,&#xd;
+          &quot;value&quot;: &quot;FR&quot;&#xd;
+        }&#xd;
+      ],&#xd;
+      &quot;postalCode&quot;: &quot;14022&quot;,&#xd;
+      &quot;email&quot;: &quot;abc@gmail${__Random(100,999999999999,)}.com&quot;,&#xd;
+      &quot;phone&quot;: &quot;${__RandomString(10,1234567890,)}&quot;,&#xd;
+      &quot;zone&quot;: [&#xd;
+        {&#xd;
+          &quot;language&quot;: &quot;eng&quot;,&#xd;
+          &quot;value&quot;: &quot;FR&quot;&#xd;
+        }&#xd;
+      ],&#xd;
+      &quot;introducerRID&quot;: &quot;212124324784879&quot;,&#xd;
+      &quot;introducerUIN&quot;: &quot;212124324784879&quot;,&#xd;
+      &quot;introducerName&quot;: [&#xd;
+        {&#xd;
+          &quot;language&quot;: &quot;eng&quot;,&#xd;
+          &quot;value&quot;: &quot;FR&quot;&#xd;
+        }&#xd;
+      ],&#xd;
+      &quot;addressLine1&quot;: [{&#xd;
 				&quot;language&quot;: &quot;eng&quot;,&#xd;
 				&quot;value&quot;: &quot;#991, 47 Street, 6 block&quot;&#xd;
 			}],&#xd;
-			&quot;addressCopy&quot;: &quot;#991, 47 Street, 6 block&quot;,&#xd;
-			&quot;presentAddressLine1&quot;: [{&#xd;
-				&quot;language&quot;: &quot;eng&quot;,&#xd;
-				&quot;value&quot;: &quot;#991, 47 Street, 6 block&quot;&#xd;
-			}],&#xd;
-			&quot;modeOfClaim&quot;: [{&#xd;
-				&quot;language&quot;: &quot;eng&quot;,&#xd;
-				&quot;value&quot;: &quot;RSK&quot;&#xd;
-			}],&#xd;
-			&quot;proofOfAddress&quot;: {&#xd;
-				&quot;format&quot;: &quot;pdf&quot;,&#xd;
-				&quot;type&quot;: &quot;DOC015&quot;,&#xd;
-				&quot;value&quot;: &quot;proofOfAddress&quot;&#xd;
-			},&#xd;
-			&quot;individualBiometrics&quot;: {&#xd;
-				&quot;format&quot;: &quot;cbeff&quot;,&#xd;
-				&quot;version&quot;: 1,&#xd;
-				&quot;value&quot;: &quot;individualBiometrics_bio_CBEFF&quot;&#xd;
-			}&#xd;
-		},&#xd;
-	      &quot;documents&quot;: [{&#xd;
-				&quot;category&quot;: &quot;proofOfAddress&quot;,&#xd;
-				&quot;value&quot;: &quot;ZGF0YQ&quot;&#xd;
-			},&#xd;
-			{&#xd;
-				&quot;category&quot;: &quot;individualBiometrics&quot;,&#xd;
-				&quot;value&quot;: &quot;${biometrics}&quot;&#xd;
-			}&#xd;
-		]&#xd;
-	},&#xd;
-	&quot;requesttime&quot;: &quot;2019-01-28T13:07:13.152Z&quot;,&#xd;
-	&quot;version&quot;: &quot;v1.0&quot;&#xd;
+      &quot;individualBiometrics&quot;: {&#xd;
+        &quot;format&quot;: &quot;cbeff&quot;,&#xd;
+        &quot;version&quot;: 1,&#xd;
+        &quot;value&quot;: &quot;fileReferenceID&quot;&#xd;
+      }&#xd;
+    },&#xd;
+     &quot;documents&quot;: [&#xd;
+      {&#xd;
+        &quot;value&quot;: &quot;${biometrics}&quot;,&#xd;
+        &quot;category&quot;: &quot;individualBiometrics&quot;&#xd;
+      }&#xd;
+    ]&#xd;
+  },&#xd;
+  &quot;requesttime&quot;: &quot;2022-06-09T10:55:24.182Z&quot;,&#xd;
+  &quot;version&quot;: &quot;v1&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -545,7 +561,7 @@
             <boolProp name="resetInterpreter">false</boolProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
-            <stringProp name="script">${__StringToFile(UIN_list.txt,${uin}\n,true,)}</stringProp>
+            <stringProp name="script">${__StringToFile(UIN_list1.txt,${uin}\n,true,)}</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
