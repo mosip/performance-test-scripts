@@ -39,18 +39,35 @@
             <stringProp name="Argument.value">443</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="process_New" elementType="Argument">
-            <stringProp name="Argument.name">process_New</stringProp>
+          <elementProp name="packetTypeToGenerate" elementType="Argument">
+            <stringProp name="Argument.name">packetTypeToGenerate</stringProp>
             <stringProp name="Argument.value">NEW</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="packetUtilityProtocol" elementType="Argument">
+            <stringProp name="Argument.name">packetUtilityProtocol</stringProp>
+            <stringProp name="Argument.value">http</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
       <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Context Details From File" enabled="true">
-        <stringProp name="filename">C:/apache-jmeter-5.3/apache-jmeter-5.3/bin/Context_Details_Try.txt</stringProp>
+        <stringProp name="filename">C:/Users/Administrator/mosip-performance-tests-mt/registration/registrationprocessor/support-files/contextDetails.csv</stringProp>
         <stringProp name="fileEncoding">UTF-8</stringProp>
         <stringProp name="variableNames">userID,machineID,centerID,password,context</stringProp>
+        <boolProp name="ignoreFirstLine">false</boolProp>
+        <stringProp name="delimiter">,</stringProp>
+        <boolProp name="quotedData">false</boolProp>
+        <boolProp name="recycle">true</boolProp>
+        <boolProp name="stopThread">false</boolProp>
+        <stringProp name="shareMode">shareMode.all</stringProp>
+      </CSVDataSet>
+      <hashTree/>
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Document Path From File" enabled="true">
+        <stringProp name="filename">C:/apache-jmeter-5.3/apache-jmeter-5.3/bin/documentPath.txt</stringProp>
+        <stringProp name="fileEncoding"></stringProp>
+        <stringProp name="variableNames">docPath</stringProp>
         <boolProp name="ignoreFirstLine">false</boolProp>
         <stringProp name="delimiter">,</stringProp>
         <boolProp name="quotedData">false</boolProp>
@@ -63,9 +80,9 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1000</stringProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">10</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
@@ -80,21 +97,22 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-&quot;mosip.test.baseurl&quot;:&quot;https://api-internal.cellbox-e2e.mosip.net/&quot;,&#xd;
+&quot;mosip.test.baseurl&quot;:&quot;${packetUtilityProtocol}s://api-internal.cellbox-e2e.mosip.net/&quot;,&#xd;
 &quot;prereg.preconfiguredOtp&quot;:&quot;111111&quot;,&#xd;
 &quot;mosip.version&quot;:&quot;1.2&quot;,&#xd;
-&quot;generatePrivateKey&quot;:false,&#xd;
+&quot;generatePrivateKey&quot;:true,&#xd;
 &quot;Male&quot;:&quot;MLE&quot;,&#xd;
 &quot;regclient.centerid&quot;:&quot;${centerID}&quot;,&#xd;
-&quot;urlBase&quot;:&quot;https://api-internal.cellbox-e2e.mosip.net/&quot;,&#xd;
+&quot;urlBase&quot;:&quot;${packetUtilityProtocol}s://api-internal.cellbox-e2e.mosip.net/&quot;,&#xd;
 &quot;mosip.test.regclient.centerid&quot;:&quot;${centerID}&quot;,&#xd;
 &quot;prereg.password&quot;:&quot;${password}&quot;,&#xd;
 &quot;mosip.test.regclient.userid&quot;:&quot;${userID}&quot;,&#xd;
+&quot;mosip.test.regclient.password&quot;:&quot;${password}&quot;,&#xd;
 &quot;Female&quot;:&quot;FLE&quot;,&#xd;
 &quot;mosip.test.regclient.machineid&quot;:&quot;${machineID}&quot;,&#xd;
 &quot;prereg.operatorId&quot;:&quot;${userID}&quot;,&#xd;
 &quot;mosip.test.regclient.supervisorid&quot;:&quot;${userID}&quot;,&#xd;
-&quot;mosip.test.regclient.password&quot;:&quot;${password}&quot;,&#xd;
+&quot;mosip.test.regclient.supervisorpwd&quot;:&quot;${password}&quot;,&#xd;
 &quot;Other&quot;:&quot;OTH&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -103,7 +121,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${packetUtilityServerIP}</stringProp>
           <stringProp name="HTTPSampler.port">${packetUtilityPortNo}</stringProp>
-          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.protocol">${packetUtilityProtocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">context/server/${context}</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -141,9 +159,9 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1500</stringProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">10</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
@@ -175,7 +193,7 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${packetUtilityServerIP}</stringProp>
           <stringProp name="HTTPSampler.port">${packetUtilityPortNo}</stringProp>
-          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.protocol">${packetUtilityProtocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">persona/1?contextKey=${context}</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -216,15 +234,59 @@
             <intProp name="Assertion.test_type">2</intProp>
           </ResponseAssertion>
           <hashTree/>
-          <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="BeanShell PreProcessor" enabled="false">
-            <stringProp name="filename"></stringProp>
-            <stringProp name="parameters"></stringProp>
-            <boolProp name="resetInterpreter">false</boolProp>
-            <stringProp name="script">import org.apache.common.FileUtils;
-
-String File1 = FileUtils.readFileToString(new File(&quot;C:/apache-jmeter-5.3/apache-jmeter-5.3/bin/.document.pdf&quot;));
-vars.put(&quot;docADD&quot;,File1);</stringProp>
-          </BeanShellPreProcessor>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Add document to persona" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">[&#xd;
+    {&#xd;
+        &quot;personaFilePath&quot;: &quot;${personaPath}&quot;,&#xd;
+        &quot;updateAttributeList&quot;: {&#xd;
+            &quot;por&quot;: &quot;{\&quot;typeCode\&quot;: \&quot;DOC001\&quot;,\&quot;docPath\&quot;: \&quot;${docPath}\&quot;}&quot;&#xd;
+            &#xd;
+        }&#xd;
+    }&#xd;
+]</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${packetUtilityServerIP}</stringProp>
+          <stringProp name="HTTPSampler.port">${packetUtilityPortNo}</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">persona/regenerateOrMissingAttribute</stringProp>
+          <stringProp name="HTTPSampler.method">PUT</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-585137058">{Sucess}</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create Packet Template" enabled="true">
@@ -244,7 +306,7 @@ vars.put(&quot;docADD&quot;,File1);</stringProp>
           </elementProp>
           <stringProp name="HTTPSampler.domain">${packetUtilityServerIP}</stringProp>
           <stringProp name="HTTPSampler.port">${packetUtilityPortNo}</stringProp>
-          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.protocol">${packetUtilityProtocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">packet/template/NEW?contextKey=${context}</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -293,7 +355,7 @@ vars.put(&quot;docADD&quot;,File1);</stringProp>
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-    &quot;process&quot;: &quot;${process_New}&quot;,&#xd;
+    &quot;process&quot;: &quot;${packetTypeToGenerate}&quot;,&#xd;
     &quot;idJsonPath&quot;:&quot;${templatePath}/REGISTRATION_CLIENT/NEW/rid_id/ID.json&quot;,&#xd;
     &quot;source&quot;: &quot;REGISTRATION_CLIENT&quot;,&#xd;
     &quot;templatePath&quot;: &quot;${templatePath}&quot;&#xd;
@@ -304,7 +366,7 @@ vars.put(&quot;docADD&quot;,File1);</stringProp>
           </elementProp>
           <stringProp name="HTTPSampler.domain">${packetUtilityServerIP}</stringProp>
           <stringProp name="HTTPSampler.port">${packetUtilityPortNo}</stringProp>
-          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.protocol">${packetUtilityProtocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">packetcreator/${context}</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -335,10 +397,10 @@ vars.put(&quot;docADD&quot;,File1);</stringProp>
             <stringProp name="RegexExtractor.match_number">1</stringProp>
           </RegexExtractor>
           <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract regID" enabled="true">
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract registrationId" enabled="true">
             <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">regID</stringProp>
-            <stringProp name="RegexExtractor.regex">D:\\packets\\2\\pktcreator(.*?)\\(.*?)-</stringProp>
+            <stringProp name="RegexExtractor.refname">registrationId</stringProp>
+            <stringProp name="RegexExtractor.regex">pktcreator(.*?)\\(.*?)-</stringProp>
             <stringProp name="RegexExtractor.template">$2$</stringProp>
             <stringProp name="RegexExtractor.default">registrationId not found</stringProp>
             <stringProp name="RegexExtractor.match_number">1</stringProp>
@@ -372,13 +434,13 @@ vars.put(&quot;NEW_PATH&quot;, path);</stringProp>
             <boolProp name="resetInterpreter">false</boolProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
-            <stringProp name="script">${__StringToFile(storepacketPath2.txt,${NEW_PATH}\,${process_New}\,${regID}\n,true,)}</stringProp>
+            <stringProp name="script">${__StringToFile(storePacketPath.txt,${NEW_PATH}\,${packetTypeToGenerate}\,${registrationId}\n,true,)}</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
       </hashTree>
       <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
-        <boolProp name="ResultCollector.error_logging">true</boolProp>
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
           <name>saveConfig</name>
           <value class="SampleSaveConfiguration">
@@ -448,7 +510,7 @@ vars.put(&quot;NEW_PATH&quot;, path);</stringProp>
             <connectTime>true</connectTime>
           </value>
         </objProp>
-        <stringProp name="filename">Generate_Packet_try.jtl</stringProp>
+        <stringProp name="filename">Packet_Generation_Result.jtl</stringProp>
       </ResultCollector>
       <hashTree/>
     </hashTree>
