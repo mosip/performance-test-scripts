@@ -53,7 +53,7 @@
       </Arguments>
       <hashTree/>
       <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Context Details From File" enabled="true">
-        <stringProp name="filename">C:/Users/Administrator/mosip-performance-tests-mt/registration/registrationprocessor/support-files/contextDetails.csv</stringProp>
+        <stringProp name="filename">./contextDetails.csv</stringProp>
         <stringProp name="fileEncoding">UTF-8</stringProp>
         <stringProp name="variableNames">userID,machineID,centerID,password,context</stringProp>
         <boolProp name="ignoreFirstLine">false</boolProp>
@@ -65,7 +65,7 @@
       </CSVDataSet>
       <hashTree/>
       <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Document Path From File" enabled="true">
-        <stringProp name="filename">C:/apache-jmeter-5.3/apache-jmeter-5.3/bin/documentPath.txt</stringProp>
+        <stringProp name="filename">./documentPath.txt</stringProp>
         <stringProp name="fileEncoding"></stringProp>
         <stringProp name="variableNames">docPath</stringProp>
         <boolProp name="ignoreFirstLine">false</boolProp>
@@ -406,27 +406,12 @@
             <stringProp name="RegexExtractor.match_number">1</stringProp>
           </RegexExtractor>
           <hashTree/>
-          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="Store temp packetPath To File" enabled="true">
-            <stringProp name="filename"></stringProp>
-            <stringProp name="parameters"></stringProp>
-            <boolProp name="resetInterpreter">false</boolProp>
-            <stringProp name="script">${__StringToFile(storepacketpathTemp.txt,${packetPath},false,)}
-
-</stringProp>
-          </BeanShellPostProcessor>
-          <hashTree/>
           <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="Replacing Slashes from temp packetPath" enabled="true">
             <boolProp name="resetInterpreter">false</boolProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
-            <stringProp name="script">import java.io.File;
-import java.io.IOException;
-import org.apache.commons.io.FileUtils;
-
-
-
-String file1 = FileUtils.readFileToString(new File(&quot;C:/apache-jmeter-5.3/apache-jmeter-5.3/bin/storepacketpathTemp.txt&quot;), &quot;UTF-8&quot;);
-String path = file1.replaceAll(&quot;\\\\&quot;, &quot;/&quot;);
+            <stringProp name="script">String file = vars.get(&quot;packetPath&quot;);
+String path = file.replaceAll(&quot;\\\\&quot;, &quot;/&quot;);
 vars.put(&quot;NEW_PATH&quot;, path);</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
@@ -510,7 +495,7 @@ vars.put(&quot;NEW_PATH&quot;, path);</stringProp>
             <connectTime>true</connectTime>
           </value>
         </objProp>
-        <stringProp name="filename">Packet_Generation_Result.jtl</stringProp>
+        <stringProp name="filename"></stringProp>
       </ResultCollector>
       <hashTree/>
     </hashTree>

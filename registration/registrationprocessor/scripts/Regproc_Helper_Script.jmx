@@ -5,7 +5,7 @@
       <stringProp name="TestPlan.comments"></stringProp>
       <boolProp name="TestPlan.functional_mode">false</boolProp>
       <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
-      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">true</boolProp>
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments"/>
       </elementProp>
@@ -38,7 +38,7 @@
           </elementProp>
           <elementProp name="secretKey" elementType="Argument">
             <stringProp name="Argument.name">secretKey</stringProp>
-            <stringProp name="Argument.value">JXWzVDpx8KEd5Zch</stringProp>
+            <stringProp name="Argument.value">abc123</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="appId" elementType="Argument">
@@ -161,23 +161,7 @@
       </ThreadGroup>
       <hashTree>
         <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="Delete files" enabled="true">
-          <stringProp name="BeanShellSampler.query">import java.text.*;
-import java.io.*;
-import java.util.*;
-
-TextFile1 = &quot;requestBody_v3.txt&quot;;
-FileDir = &quot;C:\\apache-jmeter-5.3\\apache-jmeter-5.3\\bin\\&quot; ;
-File file1 = new File( FileDir + TextFile1);
-if (file1.exists()) {
-log.info(&quot;file1 found&quot;);
-file1.delete();
-}
-else {
-log.info(&quot;file1 not found&quot;);	
-	}
-	
-
-</stringProp>
+          <stringProp name="BeanShellSampler.query">new File(&quot;requestBody_v3.txt&quot;).delete();</stringProp>
           <stringProp name="BeanShellSampler.filename"></stringProp>
           <stringProp name="BeanShellSampler.parameters"></stringProp>
           <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
