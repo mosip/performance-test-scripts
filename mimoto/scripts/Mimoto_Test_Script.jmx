@@ -755,7 +755,7 @@ new File(&quot;TransactionID_RequestIndividual-ID.txt&quot;).delete();
           <stringProp name="CounterConfig.start">1500000000</stringProp>
           <stringProp name="CounterConfig.end">9999999999</stringProp>
           <stringProp name="CounterConfig.incr">1</stringProp>
-          <stringProp name="CounterConfig.name">tranIdCR</stringProp>
+          <stringProp name="CounterConfig.name">tranIdCr</stringProp>
           <stringProp name="CounterConfig.format"></stringProp>
           <boolProp name="CounterConfig.per_user">false</boolProp>
         </CounterConfig>
@@ -767,14 +767,11 @@ new File(&quot;TransactionID_RequestIndividual-ID.txt&quot;).delete();
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;id&quot;: &quot;mosip.identity.otp.internal&quot;,&#xd;
+  &#xd;
   &quot;individualId&quot;: &quot;${UIN}&quot;,&#xd;
   &quot;individualIdType&quot;: &quot;UIN&quot;,&#xd;
-  &quot;metadata&quot;: {},&#xd;
   &quot;otpChannel&quot;: [&quot;EMAIL&quot;],&#xd;
-  &quot;transactionID&quot;: &quot;${tranIdCR}&quot;,&#xd;
-  &quot;requestTime&quot;: &quot;${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.sss&apos;Z&apos;,)}&quot;,&#xd;
-  &quot;version&quot;: &quot;1.0&quot;&#xd;
+  &quot;transactionID&quot;: &quot;${tranIdCr}&quot;&#xd;
  &#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -854,7 +851,7 @@ new File(&quot;TransactionID_RequestIndividual-ID.txt&quot;).delete();
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load TransactionID From File" enabled="true">
           <stringProp name="filename">./TransactionID_CredentialRequest.txt</stringProp>
           <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="variableNames">uin_Tid_CR,tid_CR</stringProp>
+          <stringProp name="variableNames">uinTidCr,tidCr</stringProp>
           <boolProp name="ignoreFirstLine">true</boolProp>
           <stringProp name="delimiter">&amp;</stringProp>
           <boolProp name="quotedData">false</boolProp>
@@ -871,9 +868,9 @@ new File(&quot;TransactionID_RequestIndividual-ID.txt&quot;).delete();
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
   &#xd;
-  &quot;individualId&quot;: &quot;${uin_Tid_CR}&quot;,&#xd;
+  &quot;individualId&quot;: &quot;${uinTidCr}&quot;,&#xd;
   &quot;otp&quot;: &quot;111111&quot;,&#xd;
-  &quot;transactionID&quot;: &quot;${tid_CR}&quot;,&#xd;
+  &quot;transactionID&quot;: &quot;${tidCr}&quot;,&#xd;
   &quot;issuer&quot;: &quot;mpartner-default-mobile&quot;,&#xd;
   &quot;credentialType&quot;: &quot;vercred&quot;,&#xd;
   &quot;user&quot;: &quot;dsl1&quot;&#xd;
