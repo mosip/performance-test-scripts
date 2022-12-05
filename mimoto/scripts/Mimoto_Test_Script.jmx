@@ -942,7 +942,7 @@ new File(&quot;TransactionID_RequestIndividual-ID.txt&quot;).delete();
           <stringProp name="fileEncoding"></stringProp>
           <stringProp name="variableNames">uinTidCs,tidCs</stringProp>
           <boolProp name="ignoreFirstLine">true</boolProp>
-          <stringProp name="delimiter">,</stringProp>
+          <stringProp name="delimiter">&amp;</stringProp>
           <boolProp name="quotedData">false</boolProp>
           <boolProp name="recycle">true</boolProp>
           <boolProp name="stopThread">false</boolProp>
