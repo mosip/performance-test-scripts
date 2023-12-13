@@ -18,9 +18,24 @@
 
 ### Setup points for Execution
 
-* Create Identities in MOSIP Authentication System (Setup) : This thread contains the authorization api's for regproc and idrepo from which the auth token will be generated. There is set of 3 api's generate RID, generate UIN, add identity. From here we will get the UIN which can be further used as individual id. These 3 api's are present in the loop controller where we can define the number of samples for creating identities in which "addIdentitySetup" is used as a variable.
+* Create Identities in MOSIP Authentication System (Setup) : This thread contains the authorization api's for regproc and idrepo from which the auth token will be generated. There is set of 4 api's generate RID, generate UIN, add identity and add VID. From here we will get the VID which can be further used as individual id. These 4 api's are present in the loop controller where we can define the number of samples for creating identities in which "addIdentitySetup" is used as a variable.
 
-* Create OIDC Client in MOSIP Authentication System (Setup) : This thread contains a JSR223 sampler(Generate Key Pair) from which will get a public-private key pair. The public key generated will be used in the OIDC client api to generate client id's  which will be registered for both IDA and IDP. The private key generated from the sampler will be used in another JSR223 sampler(Generate Client Assertion) present in the OIDC Token (Execution). Generated client id's and there respective private key will be stored in a file which will be used further in the required api's.
+* Create OIDC Client in MOSIP Authentication System (Setup) : This thread contains a JSR223 sampler(Generate Key Pair) from which will get a public-private key pair. The public key generated will be used in the OIDC client api to generate client id's  which will be registered for both IDA and Esignet. The private key generated from the sampler will be used in another JSR223 sampler(Generate Client Assertion) present in the OIDC Token (Execution). Generated client id's and there respective private key will be stored in a file which will be used further in the required api's.
+
+* In the above Create OIDC Client in MOSIP Authentication System (Setup) check for the Policy name and Auth partner id for the particular env in which we are executing the scripts. The policy name provided must be associated with the correct Auth partner id.
+
+* For execution purpose neeed to check for the mentioned properties: 
+   * esignet default properties: Update the value for the properties according to the execution setup. Perform the execution for Esignet api's with redis setup. So check for the redis setup accordingly.
+          mosip.esignet.cache.size - Enabled while not using the redis setup. Can keep the cache size around more than 100k.
+          mosip.esignet.cache.expire-in-seconds - 86400
+          mosip.esignet.access-token-expire-seconds - 86400
+          mosip.esignet.id-token-expire-seconds - 86400
+          spring.cache.type=redis - check for this property and enable the redis.
+   * application default properties: Update the value for the below property.
+          mosip.kernel.otp.expiry-time - 86400
+   * id-authentication default properties: Update the value for the below properties.
+          otp.request.flooding.max-count - 100000
+          kyc.token.expire.time.adjustment.seconds - 86400
 
 * We need some jar files which needs to be added in lib folder of jmeter, PFA dependency links for your reference : 
 
@@ -66,14 +81,14 @@
     <version>9.25.6</version>
 </dependency>
 
-### Execution points for IDP Management API's
-* Management - Create OIDC Client (Execution) : This thread group will directly execute in which we are using a counter which needs to be updated everytime before execution. Because we can't generate same duplicate cliend id.
+### Execution points for Esignet Management API's
+* Management - Create OIDC Client (Execution) : This thread group will directly execute in which we are using a counter which will generate unique client id. Because we can't generate same duplicate cliend id.
 * Management - Update OIDC Client : 
    * Management Update OIDC Client (Preparation) - In this the above mentioned Create OIDC Client API will be used to generate a large number of OIDC client id samples which will get stored in a file and will be used in the execution.
-   * Management Update OIDC Client (Execution) - Thread will use the client id file generated in the preparation part. We can reuse the file for multiple runs and the number of preparation samples should be greater or equal to the number of execution samples. from preparation.
-* Before executing the IDP Test Script with above api's have to update the Counter number everytime otherwise it will give duplicate client id error.
+   * Management Update OIDC Client (Execution) - Thread will use the client id file generated in the preparation part. We can reuse the file for multiple runs and the number of preparation samples should be greater or equal to the number of execution samples.
 
-### Execution points for IDP UI API's
+
+### Execution points for Esignet UI API's
 *  UI - OAuth Details : 
    * OAuth Details (Execution) - Client id created from Create OIDC Client in MOSIP Authentication System (Setup) will be loaded. Total samples created during execution can be higher in number as compared to the samples present in the file.
 
@@ -89,7 +104,23 @@
    * Authorization Code (Preparation) - There will be 3 api's included in the preparation i.e. OAuth Details, Send OTP, Authentication Endpoint - OTP from which we will get the transaction id, OTP which will be used in the execution.  We cant use the preparation file for multiple runs.
    * Authorization Code (Execution) - The total number of samples for preparation should be equal or higher in number as compared to execution. Have to pass the Transaction id generated from the preparation.
 
-### Execution points for IDP OIDC API's
+*  UI - Send OTP Linked Auth :
+   * Send OTP Linked Auth (Preparation) - For the preparation we need 3 api's OAuth Details, Generate Link Code, Link Transaction api from which a link transaction ID will be generated and will be used for the execution.
+   * Send OTP Linked Auth (Execution) - Link transaction id will be used which is created in the preparation part. Registered individual id also need to be passed in the body for which we have separately added the setup thread group for creating identity. The files created from preparation part can't be used for multiple executions transaction has a expiry.
+
+* UI - Linked Authentication :
+   * Linked Authentication (Preparation) - For the preparation we need 4 api's OAuth Details, Generate Link Code, Link Transaction and Send OTP Linked Auth api from which we will get the transaction id. We cant use the preparation file for multiple runs as OTP will not be valid.
+   * Linked Authentication (Execution) - For the execution the total preparation samples must be equal or higher in number. The link transaction id received from link-transaction endpoint api will be used. Registered individual id also need to be passed in the body.
+
+* UI - Linked Consent :
+   * Linked Consent (Preparation) - For the preparation we need 5 api's OAuth Details, Generate Link Code, Link Transaction, Send OTP Linked Auth and linked authenication api from which we will get the transaction id.
+   * Linked Consent (Execution) - The link transaction id received from link-transaction endpoint api will be used.  We cant use the preparation file for multiple runs.
+
+* UI - Link Authorization Code :
+   * Link Authorization Code (Preparation) - This thread includes 6 api's OAuth Details, Generate Link Code, Link Transaction, Send OTP Linked Auth, linked authenication and linked consent api. Transaction id and linked code must be same as the one received from oauth-details and generate link code api respectively.
+   * Link Authorization Code (Execution) - Transaction id and linked code will be used from the preparation part.
+
+### Execution points for Esignet OIDC API's
 *  OIDC - Authorization : Its a GET API with no preparations and application will do a browser redirect to this endpoint with all required details passed as query parameters.
 
 *  OIDC - Token :
@@ -102,10 +133,4 @@
 
 *  OIDC - Configuration (Execution) : Open ID Connect dynamic provider discovery is not supported currently, this endpoint is only for facilitating the OIDC provider details in a standard way.
 
-*  OIDC - JSON Web Key Set (Execution) : Endpoint to fetch all the public keys of the IdP server.Returns public key set in the JWKS format.
-   
-
-
-
-
-
+*  OIDC - JSON Web Key Set (Execution) : Endpoint to fetch all the public keys of the Esignet server.Returns public key set in the JWKS format.
