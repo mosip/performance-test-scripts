@@ -154,16 +154,6 @@
             <stringProp name="Argument.value">804296</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="delay" elementType="Argument">
-            <stringProp name="Argument.name">delay</stringProp>
-            <stringProp name="Argument.value">3000</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="scopeVci" elementType="Argument">
-            <stringProp name="Argument.name">scopeVci</stringProp>
-            <stringProp name="Argument.value">mosip_identity_vc_ldp</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
