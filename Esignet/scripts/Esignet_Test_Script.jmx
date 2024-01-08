@@ -762,7 +762,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
   &quot;metadata&quot;: {},&#xd;
   &quot;request&quot;: {&#xd;
     &quot;clientId&quot;: &quot;${regProcClientId}&quot;,&#xd;
-    &quot;secretKey&quot;: &quot;quWCEw9HowFei2fG&quot;,&#xd;
+    &quot;secretKey&quot;: &quot;${regProcSecretKey}&quot;,&#xd;
     &quot;appId&quot;: &quot;${regProcAppId}&quot;&#xd;
   },&#xd;
   &quot;requesttime&quot;: &quot;${utcTime}Z&quot;,&#xd;
@@ -851,7 +851,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
   &quot;metadata&quot;: {},&#xd;
   &quot;request&quot;: {&#xd;
     &quot;clientId&quot;: &quot;${idRepoClientId}&quot;,&#xd;
-    &quot;secretKey&quot;: &quot;Dvf2FqojyXxriAoy&quot;,&#xd;
+    &quot;secretKey&quot;: &quot;${idRepoSecretKey}&quot;,&#xd;
     &quot;appId&quot;: &quot;${idRepoAppId}&quot;&#xd;
   },&#xd;
   &quot;requesttime&quot;: &quot;${utcTime}Z&quot;,&#xd;
