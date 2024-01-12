@@ -1371,7 +1371,9 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
     },&#xd;
     &quot;nonce&quot;: &quot;973eieljzng&quot;,&#xd;
     &quot;state&quot;: &quot;eree2311&quot;,&#xd;
-    &quot;claimsLocales&quot;: &quot;en&quot;&#xd;
+    &quot;claimsLocales&quot;: &quot;en&quot;,&#xd;
+    &quot;codeChallenge&quot; : &quot;${codeChallenge}&quot;,&#xd;
+    &quot;codeChallengeMethod&quot; : &quot;S256&quot;&#xd;
   }&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -1382,7 +1384,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
           <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/v1/esignet/authorization/oauth-details</stringProp>
+          <stringProp name="HTTPSampler.path">/v1/esignet/authorization/v2/oauth-details</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -1429,6 +1431,31 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">2</intProp>
           </ResponseAssertion>
+          <hashTree/>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Generate Code Challenge &amp; Verifier" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">import org.apache.commons.codec.binary.Base64;
+import java.security.SecureRandom;
+import java.security.MessageDigest;
+
+SecureRandom secureRandom = new SecureRandom();
+byte[] codeVerifierBytes = new byte[32]; // 256 bits
+secureRandom.nextBytes(codeVerifierBytes);
+
+String codeVerifier = Base64.encodeBase64URLSafeString(codeVerifierBytes);
+vars.put(&quot;codeVerifier&quot;, codeVerifier);
+log.info(&quot;codeVerifier: &quot; + codeVerifier);
+
+MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);
+byte[] hash = digest.digest(codeVerifier.getBytes(&quot;UTF-8&quot;));
+String codeChallenge = Base64.encodeBase64URLSafeString(hash);
+vars.put(&quot;codeChallenge&quot;, codeChallenge);
+log.info(&quot;codeChallenge: &quot; + codeChallenge);
+</stringProp>
+          </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
       </hashTree>
@@ -1508,7 +1535,9 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
     },&#xd;
     &quot;nonce&quot;: &quot;973eieljzng&quot;,&#xd;
     &quot;state&quot;: &quot;eree2311&quot;,&#xd;
-    &quot;claimsLocales&quot;: &quot;en&quot;&#xd;
+    &quot;claimsLocales&quot;: &quot;en&quot;,&#xd;
+    &quot;codeChallenge&quot; : &quot;${codeChallenge}&quot;,&#xd;
+    &quot;codeChallengeMethod&quot; : &quot;S256&quot;&#xd;
   }&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -1519,7 +1548,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
           <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/v1/esignet/authorization/oauth-details</stringProp>
+          <stringProp name="HTTPSampler.path">/v1/esignet/authorization/v2/oauth-details</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -1567,21 +1596,37 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
             <intProp name="Assertion.test_type">2</intProp>
           </ResponseAssertion>
           <hashTree/>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Generate Code Challenge &amp; Verifier" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">import org.apache.commons.codec.binary.Base64;
+import java.security.SecureRandom;
+import java.security.MessageDigest;
+
+SecureRandom secureRandom = new SecureRandom();
+byte[] codeVerifierBytes = new byte[32]; // 256 bits
+secureRandom.nextBytes(codeVerifierBytes);
+
+String codeVerifier = Base64.encodeBase64URLSafeString(codeVerifierBytes);
+vars.put(&quot;codeVerifier&quot;, codeVerifier);
+log.info(&quot;codeVerifier: &quot; + codeVerifier);
+
+MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);
+byte[] hash = digest.digest(codeVerifier.getBytes(&quot;UTF-8&quot;));
+String codeChallenge = Base64.encodeBase64URLSafeString(hash);
+vars.put(&quot;codeChallenge&quot;, codeChallenge);
+log.info(&quot;codeChallenge: &quot; + codeChallenge);
+</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
           <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract TransactionID" enabled="true">
             <stringProp name="RegexExtractor.useHeaders">false</stringProp>
             <stringProp name="RegexExtractor.refname">transactionID</stringProp>
             <stringProp name="RegexExtractor.regex">&quot;transactionId&quot;:&quot;(.*?)&quot;</stringProp>
             <stringProp name="RegexExtractor.template">$1$</stringProp>
             <stringProp name="RegexExtractor.default">transactionID not found</stringProp>
-            <stringProp name="RegexExtractor.match_number">1</stringProp>
-          </RegexExtractor>
-          <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract Captcha" enabled="true">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">captcha</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;captcha.sitekey&quot;:&quot;(.*?)&quot;</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default">Captcha not found</stringProp>
             <stringProp name="RegexExtractor.match_number">1</stringProp>
           </RegexExtractor>
           <hashTree/>
@@ -1637,7 +1682,7 @@ function encodeBase64Url(value) {
             <stringProp name="filename"></stringProp>
             <stringProp name="parameters"></stringProp>
             <boolProp name="resetInterpreter">false</boolProp>
-            <stringProp name="script">${__StringToFile(transaction_id_send_otp_endpoint.txt,${transactionID}\,${hashValue}\,${captcha}\n,true,)}</stringProp>
+            <stringProp name="script">${__StringToFile(transaction_id_send_otp_endpoint.txt,${transactionID}\,${hashValue}\n,true,)}</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
@@ -1665,7 +1710,7 @@ function encodeBase64Url(value) {
           <boolProp name="recycle">true</boolProp>
           <stringProp name="shareMode">shareMode.all</stringProp>
           <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">tidSendOtp,hashValue,captcha</stringProp>
+          <stringProp name="variableNames">tidSendOtp,hashValue</stringProp>
         </CSVDataSet>
         <hashTree/>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Individual Id From File" enabled="true">
@@ -1706,7 +1751,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
     &quot;transactionId&quot;: &quot;${tidSendOtp}&quot;,&#xd;
     &quot;individualId&quot;: &quot;${sendOtpIndividualId}&quot;,&#xd;
    &quot;otpChannels&quot;: [&quot;EMAIL&quot;],&#xd;
-    &quot;captchaToken&quot; : &quot;${captcha}&quot;&#xd;
+    &quot;captchaToken&quot; : &quot;&quot;&#xd;
     &#xd;
   }&#xd;
 } &#xd;
@@ -1865,7 +1910,9 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
     },&#xd;
     &quot;nonce&quot;: &quot;973eieljzng&quot;,&#xd;
     &quot;state&quot;: &quot;eree2311&quot;,&#xd;
-    &quot;claimsLocales&quot;: &quot;en&quot;&#xd;
+    &quot;claimsLocales&quot;: &quot;en&quot;,&#xd;
+    &quot;codeChallenge&quot; : &quot;${codeChallenge}&quot;,&#xd;
+    &quot;codeChallengeMethod&quot; : &quot;S256&quot;&#xd;
   }&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -1876,7 +1923,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
           <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/v1/esignet/authorization/oauth-details</stringProp>
+          <stringProp name="HTTPSampler.path">/v1/esignet/authorization/v2/oauth-details</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -1924,21 +1971,37 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
             <intProp name="Assertion.test_type">2</intProp>
           </ResponseAssertion>
           <hashTree/>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Generate Code Challenge &amp; Verifier" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">import org.apache.commons.codec.binary.Base64;
+import java.security.SecureRandom;
+import java.security.MessageDigest;
+
+SecureRandom secureRandom = new SecureRandom();
+byte[] codeVerifierBytes = new byte[32]; // 256 bits
+secureRandom.nextBytes(codeVerifierBytes);
+
+String codeVerifier = Base64.encodeBase64URLSafeString(codeVerifierBytes);
+vars.put(&quot;codeVerifier&quot;, codeVerifier);
+log.info(&quot;codeVerifier: &quot; + codeVerifier);
+
+MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);
+byte[] hash = digest.digest(codeVerifier.getBytes(&quot;UTF-8&quot;));
+String codeChallenge = Base64.encodeBase64URLSafeString(hash);
+vars.put(&quot;codeChallenge&quot;, codeChallenge);
+log.info(&quot;codeChallenge: &quot; + codeChallenge);
+</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
           <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract TransactionID" enabled="true">
             <stringProp name="RegexExtractor.useHeaders">false</stringProp>
             <stringProp name="RegexExtractor.refname">tidAuthEndpoint</stringProp>
             <stringProp name="RegexExtractor.regex">&quot;transactionId&quot;:&quot;(.*?)&quot;</stringProp>
             <stringProp name="RegexExtractor.template">$1$</stringProp>
             <stringProp name="RegexExtractor.default">transactionID not found</stringProp>
-            <stringProp name="RegexExtractor.match_number">1</stringProp>
-          </RegexExtractor>
-          <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract Captcha" enabled="true">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">captcha</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;captcha.sitekey&quot;:&quot;(.*?)&quot;</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default">Captcha not found</stringProp>
             <stringProp name="RegexExtractor.match_number">1</stringProp>
           </RegexExtractor>
           <hashTree/>
@@ -1955,7 +2018,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
     &quot;transactionId&quot;: &quot;${tidAuthEndpoint}&quot;,&#xd;
     &quot;individualId&quot;: &quot;${authIndividualId}&quot;,&#xd;
     &quot;otpChannels&quot;: [&quot;EMAIL&quot;],&#xd;
-    &quot;captchaToken&quot;: &quot;${captcha}&quot;&#xd;
+    &quot;captchaToken&quot;: &quot;&quot;&#xd;
   }&#xd;
 } </stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -2294,7 +2357,9 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
     },&#xd;
     &quot;nonce&quot;: &quot;973eieljzng&quot;,&#xd;
     &quot;state&quot;: &quot;eree2311&quot;,&#xd;
-    &quot;claimsLocales&quot;: &quot;en&quot;&#xd;
+    &quot;claimsLocales&quot;: &quot;en&quot;,&#xd;
+    &quot;codeChallenge&quot; : &quot;${codeChallenge}&quot;,&#xd;
+    &quot;codeChallengeMethod&quot; : &quot;S256&quot;&#xd;
   }&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -2305,7 +2370,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
           <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/v1/esignet/authorization/oauth-details</stringProp>
+          <stringProp name="HTTPSampler.path">/v1/esignet/authorization/v2/oauth-details</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -2353,21 +2418,37 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
             <intProp name="Assertion.test_type">2</intProp>
           </ResponseAssertion>
           <hashTree/>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Generate Code Challenge &amp; Verifier" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">import org.apache.commons.codec.binary.Base64;
+import java.security.SecureRandom;
+import java.security.MessageDigest;
+
+SecureRandom secureRandom = new SecureRandom();
+byte[] codeVerifierBytes = new byte[32]; // 256 bits
+secureRandom.nextBytes(codeVerifierBytes);
+
+String codeVerifier = Base64.encodeBase64URLSafeString(codeVerifierBytes);
+vars.put(&quot;codeVerifier&quot;, codeVerifier);
+log.info(&quot;codeVerifier: &quot; + codeVerifier);
+
+MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);
+byte[] hash = digest.digest(codeVerifier.getBytes(&quot;UTF-8&quot;));
+String codeChallenge = Base64.encodeBase64URLSafeString(hash);
+vars.put(&quot;codeChallenge&quot;, codeChallenge);
+log.info(&quot;codeChallenge: &quot; + codeChallenge);
+</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
           <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract TransactionID" enabled="true">
             <stringProp name="RegexExtractor.useHeaders">false</stringProp>
             <stringProp name="RegexExtractor.refname">transactionIdAuthCodePrep</stringProp>
             <stringProp name="RegexExtractor.regex">&quot;transactionId&quot;:&quot;(.*?)&quot;</stringProp>
             <stringProp name="RegexExtractor.template">$1$</stringProp>
             <stringProp name="RegexExtractor.default">transactionID not found</stringProp>
-            <stringProp name="RegexExtractor.match_number">1</stringProp>
-          </RegexExtractor>
-          <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract Captcha" enabled="true">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">captcha</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;captcha.sitekey&quot;:&quot;(.*?)&quot;</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default">Captcha not found</stringProp>
             <stringProp name="RegexExtractor.match_number">1</stringProp>
           </RegexExtractor>
           <hashTree/>
@@ -2384,7 +2465,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
     &quot;transactionId&quot;: &quot;${transactionIdAuthCodePrep}&quot;,&#xd;
     &quot;individualId&quot;: &quot;${authCodeIndividualId}&quot;,&#xd;
     &quot;otpChannels&quot;: [&quot;EMAIL&quot;],&#xd;
-    &quot;captchaToken&quot; : &quot;${captcha}&quot;&#xd;
+    &quot;captchaToken&quot; : &quot;&quot;&#xd;
   }&#xd;
 } </stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -2922,7 +3003,9 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
     },&#xd;
     &quot;nonce&quot;: &quot;973eieljzng&quot;,&#xd;
     &quot;state&quot;: &quot;eree2311&quot;,&#xd;
-    &quot;claimsLocales&quot;: &quot;en&quot;&#xd;
+    &quot;claimsLocales&quot;: &quot;en&quot;,&#xd;
+    &quot;codeChallenge&quot; : &quot;${codeChallenge}&quot;,&#xd;
+    &quot;codeChallengeMethod&quot; : &quot;S256&quot;&#xd;
   }&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -2933,7 +3016,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
           <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/v1/esignet/authorization/oauth-details</stringProp>
+          <stringProp name="HTTPSampler.path">/v1/esignet/authorization/v2/oauth-details</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -2981,21 +3064,37 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
             <intProp name="Assertion.test_type">2</intProp>
           </ResponseAssertion>
           <hashTree/>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Generate Code Challenge &amp; Verifier" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">import org.apache.commons.codec.binary.Base64;
+import java.security.SecureRandom;
+import java.security.MessageDigest;
+
+SecureRandom secureRandom = new SecureRandom();
+byte[] codeVerifierBytes = new byte[32]; // 256 bits
+secureRandom.nextBytes(codeVerifierBytes);
+
+String codeVerifier = Base64.encodeBase64URLSafeString(codeVerifierBytes);
+vars.put(&quot;codeVerifier&quot;, codeVerifier);
+log.info(&quot;codeVerifier: &quot; + codeVerifier);
+
+MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);
+byte[] hash = digest.digest(codeVerifier.getBytes(&quot;UTF-8&quot;));
+String codeChallenge = Base64.encodeBase64URLSafeString(hash);
+vars.put(&quot;codeChallenge&quot;, codeChallenge);
+log.info(&quot;codeChallenge: &quot; + codeChallenge);
+</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
           <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract TransactionID" enabled="true">
             <stringProp name="RegexExtractor.useHeaders">false</stringProp>
             <stringProp name="RegexExtractor.refname">tidTokenPrep</stringProp>
             <stringProp name="RegexExtractor.regex">&quot;transactionId&quot;:&quot;(.*?)&quot;</stringProp>
             <stringProp name="RegexExtractor.template">$1$</stringProp>
             <stringProp name="RegexExtractor.default">transactionID not found</stringProp>
-            <stringProp name="RegexExtractor.match_number">1</stringProp>
-          </RegexExtractor>
-          <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract Captcha" enabled="true">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">captcha</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;captcha.sitekey&quot;:&quot;(.*?)&quot;</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default">Captcha not found</stringProp>
             <stringProp name="RegexExtractor.match_number">1</stringProp>
           </RegexExtractor>
           <hashTree/>
@@ -3012,7 +3111,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
     &quot;transactionId&quot;: &quot;${tidTokenPrep}&quot;,&#xd;
     &quot;individualId&quot;: &quot;${tokenIndividualId}&quot;,&#xd;
     &quot;otpChannels&quot;: [&quot;EMAIL&quot;],&#xd;
-    &quot;captchaToken&quot; : &quot;${captcha}&quot;&#xd;
+    &quot;captchaToken&quot; : &quot;&quot;&#xd;
   }&#xd;
 } </stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -3307,7 +3406,7 @@ function encodeBase64Url(value) {
             <stringProp name="filename"></stringProp>
             <stringProp name="parameters"></stringProp>
             <boolProp name="resetInterpreter">false</boolProp>
-            <stringProp name="script">${__StringToFile(code_authorization_code_endpoint.txt,${code}\,${tokenClientId}\,${tokenPrivateKey}\n,true,)}</stringProp>
+            <stringProp name="script">${__StringToFile(code_authorization_code_endpoint.txt,${code}\,${tokenClientId}\,${tokenPrivateKey},${codeVerifier}\n,true,)}</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
@@ -3335,7 +3434,7 @@ function encodeBase64Url(value) {
           <boolProp name="recycle">true</boolProp>
           <stringProp name="shareMode">shareMode.all</stringProp>
           <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">tokenEndpointCode,tokenEndpointClientId,tokenEncodedPrivateKey</stringProp>
+          <stringProp name="variableNames">tokenEndpointCode,tokenEndpointClientId,tokenEncodedPrivateKey,codeVerifier</stringProp>
         </CSVDataSet>
         <hashTree/>
         <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Generate Client Assertion" enabled="true">
@@ -3454,13 +3553,20 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">redirect_uri</stringProp>
               </elementProp>
+              <elementProp name="code_verifier" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">${codeVerifier}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">code_verifier</stringProp>
+              </elementProp>
             </collectionProp>
           </elementProp>
           <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
           <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/v1/esignet/oauth/token</stringProp>
+          <stringProp name="HTTPSampler.path">/v1/esignet/oauth/v2/token</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -3590,7 +3696,9 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
     },&#xd;
     &quot;nonce&quot;: &quot;973eieljzng&quot;,&#xd;
     &quot;state&quot;: &quot;eree2311&quot;,&#xd;
-    &quot;claimsLocales&quot;: &quot;en&quot;&#xd;
+    &quot;claimsLocales&quot;: &quot;en&quot;,&#xd;
+    &quot;codeChallenge&quot; : &quot;${codeChallenge}&quot;,&#xd;
+    &quot;codeChallengeMethod&quot; : &quot;S256&quot;&#xd;
   }&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -3601,7 +3709,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
           <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/v1/esignet/authorization/oauth-details</stringProp>
+          <stringProp name="HTTPSampler.path">/v1/esignet/authorization/v2/oauth-details</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -3649,21 +3757,37 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
             <intProp name="Assertion.test_type">2</intProp>
           </ResponseAssertion>
           <hashTree/>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Generate Code Challenge &amp; Verifier" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">import org.apache.commons.codec.binary.Base64;
+import java.security.SecureRandom;
+import java.security.MessageDigest;
+
+SecureRandom secureRandom = new SecureRandom();
+byte[] codeVerifierBytes = new byte[32]; // 256 bits
+secureRandom.nextBytes(codeVerifierBytes);
+
+String codeVerifier = Base64.encodeBase64URLSafeString(codeVerifierBytes);
+vars.put(&quot;codeVerifier&quot;, codeVerifier);
+log.info(&quot;codeVerifier: &quot; + codeVerifier);
+
+MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);
+byte[] hash = digest.digest(codeVerifier.getBytes(&quot;UTF-8&quot;));
+String codeChallenge = Base64.encodeBase64URLSafeString(hash);
+vars.put(&quot;codeChallenge&quot;, codeChallenge);
+log.info(&quot;codeChallenge: &quot; + codeChallenge);
+</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
           <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract TransactionID" enabled="true">
             <stringProp name="RegexExtractor.useHeaders">false</stringProp>
             <stringProp name="RegexExtractor.refname">tidUserInfoPrep</stringProp>
             <stringProp name="RegexExtractor.regex">&quot;transactionId&quot;:&quot;(.*?)&quot;</stringProp>
             <stringProp name="RegexExtractor.template">$1$</stringProp>
             <stringProp name="RegexExtractor.default">transactionID not found</stringProp>
-            <stringProp name="RegexExtractor.match_number">1</stringProp>
-          </RegexExtractor>
-          <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract Captcha" enabled="true">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">captcha</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;captcha.sitekey&quot;:&quot;(.*?)&quot;</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default">Captcha not found</stringProp>
             <stringProp name="RegexExtractor.match_number">1</stringProp>
           </RegexExtractor>
           <hashTree/>
@@ -3680,7 +3804,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
     &quot;transactionId&quot;: &quot;${tidUserInfoPrep}&quot;,&#xd;
     &quot;individualId&quot;: &quot;${userInfoIndividualId}&quot;,&#xd;
     &quot;otpChannels&quot;: [&quot;EMAIL&quot;],&#xd;
-    &quot;captchaToken&quot; : &quot;${captcha}&quot;&#xd;
+    &quot;captchaToken&quot; : &quot;&quot;&#xd;
   }&#xd;
 } </stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -4074,13 +4198,20 @@ vars.put(&quot;clientAssertionJWT&quot;, JWT);
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">redirect_uri</stringProp>
               </elementProp>
+              <elementProp name="code_verifier" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">${codeVerifier}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">code_verifier</stringProp>
+              </elementProp>
             </collectionProp>
           </elementProp>
           <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
           <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/v1/esignet/oauth/token</stringProp>
+          <stringProp name="HTTPSampler.path">/v1/esignet/oauth/v2/token</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -7517,7 +7648,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="VCI - OAuth Details V2 (Execution)" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="VCI - Get Credential (Praparation)" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -7543,6 +7674,18 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
           <stringProp name="variableNames">oAuthDetailsEndpointClientId,encodedPrivateKey</stringProp>
         </CSVDataSet>
         <hashTree/>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Individual Id From File" enabled="true">
+          <stringProp name="delimiter">,</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="filename">./individualid_esignet1.txt</stringProp>
+          <boolProp name="ignoreFirstLine">true</boolProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="variableNames">credentialIndividualId</stringProp>
+        </CSVDataSet>
+        <hashTree/>
         <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="Generate UTC Time" enabled="true">
           <stringProp name="filename"></stringProp>
           <stringProp name="parameters"></stringProp>
@@ -7557,7 +7700,7 @@ String utcTime = dateFormat.format(cal.getTime());
 vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
         </BeanShellPreProcessor>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="VCI - OAuth Details V2 Endpoint API" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="VCI - OAuth Details Endpoint API" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -7635,165 +7778,6 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">2</intProp>
           </ResponseAssertion>
-          <hashTree/>
-          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Generate Code Challenge &amp; Verifier" enabled="true">
-            <stringProp name="scriptLanguage">groovy</stringProp>
-            <stringProp name="parameters"></stringProp>
-            <stringProp name="filename"></stringProp>
-            <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="script">import org.apache.commons.codec.binary.Base64;
-import java.security.SecureRandom;
-import java.security.MessageDigest;
-
-SecureRandom secureRandom = new SecureRandom();
-byte[] codeVerifierBytes = new byte[32]; // 256 bits
-secureRandom.nextBytes(codeVerifierBytes);
-
-String codeVerifier = Base64.encodeBase64URLSafeString(codeVerifierBytes);
-vars.put(&quot;codeVerifier&quot;, codeVerifier);
-log.info(&quot;codeVerifier: &quot; + codeVerifier);
-
-MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);
-byte[] hash = digest.digest(codeVerifier.getBytes(&quot;UTF-8&quot;));
-String codeChallenge = Base64.encodeBase64URLSafeString(hash);
-vars.put(&quot;codeChallenge&quot;, codeChallenge);
-log.info(&quot;codeChallenge: &quot; + codeChallenge);
-</stringProp>
-          </JSR223PreProcessor>
-          <hashTree/>
-          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
-            <stringProp name="ConstantTimer.delay">${delay}</stringProp>
-          </ConstantTimer>
-          <hashTree/>
-        </hashTree>
-      </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="VCI - Send OTP (Preparation)" enabled="true">
-        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
-          <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
-        </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
-        <boolProp name="ThreadGroup.scheduler">false</boolProp>
-        <stringProp name="ThreadGroup.duration"></stringProp>
-        <stringProp name="ThreadGroup.delay"></stringProp>
-        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
-      </ThreadGroup>
-      <hashTree>
-        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load ClientID From File" enabled="true">
-          <stringProp name="delimiter">,</stringProp>
-          <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="filename">./client_id_esignet.csv</stringProp>
-          <boolProp name="ignoreFirstLine">true</boolProp>
-          <boolProp name="quotedData">false</boolProp>
-          <boolProp name="recycle">true</boolProp>
-          <stringProp name="shareMode">shareMode.all</stringProp>
-          <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">oAuthDetailsEndpointClientId,encodedPrivateKey</stringProp>
-        </CSVDataSet>
-        <hashTree/>
-        <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="Generate UTC Time" enabled="true">
-          <stringProp name="filename"></stringProp>
-          <stringProp name="parameters"></stringProp>
-          <boolProp name="resetInterpreter">false</boolProp>
-          <stringProp name="script">import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.TimeZone;//Set the format for the date-time
-SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd&apos;T&apos;HH:mm:ss.sss&quot;);
-dateFormat.setTimeZone(TimeZone.getTimeZone(&quot;UTC&quot;));// Get the current time in UTC
-Calendar cal = Calendar.getInstance();
-String utcTime = dateFormat.format(cal.getTime());
-vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
-        </BeanShellPreProcessor>
-        <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="VCI Send OTP - OAuth Details V2 Endpoint API" enabled="true">
-          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&#xd;
-    &quot;requestTime&quot;: &quot;${utcTime}Z&quot;,&#xd;
-    &quot;request&quot;: {&#xd;
-        &quot;clientId&quot;: &quot;${oAuthDetailsEndpointClientId}&quot;,&#xd;
-        &quot;scope&quot;: &quot;${scopeVci}&quot;,&#xd;
-        &quot;responseType&quot;: &quot;code&quot;,&#xd;
-        &quot;redirectUri&quot;: &quot;${redirectUri}&quot;,&#xd;
-        &quot;display&quot;: &quot;popup&quot;,&#xd;
-        &quot;prompt&quot;: &quot;login&quot;,&#xd;
-        &quot;acrValues&quot;: &quot;${acrValues}&quot;,&#xd;
-        &quot;nonce&quot; : &quot;973eieljzng&quot;,&#xd;
-        &quot;state&quot; : &quot;eree2311&quot;,&#xd;
-        &quot;claimsLocales&quot; : &quot;en&quot;,&#xd;
-        &quot;codeChallenge&quot; : &quot;${codeChallenge}&quot;,&#xd;
-        &quot;codeChallengeMethod&quot; : &quot;S256&quot;&#xd;
-    }&#xd;
-}</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-          <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
-          <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
-          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/v1/esignet/authorization/v2/oauth-details</stringProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        </HTTPSamplerProxy>
-        <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-            <collectionProp name="HeaderManager.headers">
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Content-Type</stringProp>
-                <stringProp name="Header.value">application/json</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">X-XSRF-TOKEN</stringProp>
-                <stringProp name="Header.value">${loadCsrfToken}</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Cookie</stringProp>
-                <stringProp name="Header.value">XSRF-TOKEN=${loadCsrfToken}</stringProp>
-              </elementProp>
-            </collectionProp>
-          </HeaderManager>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="685365575">&quot;errors&quot;:[]</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">16</intProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion - Response Code" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="49586">200</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">2</intProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract Captcha" enabled="true">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">captcha</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;captcha.sitekey&quot;:&quot;(.*?)&quot;</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default">Captcha not found</stringProp>
-            <stringProp name="RegexExtractor.match_number">1</stringProp>
-          </RegexExtractor>
           <hashTree/>
           <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract TransactionID" enabled="true">
             <stringProp name="RegexExtractor.useHeaders">false</stringProp>
@@ -7829,120 +7813,7 @@ log.info(&quot;codeChallenge: &quot; + codeChallenge);
 </stringProp>
           </JSR223PreProcessor>
           <hashTree/>
-          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Generate Hash Value" enabled="true">
-            <stringProp name="scriptLanguage">javascript</stringProp>
-            <stringProp name="parameters"></stringProp>
-            <stringProp name="filename"></stringProp>
-            <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="script">// Import the required Java classes
-var Base64 = Java.type(&apos;java.util.Base64&apos;);
-var StandardCharsets = Java.type(&apos;java.nio.charset.StandardCharsets&apos;);
-
-// Retrieve the previous response value
-var jsonResponse = prev.getResponseDataAsString();
-
-// Print the previous response value
-log.info(&quot;Previous Response: &quot; + jsonResponse);
-
-// Parse the JSON response
-var jsonObject = JSON.parse(jsonResponse);
-var responseObjectString = JSON.stringify(jsonObject.response);
-
-log.info(&quot;Previous Response: &quot; + responseObjectString);
-
-// Convert JSON to base64 URL-encoded SHA-256 hash
-var sha256Hash = hashSHA256(responseObjectString);
-var base64UrlEncodedHash = encodeBase64Url(sha256Hash);
-
-//Print the sha256 value
-log.info(&quot;sha256Hash Value: &quot; + sha256Hash);
-
-// Print the final hash value
-log.info(&quot;Final Hash Value: &quot; + base64UrlEncodedHash);
-
-// Set the new variable value in JMeter
-vars.put(&quot;hashValue&quot;, base64UrlEncodedHash);
-
-// Function to compute the SHA-256 hash
-function hashSHA256(value) {
-   var messageDigest = Java.type(&apos;java.security.MessageDigest&apos;).getInstance(&apos;SHA-256&apos;);
-   var bytes = (value).getBytes(StandardCharsets.UTF_8);
-   var digest = messageDigest.digest(bytes);
-   return digest;
-}
-
-// Function to base64 URL-encode the hash value
-function encodeBase64Url(value) {
-   var base64 = Base64.getUrlEncoder().withoutPadding().encodeToString(value);
-   return base64;
-}</stringProp>
-          </JSR223PostProcessor>
-          <hashTree/>
-          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="Store TransactionID To File" enabled="true">
-            <stringProp name="filename"></stringProp>
-            <stringProp name="parameters"></stringProp>
-            <boolProp name="resetInterpreter">false</boolProp>
-            <stringProp name="script">${__StringToFile(transaction_id_send_otp_endpoint_vci.txt,${captcha}\,${tidVci}\,${hashValue}\n,true,)}</stringProp>
-          </BeanShellPostProcessor>
-          <hashTree/>
-          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
-            <stringProp name="ConstantTimer.delay">${delay}</stringProp>
-          </ConstantTimer>
-          <hashTree/>
         </hashTree>
-      </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="VCI - Send OTP (Execution)" enabled="true">
-        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
-          <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
-        </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
-        <boolProp name="ThreadGroup.scheduler">false</boolProp>
-        <stringProp name="ThreadGroup.duration"></stringProp>
-        <stringProp name="ThreadGroup.delay"></stringProp>
-        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
-      </ThreadGroup>
-      <hashTree>
-        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load TransactionID From File" enabled="true">
-          <stringProp name="delimiter">,</stringProp>
-          <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="filename">./transaction_id_send_otp_endpoint_vci.txt</stringProp>
-          <boolProp name="ignoreFirstLine">true</boolProp>
-          <boolProp name="quotedData">false</boolProp>
-          <boolProp name="recycle">true</boolProp>
-          <stringProp name="shareMode">shareMode.all</stringProp>
-          <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">captcha,tidSendOtpVci,hashValue</stringProp>
-        </CSVDataSet>
-        <hashTree/>
-        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Individual Id From File" enabled="true">
-          <stringProp name="delimiter">,</stringProp>
-          <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="filename">./individualid_esignet.txt</stringProp>
-          <boolProp name="ignoreFirstLine">true</boolProp>
-          <boolProp name="quotedData">false</boolProp>
-          <boolProp name="recycle">true</boolProp>
-          <stringProp name="shareMode">shareMode.all</stringProp>
-          <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">sendOtpIndividualId</stringProp>
-        </CSVDataSet>
-        <hashTree/>
-        <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="Generate UTC Time" enabled="true">
-          <stringProp name="filename"></stringProp>
-          <stringProp name="parameters"></stringProp>
-          <boolProp name="resetInterpreter">false</boolProp>
-          <stringProp name="script">import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.TimeZone;//Set the format for the date-time
-SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd&apos;T&apos;HH:mm:ss.sss&quot;);
-dateFormat.setTimeZone(TimeZone.getTimeZone(&quot;UTC&quot;));// Get the current time in UTC
-Calendar cal = Calendar.getInstance();
-String utcTime = dateFormat.format(cal.getTime());
-vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
-        </BeanShellPreProcessor>
-        <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="VCI - Send OTP Endpoint API" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
@@ -7952,713 +7823,10 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
                 <stringProp name="Argument.value">{&#xd;
   &quot;requestTime&quot;: &quot;${utcTime}Z&quot;,&#xd;
   &quot;request&quot;: {&#xd;
-    &quot;transactionId&quot;: &quot;${tidSendOtpVci}&quot;,&#xd;
-    &quot;individualId&quot;: &quot;${sendOtpIndividualId}&quot;,&#xd;
-    &quot;otpChannels&quot;: [&quot;EMAIL&quot;],&#xd;
-    &quot;captchaToken&quot; : &quot;${captcha}&quot;&#xd;
-  }&#xd;
-} </stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-          <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
-          <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
-          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/v1/esignet/authorization/send-otp</stringProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        </HTTPSamplerProxy>
-        <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-            <collectionProp name="HeaderManager.headers">
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Content-Type</stringProp>
-                <stringProp name="Header.value">application/json</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">X-XSRF-TOKEN</stringProp>
-                <stringProp name="Header.value">${loadCsrfToken}</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Cookie</stringProp>
-                <stringProp name="Header.value">XSRF-TOKEN=${loadCsrfToken}</stringProp>
-              </elementProp>
-              <elementProp name="oauth-details-hash" elementType="Header">
-                <stringProp name="Header.name">oauth-details-hash</stringProp>
-                <stringProp name="Header.value">${hashValue}</stringProp>
-              </elementProp>
-              <elementProp name="oauth-details-key" elementType="Header">
-                <stringProp name="Header.name">oauth-details-key</stringProp>
-                <stringProp name="Header.value">${tidSendOtpVci}</stringProp>
-              </elementProp>
-            </collectionProp>
-          </HeaderManager>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="685365575">&quot;errors&quot;:[]</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">16</intProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion - Response Code" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="49586">200</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">2</intProp>
-          </ResponseAssertion>
-          <hashTree/>
-        </hashTree>
-      </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="VCI - Authentication V2 (Preparation)" enabled="true">
-        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
-          <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
-        </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
-        <boolProp name="ThreadGroup.scheduler">false</boolProp>
-        <stringProp name="ThreadGroup.duration"></stringProp>
-        <stringProp name="ThreadGroup.delay"></stringProp>
-        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
-      </ThreadGroup>
-      <hashTree>
-        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load ClientID From File" enabled="true">
-          <stringProp name="delimiter">,</stringProp>
-          <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="filename">./client_id_esignet.csv</stringProp>
-          <boolProp name="ignoreFirstLine">true</boolProp>
-          <boolProp name="quotedData">false</boolProp>
-          <boolProp name="recycle">true</boolProp>
-          <stringProp name="shareMode">shareMode.all</stringProp>
-          <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">oAuthDetailsEndpointClientId,encodedPrivateKey</stringProp>
-        </CSVDataSet>
-        <hashTree/>
-        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Individual Id From File" enabled="true">
-          <stringProp name="delimiter">,</stringProp>
-          <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="filename">./individualid_esignet.txt</stringProp>
-          <boolProp name="ignoreFirstLine">true</boolProp>
-          <boolProp name="quotedData">false</boolProp>
-          <boolProp name="recycle">true</boolProp>
-          <stringProp name="shareMode">shareMode.all</stringProp>
-          <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">authIndividualId</stringProp>
-        </CSVDataSet>
-        <hashTree/>
-        <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="Generate UTC Time" enabled="true">
-          <stringProp name="filename"></stringProp>
-          <stringProp name="parameters"></stringProp>
-          <boolProp name="resetInterpreter">false</boolProp>
-          <stringProp name="script">import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.TimeZone;//Set the format for the date-time
-SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd&apos;T&apos;HH:mm:ss.sss&quot;);
-dateFormat.setTimeZone(TimeZone.getTimeZone(&quot;UTC&quot;));// Get the current time in UTC
-Calendar cal = Calendar.getInstance();
-String utcTime = dateFormat.format(cal.getTime());
-vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
-        </BeanShellPreProcessor>
-        <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="VCI Authentication V2 - OAuth Details V2 Endpoint API" enabled="true">
-          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&#xd;
-    &quot;requestTime&quot;: &quot;${utcTime}Z&quot;,&#xd;
-    &quot;request&quot;: {&#xd;
-        &quot;clientId&quot;: &quot;${oAuthDetailsEndpointClientId}&quot;,&#xd;
-        &quot;scope&quot;: &quot;${scopeVci}&quot;,&#xd;
-        &quot;responseType&quot;: &quot;code&quot;,&#xd;
-        &quot;redirectUri&quot;: &quot;${redirectUri}&quot;,&#xd;
-        &quot;display&quot;: &quot;popup&quot;,&#xd;
-        &quot;prompt&quot;: &quot;login&quot;,&#xd;
-        &quot;acrValues&quot;: &quot;${acrValues}&quot;,&#xd;
-        &quot;nonce&quot; : &quot;973eieljzng&quot;,&#xd;
-        &quot;state&quot; : &quot;eree2311&quot;,&#xd;
-        &quot;claimsLocales&quot; : &quot;en&quot;,&#xd;
-        &quot;codeChallenge&quot; : &quot;${codeChallenge}&quot;,&#xd;
-        &quot;codeChallengeMethod&quot; : &quot;S256&quot;&#xd;
-    }&#xd;
-}</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-          <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
-          <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
-          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/v1/esignet/authorization/v2/oauth-details</stringProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        </HTTPSamplerProxy>
-        <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-            <collectionProp name="HeaderManager.headers">
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Content-Type</stringProp>
-                <stringProp name="Header.value">application/json</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">X-XSRF-TOKEN</stringProp>
-                <stringProp name="Header.value">${loadCsrfToken}</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Cookie</stringProp>
-                <stringProp name="Header.value">XSRF-TOKEN=${loadCsrfToken}</stringProp>
-              </elementProp>
-            </collectionProp>
-          </HeaderManager>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="685365575">&quot;errors&quot;:[]</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">16</intProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion - Response Code" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="49586">200</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">2</intProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract Captcha" enabled="true">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">captcha</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;captcha.sitekey&quot;:&quot;(.*?)&quot;</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default">Captcha not found</stringProp>
-            <stringProp name="RegexExtractor.match_number">1</stringProp>
-          </RegexExtractor>
-          <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract TransactionID" enabled="true">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">tidAuthVci</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;transactionId&quot;:&quot;(.*?)&quot;</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default">transactionID not found</stringProp>
-            <stringProp name="RegexExtractor.match_number">1</stringProp>
-          </RegexExtractor>
-          <hashTree/>
-          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Generate Code Challenge &amp; Verifier" enabled="true">
-            <stringProp name="scriptLanguage">groovy</stringProp>
-            <stringProp name="parameters"></stringProp>
-            <stringProp name="filename"></stringProp>
-            <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="script">import org.apache.commons.codec.binary.Base64;
-import java.security.SecureRandom;
-import java.security.MessageDigest;
-
-SecureRandom secureRandom = new SecureRandom();
-byte[] codeVerifierBytes = new byte[32]; // 256 bits
-secureRandom.nextBytes(codeVerifierBytes);
-
-String codeVerifier = Base64.encodeBase64URLSafeString(codeVerifierBytes);
-vars.put(&quot;codeVerifier&quot;, codeVerifier);
-log.info(&quot;codeVerifier: &quot; + codeVerifier);
-
-MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);
-byte[] hash = digest.digest(codeVerifier.getBytes(&quot;UTF-8&quot;));
-String codeChallenge = Base64.encodeBase64URLSafeString(hash);
-vars.put(&quot;codeChallenge&quot;, codeChallenge);
-log.info(&quot;codeChallenge: &quot; + codeChallenge);
-</stringProp>
-          </JSR223PreProcessor>
-          <hashTree/>
-        </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="VCI Authentication V2 - Send OTP Endpoint API" enabled="true">
-          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&#xd;
-  &quot;requestTime&quot;: &quot;${utcTime}Z&quot;,&#xd;
-  &quot;request&quot;: {&#xd;
-    &quot;transactionId&quot;: &quot;${tidAuthVci}&quot;,&#xd;
-    &quot;individualId&quot;: &quot;${authIndividualId}&quot;,&#xd;
-    &quot;otpChannels&quot;: [&quot;EMAIL&quot;],&#xd;
-    &quot;captchaToken&quot; : &quot;${captcha}&quot;&#xd;
-  }&#xd;
-} </stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-          <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
-          <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
-          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/v1/esignet/authorization/send-otp</stringProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        </HTTPSamplerProxy>
-        <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-            <collectionProp name="HeaderManager.headers">
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Content-Type</stringProp>
-                <stringProp name="Header.value">application/json</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">X-XSRF-TOKEN</stringProp>
-                <stringProp name="Header.value">${loadCsrfToken}</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Cookie</stringProp>
-                <stringProp name="Header.value">XSRF-TOKEN=${loadCsrfToken}</stringProp>
-              </elementProp>
-              <elementProp name="oauth-details-hash" elementType="Header">
-                <stringProp name="Header.name">oauth-details-hash</stringProp>
-                <stringProp name="Header.value">${hashValue}</stringProp>
-              </elementProp>
-              <elementProp name="oauth-details-key" elementType="Header">
-                <stringProp name="Header.name">oauth-details-key</stringProp>
-                <stringProp name="Header.value">${tidAuthVci}</stringProp>
-              </elementProp>
-            </collectionProp>
-          </HeaderManager>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="685365575">&quot;errors&quot;:[]</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">16</intProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion - Response Code" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="49586">200</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">2</intProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Generate Hash Value" enabled="true">
-            <stringProp name="scriptLanguage">javascript</stringProp>
-            <stringProp name="parameters"></stringProp>
-            <stringProp name="filename"></stringProp>
-            <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="script">// Import the required Java classes
-var Base64 = Java.type(&apos;java.util.Base64&apos;);
-var StandardCharsets = Java.type(&apos;java.nio.charset.StandardCharsets&apos;);
-
-// Retrieve the previous response value
-var jsonResponse = prev.getResponseDataAsString();
-
-// Print the previous response value
-log.info(&quot;Previous Response: &quot; + jsonResponse);
-
-// Parse the JSON response
-var jsonObject = JSON.parse(jsonResponse);
-var responseObjectString = JSON.stringify(jsonObject.response);
-
-log.info(&quot;Previous Response: &quot; + responseObjectString);
-
-// Convert JSON to base64 URL-encoded SHA-256 hash
-var sha256Hash = hashSHA256(responseObjectString);
-var base64UrlEncodedHash = encodeBase64Url(sha256Hash);
-
-//Print the sha256 value
-log.info(&quot;sha256Hash Value: &quot; + sha256Hash);
-
-// Print the final hash value
-log.info(&quot;Final Hash Value: &quot; + base64UrlEncodedHash);
-
-// Set the new variable value in JMeter
-vars.put(&quot;hashValue&quot;, base64UrlEncodedHash);
-
-// Function to compute the SHA-256 hash
-function hashSHA256(value) {
-   var messageDigest = Java.type(&apos;java.security.MessageDigest&apos;).getInstance(&apos;SHA-256&apos;);
-   var bytes = (value).getBytes(StandardCharsets.UTF_8);
-   var digest = messageDigest.digest(bytes);
-   return digest;
-}
-
-// Function to base64 URL-encode the hash value
-function encodeBase64Url(value) {
-   var base64 = Base64.getUrlEncoder().withoutPadding().encodeToString(value);
-   return base64;
-}</stringProp>
-          </JSR223PreProcessor>
-          <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract TransactionID" enabled="true">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">tidSendOtpVci</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;transactionId&quot;:&quot;(.*?)&quot;</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default">transactionID not found</stringProp>
-            <stringProp name="RegexExtractor.match_number">1</stringProp>
-          </RegexExtractor>
-          <hashTree/>
-          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="Store TransactionID To File" enabled="true">
-            <stringProp name="filename"></stringProp>
-            <stringProp name="parameters"></stringProp>
-            <boolProp name="resetInterpreter">false</boolProp>
-            <stringProp name="script">${__StringToFile(transaction_id_auth_endpoint_vci.txt,${authIndividualId}\,${tidSendOtpVci}\,${hashValue}\n,true,)}</stringProp>
-          </BeanShellPostProcessor>
-          <hashTree/>
-        </hashTree>
-      </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="VCI - Authentication V2 (Execution)" enabled="true">
-        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
-          <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
-        </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
-        <boolProp name="ThreadGroup.scheduler">false</boolProp>
-        <stringProp name="ThreadGroup.duration"></stringProp>
-        <stringProp name="ThreadGroup.delay"></stringProp>
-        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
-      </ThreadGroup>
-      <hashTree>
-        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load TransactionID From File" enabled="true">
-          <stringProp name="delimiter">,</stringProp>
-          <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="filename">./transaction_id_auth_endpoint_vci.txt</stringProp>
-          <boolProp name="ignoreFirstLine">true</boolProp>
-          <boolProp name="quotedData">false</boolProp>
-          <boolProp name="recycle">true</boolProp>
-          <stringProp name="shareMode">shareMode.all</stringProp>
-          <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">authIndividualId,tidAuthVci,hashValue</stringProp>
-        </CSVDataSet>
-        <hashTree/>
-        <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="Generate UTC Time" enabled="true">
-          <stringProp name="filename"></stringProp>
-          <stringProp name="parameters"></stringProp>
-          <boolProp name="resetInterpreter">false</boolProp>
-          <stringProp name="script">import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.TimeZone;//Set the format for the date-time
-SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd&apos;T&apos;HH:mm:ss.sss&quot;);
-dateFormat.setTimeZone(TimeZone.getTimeZone(&quot;UTC&quot;));// Get the current time in UTC
-Calendar cal = Calendar.getInstance();
-String utcTime = dateFormat.format(cal.getTime());
-vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
-        </BeanShellPreProcessor>
-        <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="VCI - Authentication V2 Endpoint API" enabled="true">
-          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&#xd;
-  &quot;requestTime&quot;: &quot;${utcTime}Z&quot;,&#xd;
-  &quot;request&quot;: {&#xd;
-    &quot;transactionId&quot;: &quot;${tidAuthVci}&quot;,&#xd;
-    &quot;individualId&quot;: &quot;${authIndividualId}&quot;,&#xd;
-    &quot;challengeList&quot;: [&#xd;
-      {&#xd;
-        &quot;authFactorType&quot;: &quot;OTP&quot;,&#xd;
-        &quot;challenge&quot;: &quot;111111&quot;,&#xd;
-        &quot;format&quot;: &quot;alpha-numeric&quot;&#xd;
-      }&#xd;
-    ]&#xd;
-  }&#xd;
-}</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-          <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
-          <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
-          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/v1/esignet/authorization/v2/authenticate</stringProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        </HTTPSamplerProxy>
-        <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-            <collectionProp name="HeaderManager.headers">
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Content-Type</stringProp>
-                <stringProp name="Header.value">application/json</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">X-XSRF-TOKEN</stringProp>
-                <stringProp name="Header.value">${loadCsrfToken}</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Cookie</stringProp>
-                <stringProp name="Header.value">XSRF-TOKEN=${loadCsrfToken}</stringProp>
-              </elementProp>
-              <elementProp name="oauth-details-hash" elementType="Header">
-                <stringProp name="Header.name">oauth-details-hash</stringProp>
-                <stringProp name="Header.value">${hashValue}</stringProp>
-              </elementProp>
-              <elementProp name="oauth-details-key" elementType="Header">
-                <stringProp name="Header.name">oauth-details-key</stringProp>
-                <stringProp name="Header.value">${tidSendOtpVci}</stringProp>
-              </elementProp>
-            </collectionProp>
-          </HeaderManager>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="685365575">&quot;errors&quot;:[]</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">16</intProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion - Response Code" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="49586">200</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">2</intProp>
-          </ResponseAssertion>
-          <hashTree/>
-        </hashTree>
-      </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="VCI - Authorization Code (Preparation)" enabled="true">
-        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
-          <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
-        </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
-        <boolProp name="ThreadGroup.scheduler">false</boolProp>
-        <stringProp name="ThreadGroup.duration"></stringProp>
-        <stringProp name="ThreadGroup.delay"></stringProp>
-        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
-      </ThreadGroup>
-      <hashTree>
-        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load ClientID From File" enabled="true">
-          <stringProp name="delimiter">,</stringProp>
-          <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="filename">./client_id_esignet.csv</stringProp>
-          <boolProp name="ignoreFirstLine">true</boolProp>
-          <boolProp name="quotedData">false</boolProp>
-          <boolProp name="recycle">true</boolProp>
-          <stringProp name="shareMode">shareMode.all</stringProp>
-          <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">oAuthDetailsEndpointClientId,encodedPrivateKey</stringProp>
-        </CSVDataSet>
-        <hashTree/>
-        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Individual Id From File" enabled="true">
-          <stringProp name="delimiter">,</stringProp>
-          <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="filename">./individualid_esignet.txt</stringProp>
-          <boolProp name="ignoreFirstLine">true</boolProp>
-          <boolProp name="quotedData">false</boolProp>
-          <boolProp name="recycle">true</boolProp>
-          <stringProp name="shareMode">shareMode.all</stringProp>
-          <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">authCodeIndividualId</stringProp>
-        </CSVDataSet>
-        <hashTree/>
-        <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="Generate UTC Time" enabled="true">
-          <stringProp name="filename"></stringProp>
-          <stringProp name="parameters"></stringProp>
-          <boolProp name="resetInterpreter">false</boolProp>
-          <stringProp name="script">import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.TimeZone;//Set the format for the date-time
-SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd&apos;T&apos;HH:mm:ss.sss&quot;);
-dateFormat.setTimeZone(TimeZone.getTimeZone(&quot;UTC&quot;));// Get the current time in UTC
-Calendar cal = Calendar.getInstance();
-String utcTime = dateFormat.format(cal.getTime());
-vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
-        </BeanShellPreProcessor>
-        <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="VCI Authorization Code - OAuth Details V2 Endpoint API" enabled="true">
-          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&#xd;
-    &quot;requestTime&quot;: &quot;${utcTime}Z&quot;,&#xd;
-    &quot;request&quot;: {&#xd;
-        &quot;clientId&quot;: &quot;${oAuthDetailsEndpointClientId}&quot;,&#xd;
-        &quot;scope&quot;: &quot;${scopeVci}&quot;,&#xd;
-        &quot;responseType&quot;: &quot;code&quot;,&#xd;
-        &quot;redirectUri&quot;: &quot;${redirectUri}&quot;,&#xd;
-        &quot;display&quot;: &quot;popup&quot;,&#xd;
-        &quot;prompt&quot;: &quot;login&quot;,&#xd;
-        &quot;acrValues&quot;: &quot;${acrValues}&quot;,&#xd;
-        &quot;nonce&quot; : &quot;973eieljzng&quot;,&#xd;
-        &quot;state&quot; : &quot;eree2311&quot;,&#xd;
-        &quot;claimsLocales&quot; : &quot;en&quot;,&#xd;
-        &quot;codeChallenge&quot; : &quot;${codeChallenge}&quot;,&#xd;
-        &quot;codeChallengeMethod&quot; : &quot;S256&quot;&#xd;
-    }&#xd;
-}</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-          <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
-          <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
-          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/v1/esignet/authorization/v2/oauth-details</stringProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        </HTTPSamplerProxy>
-        <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-            <collectionProp name="HeaderManager.headers">
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Content-Type</stringProp>
-                <stringProp name="Header.value">application/json</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">X-XSRF-TOKEN</stringProp>
-                <stringProp name="Header.value">${loadCsrfToken}</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Cookie</stringProp>
-                <stringProp name="Header.value">XSRF-TOKEN=${loadCsrfToken}</stringProp>
-              </elementProp>
-            </collectionProp>
-          </HeaderManager>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="685365575">&quot;errors&quot;:[]</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">16</intProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion - Response Code" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="49586">200</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">2</intProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract Captcha" enabled="true">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">captcha</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;captcha.sitekey&quot;:&quot;(.*?)&quot;</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default">Captcha not found</stringProp>
-            <stringProp name="RegexExtractor.match_number">1</stringProp>
-          </RegexExtractor>
-          <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract TransactionID" enabled="true">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">tidVci</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;transactionId&quot;:&quot;(.*?)&quot;</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default">transactionID not found</stringProp>
-            <stringProp name="RegexExtractor.match_number">1</stringProp>
-          </RegexExtractor>
-          <hashTree/>
-          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Generate Code Challenge &amp; Verifier" enabled="true">
-            <stringProp name="scriptLanguage">groovy</stringProp>
-            <stringProp name="parameters"></stringProp>
-            <stringProp name="filename"></stringProp>
-            <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="script">import org.apache.commons.codec.binary.Base64;
-import java.security.SecureRandom;
-import java.security.MessageDigest;
-
-SecureRandom secureRandom = new SecureRandom();
-byte[] codeVerifierBytes = new byte[32]; // 256 bits
-secureRandom.nextBytes(codeVerifierBytes);
-
-String codeVerifier = Base64.encodeBase64URLSafeString(codeVerifierBytes);
-vars.put(&quot;codeVerifier&quot;, codeVerifier);
-log.info(&quot;codeVerifier: &quot; + codeVerifier);
-
-MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);
-byte[] hash = digest.digest(codeVerifier.getBytes(&quot;UTF-8&quot;));
-String codeChallenge = Base64.encodeBase64URLSafeString(hash);
-vars.put(&quot;codeChallenge&quot;, codeChallenge);
-log.info(&quot;codeChallenge: &quot; + codeChallenge);
-</stringProp>
-          </JSR223PreProcessor>
-          <hashTree/>
-        </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="VCI Authorization Code - Send OTP Endpoint API" enabled="true">
-          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&#xd;
-  &quot;requestTime&quot;: &quot;${utcTime}Z&quot;,&#xd;
-  &quot;request&quot;: {&#xd;
     &quot;transactionId&quot;: &quot;${tidVci}&quot;,&#xd;
-    &quot;individualId&quot;: &quot;${authCodeIndividualId}&quot;,&#xd;
+    &quot;individualId&quot;: &quot;${credentialIndividualId}&quot;,&#xd;
     &quot;otpChannels&quot;: [&quot;EMAIL&quot;],&#xd;
-    &quot;captchaToken&quot; : &quot;${captcha}&quot;&#xd;
+    &quot;captchaToken&quot; : &quot;&quot;&#xd;
   }&#xd;
 } </stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -8784,7 +7952,7 @@ function encodeBase64Url(value) {
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="VCI Authorization Code - Authentication V2 Endpoint API" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="VCI - Authentication V2 Endpoint API" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -8794,7 +7962,7 @@ function encodeBase64Url(value) {
   &quot;requestTime&quot;: &quot;${utcTime}Z&quot;,&#xd;
   &quot;request&quot;: {&#xd;
     &quot;transactionId&quot;: &quot;${tidSendOtpVci}&quot;,&#xd;
-    &quot;individualId&quot;: &quot;${authCodeIndividualId}&quot;,&#xd;
+    &quot;individualId&quot;: &quot;${credentialIndividualId}&quot;,&#xd;
     &quot;challengeList&quot;: [&#xd;
       {&#xd;
         &quot;authFactorType&quot;: &quot;OTP&quot;,&#xd;
@@ -8868,55 +8036,16 @@ function encodeBase64Url(value) {
             <intProp name="Assertion.test_type">2</intProp>
           </ResponseAssertion>
           <hashTree/>
-          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="Store TransactionID To File" enabled="true">
-            <stringProp name="filename"></stringProp>
-            <stringProp name="parameters"></stringProp>
-            <boolProp name="resetInterpreter">false</boolProp>
-            <stringProp name="script">${__StringToFile(transaction_id_auth_code_endpoint_vci.txt,${tidSendOtpVci}\,${hashValue}\n,true,)}</stringProp>
-          </BeanShellPostProcessor>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract TransactionID" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+            <stringProp name="RegexExtractor.refname">tidAuthCodeVci</stringProp>
+            <stringProp name="RegexExtractor.regex">&quot;transactionId&quot;:&quot;(.*?)&quot;</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default">transactionID not found</stringProp>
+            <stringProp name="RegexExtractor.match_number">1</stringProp>
+          </RegexExtractor>
           <hashTree/>
         </hashTree>
-      </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="VCI - Authorization Code (Execution)" enabled="true">
-        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
-          <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
-        </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
-        <boolProp name="ThreadGroup.scheduler">false</boolProp>
-        <stringProp name="ThreadGroup.duration"></stringProp>
-        <stringProp name="ThreadGroup.delay"></stringProp>
-        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
-      </ThreadGroup>
-      <hashTree>
-        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load TransactionID From File" enabled="true">
-          <stringProp name="delimiter">,</stringProp>
-          <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="filename">./transaction_id_auth_code_endpoint_vci.txt</stringProp>
-          <boolProp name="ignoreFirstLine">true</boolProp>
-          <boolProp name="quotedData">false</boolProp>
-          <boolProp name="recycle">true</boolProp>
-          <stringProp name="shareMode">shareMode.all</stringProp>
-          <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">tidAuthCodeVci,hashValue</stringProp>
-        </CSVDataSet>
-        <hashTree/>
-        <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="Generate UTC Time" enabled="true">
-          <stringProp name="filename"></stringProp>
-          <stringProp name="parameters"></stringProp>
-          <boolProp name="resetInterpreter">false</boolProp>
-          <stringProp name="script">import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.TimeZone;//Set the format for the date-time
-SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd&apos;T&apos;HH:mm:ss.sss&quot;);
-dateFormat.setTimeZone(TimeZone.getTimeZone(&quot;UTC&quot;));// Get the current time in UTC
-Calendar cal = Calendar.getInstance();
-String utcTime = dateFormat.format(cal.getTime());
-vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
-        </BeanShellPreProcessor>
-        <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="VCI - Authorization Code Endpoint API" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
@@ -9006,557 +8135,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
             <stringProp name="RegexExtractor.match_number">1</stringProp>
           </RegexExtractor>
           <hashTree/>
-          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
-            <stringProp name="ConstantTimer.delay">4000</stringProp>
-          </ConstantTimer>
-          <hashTree/>
         </hashTree>
-      </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="VCI - Token (Preparation)" enabled="true">
-        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
-          <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
-        </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
-        <boolProp name="ThreadGroup.scheduler">false</boolProp>
-        <stringProp name="ThreadGroup.duration"></stringProp>
-        <stringProp name="ThreadGroup.delay"></stringProp>
-        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
-      </ThreadGroup>
-      <hashTree>
-        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load ClientID From File" enabled="true">
-          <stringProp name="delimiter">,</stringProp>
-          <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="filename">./client_id_esignet.csv</stringProp>
-          <boolProp name="ignoreFirstLine">true</boolProp>
-          <boolProp name="quotedData">false</boolProp>
-          <boolProp name="recycle">true</boolProp>
-          <stringProp name="shareMode">shareMode.all</stringProp>
-          <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">oAuthDetailsEndpointClientId,encodedPrivateKey</stringProp>
-        </CSVDataSet>
-        <hashTree/>
-        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Individual Id From File" enabled="true">
-          <stringProp name="delimiter">,</stringProp>
-          <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="filename">./individualid_esignet.txt</stringProp>
-          <boolProp name="ignoreFirstLine">true</boolProp>
-          <boolProp name="quotedData">false</boolProp>
-          <boolProp name="recycle">true</boolProp>
-          <stringProp name="shareMode">shareMode.all</stringProp>
-          <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">tokenIndividualId</stringProp>
-        </CSVDataSet>
-        <hashTree/>
-        <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="Generate UTC Time" enabled="true">
-          <stringProp name="filename"></stringProp>
-          <stringProp name="parameters"></stringProp>
-          <boolProp name="resetInterpreter">false</boolProp>
-          <stringProp name="script">import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.TimeZone;//Set the format for the date-time
-SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd&apos;T&apos;HH:mm:ss.sss&quot;);
-dateFormat.setTimeZone(TimeZone.getTimeZone(&quot;UTC&quot;));// Get the current time in UTC
-Calendar cal = Calendar.getInstance();
-String utcTime = dateFormat.format(cal.getTime());
-vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
-        </BeanShellPreProcessor>
-        <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="VCI Token - OAuth Details V2 Endpoint API" enabled="true">
-          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&#xd;
-    &quot;requestTime&quot;: &quot;${utcTime}Z&quot;,&#xd;
-    &quot;request&quot;: {&#xd;
-        &quot;clientId&quot;: &quot;${oAuthDetailsEndpointClientId}&quot;,&#xd;
-        &quot;scope&quot;: &quot;${scopeVci}&quot;,&#xd;
-        &quot;responseType&quot;: &quot;code&quot;,&#xd;
-        &quot;redirectUri&quot;: &quot;${redirectUri}&quot;,&#xd;
-        &quot;display&quot;: &quot;popup&quot;,&#xd;
-        &quot;prompt&quot;: &quot;login&quot;,&#xd;
-        &quot;acrValues&quot;: &quot;${acrValues}&quot;,&#xd;
-        &quot;nonce&quot; : &quot;973eieljzng&quot;,&#xd;
-        &quot;state&quot; : &quot;eree2311&quot;,&#xd;
-        &quot;claimsLocales&quot; : &quot;en&quot;,&#xd;
-        &quot;codeChallenge&quot; : &quot;${codeChallenge}&quot;,&#xd;
-        &quot;codeChallengeMethod&quot; : &quot;S256&quot;&#xd;
-    }&#xd;
-}</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-          <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
-          <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
-          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/v1/esignet/authorization/v2/oauth-details</stringProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        </HTTPSamplerProxy>
-        <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-            <collectionProp name="HeaderManager.headers">
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Content-Type</stringProp>
-                <stringProp name="Header.value">application/json</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">X-XSRF-TOKEN</stringProp>
-                <stringProp name="Header.value">${loadCsrfToken}</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Cookie</stringProp>
-                <stringProp name="Header.value">XSRF-TOKEN=${loadCsrfToken}</stringProp>
-              </elementProp>
-            </collectionProp>
-          </HeaderManager>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="685365575">&quot;errors&quot;:[]</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">16</intProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion - Response Code" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="49586">200</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">2</intProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract Captcha" enabled="true">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">captcha</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;captcha.sitekey&quot;:&quot;(.*?)&quot;</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default">Captcha not found</stringProp>
-            <stringProp name="RegexExtractor.match_number">1</stringProp>
-          </RegexExtractor>
-          <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract TransactionID" enabled="true">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">tidVci</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;transactionId&quot;:&quot;(.*?)&quot;</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default">transactionID not found</stringProp>
-            <stringProp name="RegexExtractor.match_number">1</stringProp>
-          </RegexExtractor>
-          <hashTree/>
-          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Generate Code Challenge &amp; Verifier" enabled="true">
-            <stringProp name="scriptLanguage">groovy</stringProp>
-            <stringProp name="parameters"></stringProp>
-            <stringProp name="filename"></stringProp>
-            <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="script">import org.apache.commons.codec.binary.Base64;
-import java.security.SecureRandom;
-import java.security.MessageDigest;
-
-SecureRandom secureRandom = new SecureRandom();
-byte[] codeVerifierBytes = new byte[32]; // 256 bits
-secureRandom.nextBytes(codeVerifierBytes);
-
-String codeVerifier = Base64.encodeBase64URLSafeString(codeVerifierBytes);
-vars.put(&quot;codeVerifier&quot;, codeVerifier);
-log.info(&quot;codeVerifier: &quot; + codeVerifier);
-
-MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);
-byte[] hash = digest.digest(codeVerifier.getBytes(&quot;UTF-8&quot;));
-String codeChallenge = Base64.encodeBase64URLSafeString(hash);
-vars.put(&quot;codeChallenge&quot;, codeChallenge);
-log.info(&quot;codeChallenge: &quot; + codeChallenge);
-</stringProp>
-          </JSR223PreProcessor>
-          <hashTree/>
-        </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="VCI Token - Send OTP Endpoint API" enabled="true">
-          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&#xd;
-  &quot;requestTime&quot;: &quot;${utcTime}Z&quot;,&#xd;
-  &quot;request&quot;: {&#xd;
-    &quot;transactionId&quot;: &quot;${tidVci}&quot;,&#xd;
-    &quot;individualId&quot;: &quot;${tokenIndividualId}&quot;,&#xd;
-    &quot;otpChannels&quot;: [&quot;EMAIL&quot;],&#xd;
-    &quot;captchaToken&quot; : &quot;${captcha}&quot;&#xd;
-  }&#xd;
-} </stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-          <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
-          <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
-          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/v1/esignet/authorization/send-otp</stringProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        </HTTPSamplerProxy>
-        <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-            <collectionProp name="HeaderManager.headers">
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Content-Type</stringProp>
-                <stringProp name="Header.value">application/json</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">X-XSRF-TOKEN</stringProp>
-                <stringProp name="Header.value">${loadCsrfToken}</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Cookie</stringProp>
-                <stringProp name="Header.value">XSRF-TOKEN=${loadCsrfToken}</stringProp>
-              </elementProp>
-              <elementProp name="oauth-details-hash" elementType="Header">
-                <stringProp name="Header.name">oauth-details-hash</stringProp>
-                <stringProp name="Header.value">${hashValue}</stringProp>
-              </elementProp>
-              <elementProp name="oauth-details-key" elementType="Header">
-                <stringProp name="Header.name">oauth-details-key</stringProp>
-                <stringProp name="Header.value">${tidVci}</stringProp>
-              </elementProp>
-            </collectionProp>
-          </HeaderManager>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="685365575">&quot;errors&quot;:[]</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">16</intProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion - Response Code" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="49586">200</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">2</intProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract TransactionID" enabled="true">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">tidSendOtpVci</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;transactionId&quot;:&quot;(.*?)&quot;</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default">transactionID not found</stringProp>
-            <stringProp name="RegexExtractor.match_number">1</stringProp>
-          </RegexExtractor>
-          <hashTree/>
-          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Generate Hash Value" enabled="true">
-            <stringProp name="scriptLanguage">javascript</stringProp>
-            <stringProp name="parameters"></stringProp>
-            <stringProp name="filename"></stringProp>
-            <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="script">// Import the required Java classes
-var Base64 = Java.type(&apos;java.util.Base64&apos;);
-var StandardCharsets = Java.type(&apos;java.nio.charset.StandardCharsets&apos;);
-
-// Retrieve the previous response value
-var jsonResponse = prev.getResponseDataAsString();
-
-// Print the previous response value
-log.info(&quot;Previous Response: &quot; + jsonResponse);
-
-// Parse the JSON response
-var jsonObject = JSON.parse(jsonResponse);
-var responseObjectString = JSON.stringify(jsonObject.response);
-
-log.info(&quot;Previous Response: &quot; + responseObjectString);
-
-// Convert JSON to base64 URL-encoded SHA-256 hash
-var sha256Hash = hashSHA256(responseObjectString);
-var base64UrlEncodedHash = encodeBase64Url(sha256Hash);
-
-//Print the sha256 value
-log.info(&quot;sha256Hash Value: &quot; + sha256Hash);
-
-// Print the final hash value
-log.info(&quot;Final Hash Value: &quot; + base64UrlEncodedHash);
-
-// Set the new variable value in JMeter
-vars.put(&quot;hashValue&quot;, base64UrlEncodedHash);
-
-// Function to compute the SHA-256 hash
-function hashSHA256(value) {
-   var messageDigest = Java.type(&apos;java.security.MessageDigest&apos;).getInstance(&apos;SHA-256&apos;);
-   var bytes = (value).getBytes(StandardCharsets.UTF_8);
-   var digest = messageDigest.digest(bytes);
-   return digest;
-}
-
-// Function to base64 URL-encode the hash value
-function encodeBase64Url(value) {
-   var base64 = Base64.getUrlEncoder().withoutPadding().encodeToString(value);
-   return base64;
-}</stringProp>
-          </JSR223PreProcessor>
-          <hashTree/>
-        </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="VCI Token - Authentication V2 Endpoint API" enabled="true">
-          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&#xd;
-  &quot;requestTime&quot;: &quot;${utcTime}Z&quot;,&#xd;
-  &quot;request&quot;: {&#xd;
-    &quot;transactionId&quot;: &quot;${tidSendOtpVci}&quot;,&#xd;
-    &quot;individualId&quot;: &quot;${tokenIndividualId}&quot;,&#xd;
-    &quot;challengeList&quot;: [&#xd;
-      {&#xd;
-        &quot;authFactorType&quot;: &quot;OTP&quot;,&#xd;
-        &quot;challenge&quot;: &quot;111111&quot;,&#xd;
-        &quot;format&quot;: &quot;alpha-numeric&quot;&#xd;
-      }&#xd;
-    ]&#xd;
-  }&#xd;
-}</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-          <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
-          <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
-          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/v1/esignet/authorization/v2/authenticate</stringProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        </HTTPSamplerProxy>
-        <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-            <collectionProp name="HeaderManager.headers">
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Content-Type</stringProp>
-                <stringProp name="Header.value">application/json</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">X-XSRF-TOKEN</stringProp>
-                <stringProp name="Header.value">${loadCsrfToken}</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Cookie</stringProp>
-                <stringProp name="Header.value">XSRF-TOKEN=${loadCsrfToken}</stringProp>
-              </elementProp>
-              <elementProp name="oauth-details-hash" elementType="Header">
-                <stringProp name="Header.name">oauth-details-hash</stringProp>
-                <stringProp name="Header.value">${hashValue}</stringProp>
-              </elementProp>
-              <elementProp name="oauth-details-key" elementType="Header">
-                <stringProp name="Header.name">oauth-details-key</stringProp>
-                <stringProp name="Header.value">${tidSendOtpVci}</stringProp>
-              </elementProp>
-            </collectionProp>
-          </HeaderManager>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="685365575">&quot;errors&quot;:[]</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">16</intProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion - Response Code" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="49586">200</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">2</intProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract TransactionID" enabled="true">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">tidAuthCodeVci</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;transactionId&quot;:&quot;(.*?)&quot;</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default">transactionID not found</stringProp>
-            <stringProp name="RegexExtractor.match_number">1</stringProp>
-          </RegexExtractor>
-          <hashTree/>
-        </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="VCI Token - Authorization Code Endpoint API" enabled="true">
-          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&#xd;
-  &quot;requestTime&quot;: &quot;${utcTime}Z&quot;,&#xd;
-  &quot;request&quot;: {&#xd;
-    &quot;transactionId&quot;: &quot;${tidAuthCodeVci}&quot;,&#xd;
-    &quot;permittedAuthorizeScopes&quot;: [],&#xd;
-    &quot;acceptedClaims&quot;: [&#xd;
-      ${acceptedClaims}&#xd;
-    ]&#xd;
-  }&#xd;
-}</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-          <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
-          <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
-          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/v1/esignet/authorization/auth-code</stringProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
-        </HTTPSamplerProxy>
-        <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-            <collectionProp name="HeaderManager.headers">
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Content-Type</stringProp>
-                <stringProp name="Header.value">application/json</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">X-XSRF-TOKEN</stringProp>
-                <stringProp name="Header.value">${loadCsrfToken}</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Cookie</stringProp>
-                <stringProp name="Header.value">XSRF-TOKEN=${loadCsrfToken}</stringProp>
-              </elementProp>
-              <elementProp name="oauth-details-hash" elementType="Header">
-                <stringProp name="Header.name">oauth-details-hash</stringProp>
-                <stringProp name="Header.value">${hashValue}</stringProp>
-              </elementProp>
-              <elementProp name="oauth-details-key" elementType="Header">
-                <stringProp name="Header.name">oauth-details-key</stringProp>
-                <stringProp name="Header.value">${tidAuthCodeVci}</stringProp>
-              </elementProp>
-            </collectionProp>
-          </HeaderManager>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="685365575">&quot;errors&quot;:[]</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">16</intProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion - Response Code" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="49586">200</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">2</intProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract Code" enabled="true">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">codeVci</stringProp>
-            <stringProp name="RegexExtractor.regex">&quot;code&quot;:&quot;(.*?)&quot;</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default">Code not found</stringProp>
-            <stringProp name="RegexExtractor.match_number">1</stringProp>
-          </RegexExtractor>
-          <hashTree/>
-          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="Store TransactionID To File" enabled="true">
-            <stringProp name="filename"></stringProp>
-            <stringProp name="parameters"></stringProp>
-            <boolProp name="resetInterpreter">false</boolProp>
-            <stringProp name="script">${__StringToFile(transaction_id_token_endpoint_vci.txt,${oAuthDetailsEndpointClientId}\,${encodedPrivateKey}\,${codeVci}\,${codeVerifier}\n,true,)}</stringProp>
-          </BeanShellPostProcessor>
-          <hashTree/>
-        </hashTree>
-      </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="VCI - Token (Execution)" enabled="true">
-        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
-          <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
-        </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
-        <boolProp name="ThreadGroup.scheduler">false</boolProp>
-        <stringProp name="ThreadGroup.duration"></stringProp>
-        <stringProp name="ThreadGroup.delay"></stringProp>
-        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
-      </ThreadGroup>
-      <hashTree>
-        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load TransactionID From File" enabled="true">
-          <stringProp name="delimiter">,</stringProp>
-          <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="filename">./transaction_id_token_endpoint_vci.txt</stringProp>
-          <boolProp name="ignoreFirstLine">true</boolProp>
-          <boolProp name="quotedData">false</boolProp>
-          <boolProp name="recycle">true</boolProp>
-          <stringProp name="shareMode">shareMode.all</stringProp>
-          <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">tokenClientId,encodedPrivateKey,tokencodeVci,codeVerifier</stringProp>
-        </CSVDataSet>
-        <hashTree/>
-        <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="Generate UTC Time" enabled="true">
-          <stringProp name="filename"></stringProp>
-          <stringProp name="parameters"></stringProp>
-          <boolProp name="resetInterpreter">false</boolProp>
-          <stringProp name="script">import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.TimeZone;//Set the format for the date-time
-SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd&apos;T&apos;HH:mm:ss.sss&quot;);
-dateFormat.setTimeZone(TimeZone.getTimeZone(&quot;UTC&quot;));// Get the current time in UTC
-Calendar cal = Calendar.getInstance();
-String utcTime = dateFormat.format(cal.getTime());
-vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
-        </BeanShellPreProcessor>
-        <hashTree/>
         <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="Generate Client Assertion" enabled="true">
           <stringProp name="cacheKey">true</stringProp>
           <stringProp name="filename"></stringProp>
@@ -9576,9 +8155,8 @@ import java.security.KeyPair;
 
 java.security.Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 
-String clientId = vars.get(&quot;tokenClientId&quot;) ; 
+String clientId = vars.get(&quot;oAuthDetailsEndpointClientId&quot;) ; 
 log.info(&quot;clientId: &quot; + clientId);
-
 
 String pemPrivateKey = &quot;-----BEGIN RSA PRIVATE KEY-----\n&quot;+ vars.get(&quot;encodedPrivateKey&quot;) +&quot;\n-----END RSA PRIVATE KEY-----&quot; ;
 
@@ -9627,14 +8205,14 @@ log.info(&quot;clientAssertionJWT: ${vars.get(&quot;clientAssertionJWT&quot;)}&q
               </elementProp>
               <elementProp name="code" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">${tokencodeVci}</stringProp>
+                <stringProp name="Argument.value">${codeVci}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">code</stringProp>
               </elementProp>
               <elementProp name="client_id" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">${tokenClientId}</stringProp>
+                <stringProp name="Argument.value">${oAuthDetailsEndpointClientId}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">client_id</stringProp>
@@ -9713,9 +8291,203 @@ log.info(&quot;clientAssertionJWT: ${vars.get(&quot;clientAssertionJWT&quot;)}&q
             <intProp name="Assertion.test_type">2</intProp>
           </ResponseAssertion>
           <hashTree/>
-          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
-            <stringProp name="ConstantTimer.delay">${delay}</stringProp>
-          </ConstantTimer>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract Access Token" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+            <stringProp name="RegexExtractor.refname">accessToken</stringProp>
+            <stringProp name="RegexExtractor.regex">&quot;access_token&quot;:&quot;(.*?)&quot;</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default">access_token not found</stringProp>
+            <stringProp name="RegexExtractor.match_number">1</stringProp>
+          </RegexExtractor>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract Cnonce" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+            <stringProp name="RegexExtractor.refname">cNonce</stringProp>
+            <stringProp name="RegexExtractor.regex">&quot;c_nonce&quot;:&quot;(.*?)&quot;</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default">cNonce not found</stringProp>
+            <stringProp name="RegexExtractor.match_number">1</stringProp>
+          </RegexExtractor>
+          <hashTree/>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Generate Proof JWT" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">// Import necessary libraries
+import java.security.KeyFactory;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.gen.RSAKeyGenerator;
+import com.nimbusds.jose.util.JSONObjectUtils;
+import net.minidev.json.JSONObject;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import java.security.PrivateKey;
+import java.security.spec.InvalidKeySpecException;
+import io.jsonwebtoken.*;
+import java.util.Date;
+import java.security.KeyPair;
+
+def keyPair = Keys.keyPairFor(SignatureAlgorithm.RS256)
+def privateKey = keyPair.private
+def publicKey = keyPair.public
+
+vars.put(&quot;holderPrivateKey&quot;, privateKey.getEncoded().encodeBase64().toString())
+
+// Create JSON representation of RSA public key
+def rsaPublicKeyJson = [
+    &quot;kty&quot;: &quot;RSA&quot;,
+    &quot;n&quot;  : Base64.getUrlEncoder().withoutPadding().encodeToString(publicKey.getModulus().toByteArray()),
+    &quot;e&quot;  : Base64.getUrlEncoder().withoutPadding().encodeToString(publicKey.getPublicExponent().toByteArray()),
+    &quot;alg&quot;: &quot;RS256&quot;,
+    &quot;use&quot;: &quot;sig&quot;
+]
+
+vars.put(&quot;holderPublicKey&quot;, JSONObjectUtils.toJSONString(rsaPublicKeyJson))
+// Set headers for JWT
+def header = [
+    &quot;alg&quot;: &quot;RS256&quot;,
+    &quot;typ&quot;: &quot;openid4vci-proof+jwt&quot;,
+    &quot;jwk&quot;: rsaPublicKeyJson
+]
+
+
+String audience = &quot;${protocol}&quot;+ &quot;:&quot; + &quot;//&quot; + &quot;${serverIpEsignet}&quot; +&quot;/v1/esignet&quot; ;
+log.info(&quot;audience: &quot; + audience);
+String clientId =  vars.get(&quot;oAuthDetailsEndpointClientId&quot;) ; 
+log.info(&quot;clientId: &quot; + clientId);
+long nowMillis = System.currentTimeMillis();
+Date now = new Date(nowMillis);
+
+// Set JWT payload
+def payload = [
+    &quot;nonce&quot;: vars.get(&quot;cNonce&quot;) 
+]
+
+//Build the JWT with the JwtBuilder
+JwtBuilder builder = Jwts.builder()
+			  .setHeader(header)
+			  .setClaims(payload)
+                .setIssuedAt(now)
+                .setIssuer(clientId)
+                .setAudience(audience)
+                .setExpiration(new Date(System.currentTimeMillis() + 600000))
+                .signWith(SignatureAlgorithm.RS256,privateKey);
+
+String JWT = builder.compact().toString();
+vars.put(&quot;proofJwt&quot;, JWT)
+log.info(&quot;proofJwt: ${vars.get(&quot;proofJwt&quot;)}&quot;)
+</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="Store TransactionID To File" enabled="true">
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="script">${__StringToFile(accesstoken_proofjwt_credential_endpoint_vci.txt,${accessToken}\,${proofJwt}\n,true,)}</stringProp>
+          </BeanShellPostProcessor>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="VCI - Get Credential (Execution)" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Access Token and Proof Jwt From File" enabled="true">
+          <stringProp name="delimiter">,</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="filename">./accesstoken_proofjwt_credential_endpoint_vci.txt</stringProp>
+          <boolProp name="ignoreFirstLine">true</boolProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="variableNames">accessToken,proofJwt</stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="VCI - Get Credential Endpoint API" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;format&quot;: &quot;ldp_vc&quot;,&#xd;
+    &quot;credential_definition&quot; : { &quot;type&quot; : [&quot;VerifiableCredential&quot;, &quot;MOSIPVerifiableCredential&quot;], &quot;@context&quot; : [&quot;https://www.w3.org/2018/credentials/v1&quot;]},&#xd;
+    &quot;proof&quot;: {&#xd;
+        &quot;proof_type&quot;: &quot;jwt&quot;,&#xd;
+        &quot;jwt&quot;: &quot;${proofJwt}&quot;&#xd;
+    }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
+          <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/v1/esignet/vci/credential</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-XSRF-TOKEN</stringProp>
+                <stringProp name="Header.value">${loadCsrfToken}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Cookie</stringProp>
+                <stringProp name="Header.value">XSRF-TOKEN=${loadCsrfToken}</stringProp>
+              </elementProp>
+              <elementProp name="Authorization" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">Bearer ${accessToken}</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="1850341991">{&quot;format&quot;:&quot;ldp_vc&quot;,&quot;credential&quot;:</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion - Response Code" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
           <hashTree/>
         </hashTree>
       </hashTree>

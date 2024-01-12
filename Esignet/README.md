@@ -3,7 +3,8 @@
 * This folder contains performance helper script and test script of below API endpoint categories.
     1. Management API Endpoints
     2. UI API Endpoints
-    3. OIDC API Endpoints
+    3. OIDC API Endpoints 
+    4. VCI API Endpoint
 
 * Open source Tools used,
     1. [Apache JMeter](https://jmeter.apache.org/)
@@ -133,4 +134,9 @@
 
 *  OIDC - Configuration (Execution) : Open ID Connect dynamic provider discovery is not supported currently, this endpoint is only for facilitating the OIDC provider details in a standard way.
 
-*  OIDC - JSON Web Key Set (Execution) : Endpoint to fetch all the public keys of the Esignet server.Returns public key set in the JWKS format.
+*  OIDC - JSON Web Key Set (Execution) : Endpoint to fetch all the public keys of the Esignet server.Returns public key set in the JWKS format. 
+
+### Execution points for Esignet VCI API 
+* VCI - Get Credential (Praparation) - For the preparation we need 5 api's OAuth Details, Send OTP, Authentication, Authorization Code and Token Endpoint api from which a access token will be generated. Will also use a JSR223 Post processor in which we are having a groovy code which is generating a proof jwt value which will be used in the execution. Both access token and proof jwt values will be stored in a text file which will be used for execution.
+
+* VCI - Get Credential (Execution) - In this thread group will have the get credential endpoint API for execution which will use the generated access token and proof jwt values from the preparation part. We cant use the preparation file for multiple runs so the total number of samples generated from preparation should be equal or higher in number as compared to execution.
