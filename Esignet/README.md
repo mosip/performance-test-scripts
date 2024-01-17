@@ -4,8 +4,8 @@
     1. Management API Endpoints
     2. UI API Endpoints
     3. OIDC API Endpoints 
-    4. Wallet Binding Endpoints
-
+    4. Wallet Binding Endpoints 
+    5. VCI API Endpoint
 
 * Open source Tools used,
     1. [Apache JMeter](https://jmeter.apache.org/)
@@ -22,13 +22,15 @@
 
 * Create Identities in MOSIP Authentication System (Setup) : This thread contains the authorization api's for regproc and idrepo from which the auth token will be generated. There is set of 4 api's generate RID, generate UIN, add identity and add VID. From here we will get the VID which can be further used as individual id. These 4 api's are present in the loop controller where we can define the number of samples for creating identities in which "addIdentitySetup" is used as a variable.
 
-* Create OIDC Client in MOSIP Authentication System (Setup) : This thread contains a JSR223 sampler(Generate Key Pair) from which will get a public-private key pair. The public key generated will be used in the OIDC client api to generate client id's  which will be registered for both IDA and eSignet. The private key generated from the sampler will be used in another JSR223 sampler(Generate Client Assertion) present in the OIDC Token (Execution). Generated client id's and there respective private key will be stored in a file which will be used further in the required api's.
+
+* Create OIDC Client in MOSIP Authentication System (Setup) : This thread contains a JSR223 sampler(Generate Key Pair) from which will get a public-private key pair. The public key generated will be used in the OIDC client api to generate client id's  which will be registered for both IDA and Esignet. The private key generated from the sampler will be used in another JSR223 sampler(Generate Client Assertion) present in the OIDC Token (Execution). Generated client id's and there respective private key will be stored in a file which will be used further in the required api's.
+
 
 * In the above Create OIDC Client in MOSIP Authentication System (Setup) check for the Policy name and Auth partner id for the particular env in which we are executing the scripts. The policy name provided must be associated with the correct Auth partner id.
 
 * For execution purpose neeed to check for the mentioned properties: 
 
-   * eSignet default properties: Update the value for the properties according to the execution setup. Perform the execution for eSignet api's with redis setup. So check for the redis setup accordingly.
+   * esignet default properties: Update the value for the properties according to the execution setup. Perform the execution for Esignet api's with redis setup. So check for the redis setup accordingly.
 
           mosip.esignet.cache.size - Enabled while not using the redis setup. Can keep the cache size around more than 100k.
           mosip.esignet.cache.expire-in-seconds - 86400
@@ -85,14 +87,18 @@
     <version>9.25.6</version>
 </dependency>
 
+
 ### Execution points for eSignet Management API's
+
 * Management - Create OIDC Client (Execution) : This thread group will directly execute in which we are using a counter which will generate unique client id. Because we can't generate same duplicate cliend id.
 * Management - Update OIDC Client : 
    * Management Update OIDC Client (Preparation) - In this the above mentioned Create OIDC Client API will be used to generate a large number of OIDC client id samples which will get stored in a file and will be used in the execution.
    * Management Update OIDC Client (Execution) - Thread will use the client id file generated in the preparation part. We can reuse the file for multiple runs and the number of preparation samples should be greater or equal to the number of execution samples.
 
 
+
 ### Execution points for eSignet UI API's
+
 *  UI - OAuth Details : 
    * OAuth Details (Execution) - Client id created from Create OIDC Client in MOSIP Authentication System (Setup) will be loaded. Total samples created during execution can be higher in number as compared to the samples present in the file.
 
@@ -124,7 +130,9 @@
    * Link Authorization Code (Preparation) - This thread includes 6 api's OAuth Details, Generate Link Code, Link Transaction, Send OTP Linked Auth, linked authenication and linked consent api. Transaction id and linked code must be same as the one received from oauth-details and generate link code api respectively.
    * Link Authorization Code (Execution) - Transaction id and linked code will be used from the preparation part.
 
+
 ### Execution points for eSignet OIDC API's
+
 *  OIDC - Authorization : Its a GET API with no preparations and application will do a browser redirect to this endpoint with all required details passed as query parameters.
 
 *  OIDC - Token :
@@ -137,7 +145,13 @@
 
 *  OIDC - Configuration (Execution) : Open ID Connect dynamic provider discovery is not supported currently, this endpoint is only for facilitating the OIDC provider details in a standard way.
 
-*  OIDC - JSON Web Key Set (Execution) : Endpoint to fetch all the public keys of the eSignet server.Returns public key set in the JWKS format.
+
+*  OIDC - JSON Web Key Set (Execution) : Endpoint to fetch all the public keys of the Esignet server.Returns public key set in the JWKS format. 
+
+### Execution points for eSignet VCI API 
+* VCI - Get Credential (Praparation) - For the preparation we need 5 api's OAuth Details, Send OTP, Authentication, Authorization Code and Token Endpoint api from which a access token will be generated. Will also use a JSR223 Post processor in which we are having a groovy code which is generating a proof jwt value which will be used in the execution. Both access token and proof jwt values will be stored in a text file which will be used for execution.
+
+* VCI - Get Credential (Execution) - In this thread group will have the get credential endpoint API for execution which will use the generated access token and proof jwt values from the preparation part. We cant use the preparation file for multiple runs so the total number of samples generated from preparation should be equal or higher in number as compared to execution.
 
 
 ### Execution points for eSignet Wallet Binding API's
@@ -148,4 +162,5 @@
    * Wallet Binding (Preparation) - This preparation thread group contains binding otp api from which we will save the passed individual id into a file and will use that same file in the execution.
 
    * Wallet Binding (Execution) - In this thread will pass the auth factor type as "WLA". Also, a JWT format binding public key which will be generated from a code written in JSR223 preprocessor. Will use the file generated from the preparation and it can't be used multiple times.
+
 
