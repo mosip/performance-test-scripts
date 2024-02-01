@@ -710,7 +710,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
-        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.duration">1800</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
@@ -748,7 +748,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">api-internal.camdgc-dev.mosip.net</stringProp>
+          <stringProp name="HTTPSampler.domain">${serverIPInternal}</stringProp>
           <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -837,7 +837,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">api-internal.camdgc-dev.mosip.net</stringProp>
+          <stringProp name="HTTPSampler.domain">${serverIPInternal}</stringProp>
           <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -900,7 +900,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
               <collectionProp name="Arguments.arguments"/>
             </elementProp>
-            <stringProp name="HTTPSampler.domain">api-internal.camdgc-dev.mosip.net</stringProp>
+            <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
             <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
             <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -977,7 +977,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <stringProp name="HTTPSampler.domain">api-internal.camdgc-dev.mosip.net</stringProp>
+            <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
             <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
             <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -1025,7 +1025,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
               <intProp name="Assertion.test_type">2</intProp>
             </ResponseAssertion>
             <hashTree/>
-            <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Password Generation" enabled="true">
+            <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Generate Random Password" enabled="true">
               <stringProp name="scriptLanguage">groovy</stringProp>
               <stringProp name="parameters"></stringProp>
               <stringProp name="filename"></stringProp>
@@ -1057,7 +1057,7 @@ log.info(&quot;Password: &quot; + password)</stringProp>
             </RegexExtractor>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Add Identity (bio)" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Add Identity" enabled="true">
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
@@ -1080,7 +1080,7 @@ log.info(&quot;Password: &quot; + password)</stringProp>
                     &quot;value&quot;: &quot;demo&quot;&#xd;
                 }&#xd;
             ],&#xd;
-            &quot;phone&quot;: &quot;${countryCodeCambd}${identifier}&quot;,&#xd;
+            &quot;phone&quot;: &quot;${identifierPrefix}${identifier}&quot;,&#xd;
             &quot;preferredLang&quot;: &quot;khm&quot;,&#xd;
             &quot;password&quot;: {&#xd;
                 &quot;hash&quot;: &quot;${hash}&quot;,&#xd;
@@ -1097,7 +1097,7 @@ log.info(&quot;Password: &quot; + password)</stringProp>
                 </elementProp>
               </collectionProp>
             </elementProp>
-            <stringProp name="HTTPSampler.domain">api-internal.camdgc-dev.mosip.net</stringProp>
+            <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
             <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
             <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -1145,7 +1145,7 @@ log.info(&quot;Password: &quot; + password)</stringProp>
               <intProp name="Assertion.test_type">2</intProp>
             </ResponseAssertion>
             <hashTree/>
-            <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="Generate UTC Time" enabled="true">
+            <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="Generate UTC Time and Random identifier" enabled="true">
               <stringProp name="filename"></stringProp>
               <stringProp name="parameters"></stringProp>
               <boolProp name="resetInterpreter">false</boolProp>
@@ -1158,8 +1158,8 @@ Calendar cal = Calendar.getInstance();
 String utcTime = dateFormat.format(cal.getTime());
 vars.put(&quot;utcTime&quot;, utcTime);
 
-String abc = &quot;${__Random(10000000,999999999,)}&quot;;
-vars.put(&quot;identifier&quot;, abc);
+String tempValue = &quot;${__Random(10000000,999999999,)}&quot;;
+vars.put(&quot;identifier&quot;, tempValue);
 </stringProp>
             </BeanShellPreProcessor>
             <hashTree/>
@@ -1167,7 +1167,7 @@ vars.put(&quot;identifier&quot;, abc);
               <stringProp name="filename"></stringProp>
               <stringProp name="parameters"></stringProp>
               <boolProp name="resetInterpreter">false</boolProp>
-              <stringProp name="script">${__StringToFile(credential_password_based_auth.txt,${identifier}\,${genPassword}\n,true,)}</stringProp>
+              <stringProp name="script">${__StringToFile(credential_password_based_auth.txt,${identifier}@phone\,${genPassword}\n,true,)}</stringProp>
             </BeanShellPostProcessor>
             <hashTree/>
           </hashTree>
@@ -8606,7 +8606,7 @@ log.info(&quot;Public Key: ${vars.get(&quot;bindingPublicKey&quot;)}&quot;)
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Authentication - Password Based Auth (Preparation)" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="UI - Authentication - Password (Preparation)" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -8623,16 +8623,16 @@ log.info(&quot;Public Key: ${vars.get(&quot;bindingPublicKey&quot;)}&quot;)
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Client Id From File" enabled="true">
           <stringProp name="delimiter">,</stringProp>
           <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="filename">./client_id_esignet_pwd.csv</stringProp>
+          <stringProp name="filename">./client_id_esignet.csv</stringProp>
           <boolProp name="ignoreFirstLine">true</boolProp>
           <boolProp name="quotedData">false</boolProp>
           <boolProp name="recycle">true</boolProp>
           <stringProp name="shareMode">shareMode.all</stringProp>
           <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">partnerClientId</stringProp>
+          <stringProp name="variableNames">partnerClientId,null,redirectUriPwd</stringProp>
         </CSVDataSet>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Password Based Auth - OAuth Details V2 Endpoint API" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OAuth Details V2 Endpoint API" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -8644,10 +8644,10 @@ log.info(&quot;Public Key: ${vars.get(&quot;bindingPublicKey&quot;)}&quot;)
         &quot;clientId&quot;: &quot;${partnerClientId}&quot;,&#xd;
         &quot;scope&quot;: &quot;${scope}&quot;,&#xd;
         &quot;responseType&quot;: &quot;code&quot;,&#xd;
-        &quot;redirectUri&quot;: &quot;${redirectUri}&quot;,&#xd;
+        &quot;redirectUri&quot;: &quot;${redirectUriPwd}&quot;,&#xd;
         &quot;display&quot;: &quot;popup&quot;,&#xd;
         &quot;prompt&quot;: &quot;login&quot;,&#xd;
-        &quot;acrValues&quot;: &quot;${acrValues} mosip:idp:acr:password&quot;,&#xd;
+        &quot;acrValues&quot;: &quot;${acrValuesPwd}&quot;,&#xd;
         &quot;nonce&quot; : &quot;973eieljzng&quot;,&#xd;
         &quot;state&quot; : &quot;eree2311&quot;,&#xd;
         &quot;claimsLocales&quot; : &quot;en&quot;,&#xd;
@@ -8659,7 +8659,7 @@ log.info(&quot;Public Key: ${vars.get(&quot;bindingPublicKey&quot;)}&quot;)
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">${serverIPCamdgcDev}</stringProp>
+          <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
           <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -8819,7 +8819,7 @@ function encodeBase64Url(value) {
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Authentication - Password Based Auth (Execution)" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="UI - Authentication - Password (Preparation)" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -8857,7 +8857,7 @@ function encodeBase64Url(value) {
           <stringProp name="variableNames">transactionIdPwdAuth,hashValue</stringProp>
         </CSVDataSet>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Password Based Auth - Authentication Endpoint API" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Authentication Endpoint API" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -8867,7 +8867,7 @@ function encodeBase64Url(value) {
     &quot;requestTime&quot;: &quot;${utcTime}Z&quot;,&#xd;
     &quot;request&quot;: {&#xd;
         &quot;transactionId&quot;: &quot;${transactionIdPwdAuth}&quot;,&#xd;
-        &quot;individualId&quot;: &quot;${countryCodeCambd}${individualIdPwdAuth}@phone&quot;,&#xd;
+        &quot;individualId&quot;: &quot;${identifierPrefix}${individualIdPwdAuth}&quot;,&#xd;
         &quot;challengeList&quot; : [&#xd;
             {&#xd;
                 &quot;authFactorType&quot; : &quot;PWD&quot;,&#xd;
@@ -8881,7 +8881,7 @@ function encodeBase64Url(value) {
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">${serverIPCamdgcDev}</stringProp>
+          <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
           <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
