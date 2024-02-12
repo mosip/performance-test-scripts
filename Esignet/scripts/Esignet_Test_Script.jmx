@@ -8316,7 +8316,8 @@ log.info(&quot;Public Key: ${vars.get(&quot;bindingPublicKey&quot;)}&quot;)
   &quot;request&quot;: {&#xd;
     &quot;identifier&quot;: &quot;${identifierPrefix}${__Random(10000000,999999999,)}&quot;,&#xd;
     &quot;captchaToken&quot;: &quot;&quot;,&#xd;
-    &quot;regenerate&quot;: &quot;FALSE&quot;&#xd;
+    &quot;regenerate&quot;: &quot;FALSE&quot;,&#xd;
+    &quot;purpose&quot;: &quot;REGISTRATION&quot;&#xd;
   }&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -8907,7 +8908,7 @@ vars.put(&quot;identifier&quot;, tempValue);
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">${serverIPCamdgcPerf}</stringProp>
+          <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
           <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
@@ -8982,7 +8983,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
             <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="script">def text = &quot;PSWRD@&quot;
+            <stringProp name="script">def text = &quot;Pswrd@&quot;
 def randomNumbers = (new Random().nextInt(1000000000)).toString()
 def password = text + randomNumbers 
 
@@ -9038,7 +9039,7 @@ log.info(&quot;Password: &quot; + password)
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">${serverIPCamdgcPerf}</stringProp>
+          <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
           <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -9139,7 +9140,7 @@ vars.put(&quot;identifier&quot;, tempValue);
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">${serverIPCamdgcPerf}</stringProp>
+          <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
           <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -9235,7 +9236,7 @@ vars.put(&quot;identifier&quot;, tempValue);
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">${serverIPCamdgcPerf}</stringProp>
+          <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
           <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
@@ -9296,7 +9297,7 @@ vars.put(&quot;identifier&quot;, tempValue);
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
             <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="script">def text = &quot;PSWRD@&quot;
+            <stringProp name="script">def text = &quot;Pswrd@&quot;
 def randomNumbers = (new Random().nextInt(1000000000)).toString()
 def password = text + randomNumbers 
 
