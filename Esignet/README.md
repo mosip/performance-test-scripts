@@ -20,7 +20,9 @@
 
 ### Setup points for Execution
 
-* Create Identities in MOSIP Authentication System (Setup) : This thread contains the authorization api's for regproc and idrepo from which the auth token will be generated. There is set of 4 api's generate RID, generate UIN, add identity and add VID. From here we will get the VID which can be further used as individual id. These 4 api's are present in the loop controller where we can define the number of samples for creating identities in which "addIdentitySetup" is used as a variable.
+* Create Identities in MOSIP Authentication System (Setup) : This thread contains the authorization api's for regproc and idrepo from which the auth token will be generated. There is set of 4 api's generate RID, generate UIN, add identity and add VID. From here we will get the VID which can be further used as individual id. These 4 api's are present in the loop controller where we can define the number of samples for creating identities in which "addIdentitySetup" is used as a variable. 
+
+* Create Identities in MOSIP Authentication System - Password Based Auth (Setup) : This thread contains the authorization api's for regproc and idrepo from which the auth token will be generated. There is set of 3 api's generate UIN, generate hash for password and add identity. From here we will get the identifier value which can be further used as an individual id or we can say as phone number in pwd based authentication. These 3 api's are present in the loop controller where we can define the number of samples for creating identities in which "addIdentitySetup" is used as a variable.
 
 * Create OIDC Client in MOSIP Authentication System (Setup) : This thread contains a JSR223 sampler(Generate Key Pair) from which will get a public-private key pair. The public key generated will be used in the OIDC client api to generate client id's  which will be registered for both IDA and eSignet. The private key generated from the sampler will be used in another JSR223 sampler(Generate Client Assertion) present in the OIDC Token (Execution). Generated client id's and there respective private key will be stored in a file which will be used further in the required api's.
 
@@ -39,7 +41,12 @@
           mosip.kernel.otp.expiry-time - 86400
    * id-authentication default properties: Update the value for the below properties.
           otp.request.flooding.max-count - 100000
-          kyc.token.expire.time.adjustment.seconds - 86400
+          kyc.token.expire.time.adjustment.seconds - 86400 
+   
+   * signup default properties : Update the value for the properties according to the execution setup.
+         mosip.signup.unauthenticated.txn.timeout=86400
+         mosip.signup.verified.txn.timeout=86400
+         mosip.signup.status-check.txn.timeout=86400
 
 * We need some jar files which needs to be added in lib folder of jmeter, PFA dependency links for your reference : 
 
@@ -101,8 +108,8 @@
    * Send OTP (Execution) - Same execution scenario applied as of OAuth details i.e. preparation samples should be greater or equal to the number of execution samples. than preparation. Transaction id will be used which is created in the preparation part. Registered individual id also need to be passed in the body for which we have separately added the setup thread group for creating identity. The files created from preparation part can be used for multiple executions.
 
 *  UI - Authentication :
-   * Authentication - OTP (Preparation) - For the preparation we need 2 api's OAuth Details and Send OTP from which we will get the transaction id and required OTP respectively. We cant use the preparation file for multiple runs as OTP will not be valid.
-   * Authentication - OTP (Execution) - For the execution the total preparation samples must be equal or higher in number. Transaction id will be used which is created from OAuth details api. Registered individual id also need to be passed in the body along with the OTP.
+   * Authentication (Preparation) - In this thread group we are authenticating with 2 types of auth factor i.e. "PWD" and "OTP". So we have added an If controller where according to the type of auth factor the controller will execute. In the If controller we are using a variable which is defined in the user defined variables as "authFactorType. When the authFactorType will be "PWD" the first If controller will be executed and which contains OAuth details endpoint. When the authFactorType will be "OTP" the second If controller will be executed which contains 2 api's OAuth Details and Send OTP endpoints. We cant use the preparation file for multiple runs.
+   * Authentication (Execution) - For the execution also there are 2 If controller in which we have authentication endpoint for PWD and OTP respectively. The total preparation samples must be equal or higher in number.
 
 *  UI - Authorization Code : 
    * Authorization Code (Preparation) - There will be 3 api's included in the preparation i.e. OAuth Details, Send OTP, Authentication Endpoint - OTP from which we will get the transaction id, OTP which will be used in the execution.  We cant use the preparation file for multiple runs.
@@ -123,11 +130,6 @@
 * UI - Link Authorization Code :
    * Link Authorization Code (Preparation) - This thread includes 6 api's OAuth Details, Generate Link Code, Link Transaction, Send OTP Linked Auth, linked authenication and linked consent api. Transaction id and linked code must be same as the one received from oauth-details and generate link code api respectively.
    * Link Authorization Code (Execution) - Transaction id and linked code will be used from the preparation part.
-
-* UI - Authentication - Password Based Auth : 
-   * Authentication - Password Based Auth (Preparation) - In this thread group will have a Oauth details V2 endpoint from which will get the transaction id and hash value which will be stored in a text file.
-
-   * Authentication - Password Based Auth (Execution) - In this thread group will use 2 text files one will get from the above preparation thread group and we can't use the file for multiple iterations. The other file will be generated from the MOSIP Authentication System - Password Based Auth (Setup). The file created from here will contain the phone number and a password associated to it. So in this thread we have to use these two files for execution purpose.
 
 ### Execution points for eSignet OIDC API's
 *  OIDC - Authorization : Its a GET API with no preparations and application will do a browser redirect to this endpoint with all required details passed as query parameters.
@@ -161,12 +163,12 @@
 
 * Sign Up Service - Verify Challenge (Preparation) : In this thread we have generate challenge API from which we will get the value of identifier and from response headers will get the transaction id which will be stored in a csv file.
 
-* Sign Up Service - Verify Challenge (Execution) : This thread contains verify challenge API in which we will pass the value of identifier i.e. phone number and transaction id in the headers which will get from the csv file generated in preparation. The file generated can't be used for multiple iterations. 
+* Sign Up Service - Verify Challenge (Execution) : This thread contains verify challenge API in which we will pass the value of identifier i.e. phone number and transaction id in the headers which will get from the csv file generated in preparation. The file generated can't be used for multiple iterations. We need to increase the expiry time of the transaction id we are getting from the preparation thread group so for that we need to update the mentioned property mosip.signup.unauthenticated.txn.timeout in signup default properties.
 
 * Sign Up Service - Register (Preparation) : This thread contains 2 API's i.e. generate challenge and verify challenge. Will save the value of identifier which will be passed in both the API's in a csv file. Will also get a verified transaction id in the response header of verified challenge endpoint and will save the transaction id in the same csv file and will use that file in the execution.
 
-* Sign Up Service - Register (Execution) : This thread is for register API endpoint and will use a csv file to pass the value of identifier and verified transaction id. Will use the file generated from the preparation and it can't be used multiple times. 
+* Sign Up Service - Register (Execution) : This thread is for register API endpoint and will use a csv file to pass the value of identifier and verified transaction id. Will use the file generated from the preparation and it can't be used multiple times. We need to increase the expiry time of the transaction id we are getting from the preparation thread group so for that we need to update the mentioned property mosip.signup.verified.txn.timeout in signup default properties.
 
 * Sign Up Service - Registration Status (Preparation) : This thread contains 3 API's i.e. generate challenge, verify challenge and register API endpoints. Will save the transaction id generated from the response headers of verify challenge endpoint in a csv file and will use that in the execution.
 
-* Sign Up Service - Registration Status (Execution) : This thread contains Registration Status API endpoint. Will use the file generated from the preparation to pass the transaction id and it can be used multiple times as it will only give the latest status for the transaction id we are passing.
+* Sign Up Service - Registration Status (Execution) : This thread contains Registration Status API endpoint. Will use the file generated from the preparation to pass the transaction id and it can be used multiple times as it will only give the latest status for the transaction id we are passing. The transaction id used has a expiry time which can be configured with the mentioned property mosip.signup.status-check.txn.timeout available in mosip config signup default properties. We need to increase the expiry time of the transaction id we are getting from the preparation thread group so for that we need to update the mentioned property mosip.signup.status-check.txn.timeout in signup default properties.
