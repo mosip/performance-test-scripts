@@ -770,18 +770,6 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Add Identity Request Details From File" enabled="true">
-          <stringProp name="filename">./addIdentityRequestDetails.csv</stringProp>
-          <stringProp name="fileEncoding">UTF-8</stringProp>
-          <stringProp name="variableNames">fullName</stringProp>
-          <boolProp name="ignoreFirstLine">true</boolProp>
-          <stringProp name="delimiter">,</stringProp>
-          <boolProp name="quotedData">false</boolProp>
-          <boolProp name="recycle">true</boolProp>
-          <boolProp name="stopThread">false</boolProp>
-          <stringProp name="shareMode">shareMode.all</stringProp>
-        </CSVDataSet>
-        <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Authentication API Regproc" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
@@ -951,6 +939,18 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
           <stringProp name="LoopController.loops">${addIdentitySetup}</stringProp>
         </LoopController>
         <hashTree>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Add Identity Request Details From File" enabled="true">
+            <stringProp name="filename">./addIdentityRequestDetails.csv</stringProp>
+            <stringProp name="fileEncoding">UTF-8</stringProp>
+            <stringProp name="variableNames">fullName</stringProp>
+            <boolProp name="ignoreFirstLine">true</boolProp>
+            <stringProp name="delimiter">,</stringProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+          </CSVDataSet>
+          <hashTree/>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Generate UIN" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
               <collectionProp name="Arguments.arguments"/>
@@ -1085,7 +1085,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
               <stringProp name="parameters"></stringProp>
               <stringProp name="filename"></stringProp>
               <stringProp name="cacheKey">true</stringProp>
-              <stringProp name="script">def text = &quot;PSWRD@&quot;
+              <stringProp name="script">def text = &quot;Pswrd@&quot;
 def randomNumbers = (new Random().nextInt(1000000000)).toString()
 def password = text + randomNumbers 
 
@@ -1238,7 +1238,7 @@ vars.put(&quot;identifier&quot;, tempValue);
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Authentication API" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Authentication API Pms" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -1248,11 +1248,11 @@ vars.put(&quot;identifier&quot;, tempValue);
   &quot;id&quot;: &quot;string&quot;,&#xd;
   &quot;metadata&quot;: {},&#xd;
   &quot;request&quot;: {&#xd;
-    &quot;clientId&quot;: &quot;${clientId}&quot;,&#xd;
-    &quot;secretKey&quot;: &quot;${secretKey}&quot;,&#xd;
-    &quot;appId&quot;: &quot;${appId}&quot;&#xd;
+    &quot;clientId&quot;: &quot;${pmsClientId}&quot;,&#xd;
+    &quot;secretKey&quot;: &quot;${pmsSecretKey}&quot;,&#xd;
+    &quot;appId&quot;: &quot;${pmsAppId}&quot;&#xd;
   },&#xd;
-  &quot;requesttime&quot;: &quot;${__time(YYYY-MM-dd&apos;T&apos;HH:mm:ss.SSS,)}Z&quot;,&#xd;
+  &quot;requesttime&quot;: &quot;${utcTime}Z&quot;,&#xd;
   &quot;version&quot;: &quot;1.0&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -1303,6 +1303,20 @@ vars.put(&quot;identifier&quot;, tempValue);
             <intProp name="Assertion.test_type">2</intProp>
           </ResponseAssertion>
           <hashTree/>
+          <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="Generate UTC Time" enabled="true">
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="script">import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.TimeZone;//Set the format for the date-time
+SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd&apos;T&apos;HH:mm:ss.sss&quot;);
+dateFormat.setTimeZone(TimeZone.getTimeZone(&quot;UTC&quot;));// Get the current time in UTC
+Calendar cal = Calendar.getInstance();
+String utcTime = dateFormat.format(cal.getTime());
+vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
+          </BeanShellPreProcessor>
+          <hashTree/>
           <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract Auth Token" enabled="true">
             <stringProp name="RegexExtractor.useHeaders">true</stringProp>
             <stringProp name="RegexExtractor.refname">authToken</stringProp>
@@ -1320,7 +1334,7 @@ vars.put(&quot;identifier&quot;, tempValue);
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Authentication API" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Authentication API Mobile" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -1330,11 +1344,11 @@ vars.put(&quot;identifier&quot;, tempValue);
   &quot;id&quot;: &quot;string&quot;,&#xd;
   &quot;metadata&quot;: {},&#xd;
   &quot;request&quot;: {&#xd;
-    &quot;clientId&quot;: &quot;${clientIdMobile}&quot;,&#xd;
-    &quot;secretKey&quot;: &quot;${secretKeyMobile}&quot;,&#xd;
-    &quot;appId&quot;: &quot;${appIdMobile}&quot;&#xd;
+    &quot;clientId&quot;: &quot;${mobileClientId}&quot;,&#xd;
+    &quot;secretKey&quot;: &quot;${mobileSecretKey}&quot;,&#xd;
+    &quot;appId&quot;: &quot;${mobileAppId}&quot;&#xd;
   },&#xd;
-  &quot;requesttime&quot;: &quot;${__time(YYYY-MM-dd&apos;T&apos;HH:mm:ss.SSS,)}Z&quot;,&#xd;
+  &quot;requesttime&quot;: &quot;${utcTime}Z&quot;,&#xd;
   &quot;version&quot;: &quot;1.0&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -2033,6 +2047,70 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
           <hashTree/>
         </hashTree>
       </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="UI - Get Csrf Token (Execution)" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Csrf Token Endpoint API" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${serverIP}</stringProp>
+          <stringProp name="HTTPSampler.port">${serverPortNo}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/v1/esignet/csrf/token</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-2017977937">&quot;token&quot;:</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion - Response Code" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">2</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="UI - OAuth Details (Execution)" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
@@ -2529,7 +2607,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
           <boolProp name="recycle">true</boolProp>
           <stringProp name="shareMode">shareMode.all</stringProp>
           <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">partnerClientId,null,redirectUri</stringProp>
+          <stringProp name="variableNames">partnerClientId</stringProp>
         </CSVDataSet>
         <hashTree/>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load Individual Id From File" enabled="true">
@@ -3350,7 +3428,7 @@ vars.put(&quot;utcTime&quot;, utcTime);
           <boolProp name="recycle">true</boolProp>
           <stringProp name="shareMode">shareMode.all</stringProp>
           <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">authCodeClientId,authCodeEncodedPrivateKey,redirectUri</stringProp>
+          <stringProp name="variableNames">authCodeClientId,authCodeEncodedPrivateKey</stringProp>
         </CSVDataSet>
         <hashTree/>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load User Credentials From File" enabled="true">
@@ -4333,7 +4411,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
           <boolProp name="recycle">true</boolProp>
           <stringProp name="shareMode">shareMode.all</stringProp>
           <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">tokenEndpointClientId,tokenPrivateKey,redirectUri</stringProp>
+          <stringProp name="variableNames">tokenEndpointClientId,tokenPrivateKey</stringProp>
         </CSVDataSet>
         <hashTree/>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load User Credentials From File" enabled="true">
@@ -5446,7 +5524,7 @@ vars.put(&quot;utcTime&quot;, utcTime);</stringProp>
           <boolProp name="recycle">true</boolProp>
           <stringProp name="shareMode">shareMode.all</stringProp>
           <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">userInfoClientId,userInfoEncodedPrivateKey,redirectUri</stringProp>
+          <stringProp name="variableNames">userInfoClientId,userInfoEncodedPrivateKey</stringProp>
         </CSVDataSet>
         <hashTree/>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Load User Credentials From File" enabled="true">
