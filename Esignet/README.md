@@ -28,7 +28,9 @@
 
 * In the above Create OIDC Client in MOSIP Authentication System (Setup) check for the Policy name and Auth partner id for the particular env in which we are executing the scripts. The policy name provided must be associated with the correct Auth partner id. 
 
-* Auth Token Generation (Setup) : This thread conatins Auth manager authentication API which will generate auth token value for PMS and mobile client.
+* Auth Token Generation (Setup) : This thread conatins Auth manager authentication API which will generate auth token value for PMS and mobile client. 
+
+* Store Successful Credentials To File - Password Based Auth (Setup) : In this thread we will pass the file created from Create Identities in MOSIP Authentication System - Password Based Auth (Setup). Here, we will create a csv file which will store successful credentials into the file. 
 
 * For execution purpose neeed to check for the mentioned properties: 
    * eSignet default properties: Update the value for the properties according to the execution setup. Perform the execution for eSignet api's with redis setup. So check for the redis setup accordingly.
