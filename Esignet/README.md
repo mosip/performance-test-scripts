@@ -113,6 +113,8 @@
    * Authentication (Preparation) - In this thread group we are authenticating with 2 types of auth factor i.e. "PWD" and "OTP". So we have added an If controller where according to the type of auth factor the controller will execute. In the If controller we are using a variable which is defined in the user defined variables as "authFactorType. When the authFactorType will be "PWD" the first If controller will be executed and which contains OAuth details endpoint. When the authFactorType will be "OTP" the second If controller will be executed which contains 2 api's OAuth Details and Send OTP endpoints. We cant use the preparation file for multiple runs.
    * Authentication (Execution) - For the execution also there are 2 If controller in which we have authentication endpoint for PWD and OTP respectively. The total preparation samples must be equal or higher in number.
 
+   * UI - Authentication Complete Flow (Execution) - In this thread we have kept all the ednpoints of the auth flow in a single thread group. Thread contains 2 types of auth factor i.e. "PWD" and "OTP" flow endpoints.
+
 *  UI - Authorization Code : 
    * Authorization Code (Preparation) - There will be 3 api's included in the preparation i.e. OAuth Details, Send OTP, Authentication Endpoint - OTP from which we will get the transaction id, OTP which will be used in the execution.  We cant use the preparation file for multiple runs.
    * Authorization Code (Execution) - The total number of samples for preparation should be equal or higher in number as compared to execution. Have to pass the Transaction id generated from the preparation.
