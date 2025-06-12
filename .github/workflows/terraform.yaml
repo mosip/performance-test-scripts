@@ -1,0 +1,68 @@
+name: Deploy Performance VM with Terraform
+
+on:
+  workflow_dispatch:
+    inputs:
+      vnc_username:
+        description: 'VNC Username'
+        required: true
+        type: string
+      vnc_password:
+        description: 'VNC Password'
+        required: true
+        type: string
+
+env:
+  AWS_REGION: ap-south-1 # Match this with your provider region in main.tf
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.0
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+        working-directory: terraform
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color -input=false -var="VNC_USERNAME=${{ github.event.inputs.vnc_username }}" -var="VNC_PASSWORD=${{ github.event.inputs.vnc_password }}"
+        working-directory: terraform
+
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply -auto-approve -input=false -var="VNC_USERNAME=${{ github.event.inputs.vnc_username }}" -var="VNC_PASSWORD=${{ github.event.inputs.vnc_password }}"
+        working-directory: terraform
+
+      - name: Get Terraform Output
+        run: |
+          terraform output -raw instance_public_ip > public_ip.txt
+          terraform output -raw instance_private_ip > private_ip.txt
+        working-directory: terraform
+
+      - name: Upload Public IP as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: instance-public-ip
+          path: terraform/public_ip.txt
+
+      - name: Upload Private IP as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: instance-private-ip
+          path: terraform/private_ip.txt
