@@ -53,7 +53,10 @@ target before relying on it.
 ## Build & Test Commands
 
 There is no root `pom.xml` or build script. Each Maven utility is built from
-inside its own folder:
+inside its own folder. The two examples below are illustrative — apply the
+same `cd` into the folder, then `mvn clean install` pattern for the other
+Maven utilities listed above (`modifyfile`, `registrationprocessor_sync_utility`,
+`regproc_transactiondata_util_v2.2`):
 
 ```shell
 cd utilities/pridvolume_utility
@@ -72,9 +75,13 @@ options **before** `-jar`, e.g.:
 java -Dspring.profiles.active=default -jar target/PridVolumeUtility-0.0.1-SNAPSHOT.jar
 ```
 
-There are no automated unit tests to run in this repo — "testing" here means
-running JMeter scripts against a deployed MOSIP environment (sandbox, dev,
-QA, or a local Kubernetes setup), not `mvn test`.
+There is no repo-wide or root-level test suite, and most of this repo isn't
+covered by automated tests. One exception: `utilities/regproc_transactiondata_util_v2.2`
+has JUnit tests under `src/test/java/dbtests/` (`DBTest.java`,
+`DataProcessorTest.java`) — run those with `mvn test` inside that utility's
+own folder if you change it. Everywhere else, "testing" means running JMeter
+scripts against a deployed MOSIP environment (sandbox, dev, QA, or a local
+Kubernetes setup), not `mvn test`.
 
 To run a JMeter script:
 
@@ -101,9 +108,10 @@ General flow described in the root `README.md`:
   values that look like credentials** (e.g. `mosip.test.regclient.password`,
   `mosip.test.regclient.secretkey`, `mosip.test.print.event.secret`). These
   match MOSIP's well-known public sandbox/dev defaults used throughout the
-  MOSIP codebase (not secrets for a real deployment) — but treat this file
-  the same way regardless: **never replace these placeholder values with a
-  real environment's credentials and commit the result.** If you need to
+  MOSIP codebase — these are non-production placeholders, but they remain
+  authentication material and should be treated as sensitive: **never
+  replace these placeholder values with a real environment's credentials
+  and commit the result.** If you need to
   point a script at your own environment, override the value locally and
   keep the change out of your commit/PR.
 - `default.properties` (repo root) — pre-registration test defaults
@@ -159,7 +167,7 @@ PDF reports — historical output, not something to edit). Read a module's own
 that must be running in the target environment for that script to work.
 
 A single root `AGENTS.md` is used here (no per-module `AGENTS.md` files)
-because none of the module folders have independent build/CI tooling of
+because the JMeter module folders have no independent build/CI tooling of
 their own beyond a `README.md` and static `.jmx`/data files — the only real
 "build" concern in the repo is the handful of Maven utilities under
 `utilities/`, and those already have adequate module-level `README.md`
@@ -177,11 +185,12 @@ documentation to point to.
    merge commit. Enable it once per clone with:
 
    ```shell
-   git config --global core.hooksPath scripts/githooks/
+   git config core.hooksPath githooks/
    ```
 
-4. Make your change inside the relevant module folder only — don't mix
-   changes across unrelated modules (e.g. `id-authentication/` and
+4. Keep each change scoped to one related module, utility, or
+   repository-level objective (e.g. this `AGENTS.md`) — don't mix changes
+   across unrelated modules (e.g. `id-authentication/` and
    `commons/kernel/`) in one commit unless they're genuinely related.
 5. If you add or edit a `.jmx` script, validate it can open in JMeter and
    run for a single user before submitting — there's no automated check for
@@ -230,7 +239,8 @@ documentation to point to.
 
 1. Read the target module's own `README.md` before writing or running a
    `.jmx` script, and confirm which Kubernetes services it expects.
-2. Keep changes scoped to a single module or utility folder per PR.
+2. Keep changes scoped to a single module, utility folder, or
+   repository-level objective (e.g. this `AGENTS.md`) per PR.
 3. Use placeholder/sandbox-style values in `application.properties`,
    `default.properties`, and `support-files/*` — matching the existing
    convention in those files.
