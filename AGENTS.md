@@ -124,11 +124,15 @@ General flow described in the root `README.md`:
   describe which file drives which scenario — check the module's own
   `README.md` before changing one of these.
 - `utilities/java-profiler-agent/values.yaml` — Helm values for the profiler
-  chart, including `profileAppService`. This is the pod's `app` label value
-  used by the chart's Service selector (`templates/java-profiler-svc.yaml`)
-  to target the pod to profile — not a Kubernetes Service name or endpoint
-  address. This is edited per-environment, not committed with
-  environment-specific values baked in.
+  chart, including `profileAppService`. This is meant to be the pod's `app`
+  label value the chart's Service selector
+  (`templates/java-profiler-svc.yaml`) matches to target the pod to
+  profile — not a Kubernetes Service name or endpoint address. That
+  selector block is currently commented out in the template, so the
+  Service has no endpoints from it as-is; uncomment the selector before
+  relying on `profileAppService` to route to a pod. This value is edited
+  per-environment, not committed with environment-specific values baked
+  in.
 
 ## Project Structure Notes
 
