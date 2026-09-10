@@ -1,50 +1,22 @@
 ### Contains
-* This folder contains performance test script of Resident Service Endpoints.
-    1. Authorize​ Admin​ Validate Token 
-    2. Login​ Redirect URI 
-    3. VID Policy
-    4. Generate VID
-    5. Get VIDs of the Resident
-    6. Service History
-    7. Service History Download
-    8. Auth Lock Unlock
-    9. Auth Lock Status 
-    10. Request Card VID 
-    11. Revoke VID 
-    12. Identity Info Schema Type
-    13. Identity Mapping
-    14. Masterdata Idschema
-    15. Download Personalized Card
-    16. Auth Proxy Partner Type
-    17. UI Schema
-    18. Masterdata Getting Templates
-    19. Share Credential
-    20. Login
-    21. Registration Center List Nearest Location
-    22. Registration Center List Location Hierarchy
-    23. Download Supporting Docs
-    24. Menu Bar Bell Update Time
-    25. Menu Bar Unread Notification Count
-    26. Menu Bar Bell Notification Click
-    27. Validate OTP 
-    28. Track Service Request
-    29. Download Service Request
-    30. Menu Bar Notifications Language Code 
-    31. Profile 
-    32. Channel Verification Status 
-    33. Download Card Event 
-    34. Masterdata Get Coordinates
-    35. Masterdata Location Info 
-    36. Masterdata Registration Centers
-    37. Masterdata Valid Documents 
-    38. Masterdata Registration Centers Page 
-    39. Masterdata Location Immediate Children
-    40. Masterdata Applicant Type
-
+* This folder contains scenario-based performance test scripts for Resident Services.
+   
+*List of  Scenarios:
+	* UIN services Login
+	* View My History 
+	* Manage My VID
+	* Secure My ID 
+	* Track My Requests
+	* Get Personalized Card
+	* Share My Data
+	* Update My Data
+	* Get Information
+	* Get My UIN
+ 	* Verify Phone/Email ID
+	* Menu Bar
+	* Audit
+	* Logout
  
-    
-
-
 * Open source Tools used,
     1. [Apache JMeter](https://jmeter.apache.org/)
 
@@ -75,134 +47,89 @@
    * id-authentication default properties: Update the value for the below properties.
           otp.request.flooding.max-count - 100000
 
+* Create Resident Services EventId (Setup) : This thread contains service history endpoint api to capture the event id's required for the test.
           
 
 ### Data prerequisite
 
 * List of VID's as per environment which is valid and will be prepared from the above mentioned create identities setup.
+* List of Event id's as per environment which is valid and will be prepared from the above mentioned create resident services event id setup.
 
 ### Execution points for Resident Service endpoints
 
-* The id and access token generated from the Login​ Redirect URI api will be stored in a file and will be used in the headers of below mentioned api's :
-
-    * Authorize​ Admin​ Validate Token 
-    * Login​ Redirect URI
-    * VID Policy
-    * Generate VID
-    * Get VIDs of the Resident
-    * Service History 
-    * Service History Download
-    * Auth Lock Unlock 
-    * Auth Lock Status 
-    * Request Card VID  
-    * Revoke VID
-    * Identity Info Schema Type
-    * Identity Mapping
-    * Masterdata Idschema
-    * Download Personalized Card
-    * Auth Proxy Partner Type
-    * UI Schema
-    * Masterdata Getting Templates
-    * Share Credential
-    * Menu Bar Bell Update Time
-    * Menu Bar Unread Notification Count
-    * Menu Bar Bell Notification Click
-    * Download Supporting Docs
-    * Registration Center List Nearest Location
-    * Registration Center List Location Hierarchy
-    * Track Service Request
-    * Download Service Request
-    * Menu Bar Notifications Language Code 
-    * Profile 
-    * Download Card Event
+* The id and access token generated from the Login​ Redirect URI api will be stored in a file and will be used in the headers the api and can be re-used until they are not expired.
+* Test duration is already defined as a variable and needs to be changed as per the test run duration requirement in the user defined variable section.
+* The script is designed to run for 100 users, load being distributed accordingly for each thread group based on the weightage given for each scenario.
 
 
+### Exact steps of execution
 
-* Authorize​ Admin​ Validate Token (Execution) - The id and access token generated above in the setup will be used in the headers of this api and can be re-used until they are not expired.
+	Step 1: Toggle only Create Identities in MOSIP Authentication System (Setup) thread group in the script and create the required no of identities.
+	Step 2: Toggle only Resident Id Access Token Creation (Setup) thread group in the script and create access token and id token.
+	Step 3: Toggle only Create Resident EventId (Setup) thread group in the script and create the event id's.
+	Step 4: Toggle all the Execution based scenario thread groups and Un-toggle the first 3 setup based thread groups, make sure test duration is defined in the user defined variable section. 
+	Step 5: Run/Excute the test.
+	Step 6: Monitor the metrics during the test run using reports from jmeter, kibana, grafana and Jprofiler.
+	
+### Designing the workload model for performance test execution
 
-* Login​ Redirect URI (Preparation) - This thread contains set of 4 esignet api's Oauth details, Send OTP, Authentication, Authorization Code. The code generated will be stored in a file and can't be used for multiple runs as code can only be used once. 
-* Login​ Redirect URI (Execution) - In this api will use the code generated from the above esignet api. The total preparation samples must be equal or higher in number. We cannot re-use the preparation as the generated code can only be used once.
+* Calculation of number of users depending on Transactions per second (TPS) provided by client
 
-* VID Policy - This API is to get the VID policy. The id and access token can be re-used until they are not expired.
+* Applying little's law
+	* Users = TPS * (SLA of transaction + think time + pacing)
+	* TPS --> Transaction per second.
 
-* Generate VID - This API generates the VID for the given VID type. The id and access token will be used in the headers of this api and can be re-used until they are not expired.
+* For the realistic approach we can keep (Think time + Pacing) = 1 second for API testing
+	* Calculating number of users for 10 TPS
+		* Users= 10 X (SLA of transaction + 1)
+		       = 10 X (1 + 1)
+			   = 20
+			   
+### Usage of Constant Throughput timer to control Hits/sec from JMeter
 
-* Get VIDs of the Resident - This API will retrieve the list of active VIDs of the VID of the logged in session. The id and access token can be re-used until they are not expired.
+* In order to control hits/ minute in JMeter, it is better to use Timer called Constant Throughput Timer.
 
-* Service History - This API is to get the service history of one or more service types. The id and access token can be re-used until they are not expired.
+* If we are performing load test with 10TPS as hits / sec in one thread group. Then we need to provide value hits / minute as in Constant Throughput Timer
+	* Value = 10 X 60
+			= 600
 
-* Service History Download - This API is to download the View History Tables as a PDF. The id and access token can be re-used until they are not expired.
+* Dropdown option in Constant Throughput Timer
+	* Calculate Throughput based on as = All active threads in current thread group
+		* If we are performing load test with 10TPS as hits / sec in one thread group. Then we need to provide value hits / minute as in Constant Throughput Timer
+	 			Value = 10 X 60
+					  = 600
+		  
+	* Calculate Throughput based on as = this thread
+		* If we are performing scalability testing we need to calculate throughput for 10 TPS as 
+          Value = (10 * 60 )/(Number of users)
 
-* Auth Lock Unlock - Resident service to store the Auth type lock/unlock status with status_comment containing summary of what is locked /unlocked. The id and access token can be re-used until they are not expired.
 
-* Auth Lock Status - This API returns the lock/unlock status of Auth Types for a given VID. The id and access token can be re-used until they are not expired. The id and access token can be re-used until they are not expired.
+### Description of the scenarios
 
-* Request Card VID - This API is to request the PDF card generation for a specific VID of the logged in user. This will give back a event ID for tracking purpose and to use it to download the VID card from the notifications. The id and access token can be re-used until they are not expired.
+* View My History: This feature enables the Resident to view the history of transactions associated with their UIN.
 
-* Revoke VID (Preparation) - This thread contains Generate VID api from which we will get a VID which needs to be revoked.
-* Revoke VID (Execution) - The generated VID can only be used once to be revoked so the samples created in the preparation must be equal or higher in number.
+* Manage My VID: Residents can create, delete, and download VID cards based on requirements.
 
-* Identity Info Schema Type (Execution) - This API is to get the list of ID Attributes of the logged-in user to pre-populate in the UI. A variable is used as "schemaType" to pass the Type of schema in this API from a file named as schema_type. The id and access token will be used here and can be used multiple times until its valid and not expired.
+* Secure My ID: Residents can lock or unlock their authentication modalities such as fingerprint authentication, iris authentication, email OTP authentication, SMS OTP authentication, thumbprint authentication, and face authentication.
 
-* Identity Mapping (Execution) - This API is to get the identity mapping Json. The id and access token will be passed in the headers and can be used multiple times until valid and not expired.
+* Track My Requests: This feature enables the Residents to enter an Event ID associated with the logged-in user’s UIN to track the status of the event.
 
-* Masterdata Idschema (Execution) - This API is used to return the Id-schema. The id and access token will be used here and can be used multiple times until its valid and not expired.
+* Get Personalized Card: The residents can download a personalized card which essentially means that they can choose the attributes that they would want to be added to their cards.
 
-* Download Personalized Card (Execution) - This API is to download the personalized PDF card. The id and access token will be used here and can be used multiple times until its valid and not expired.
+* Share My Data: This feature enables Residents to choose the data that they want to share with a MOSIP-registered partner.
 
-* Auth Proxy Partner Type (Execution) - This API is to get the list of partner types from PMS. The id and access token will be used here and can be used multiple times until its valid and not expired.
+* Update My Data: This feature enables the Resident to update their identity data, address, email ID, phone number, and notification language preference.
 
-* UI Schema (Execution) - API to return the UI Spec (UI Schema) for the given schemaType which is one of share-credential/update-demographics/personalized-card. A variable is used as "schemaTypeUI" to pass the Type of schema in this API from the same file used above named as schema_type. The id and access token will be used here and can be used multiple times until its valid and not expired.
+* Logout: Once the Resident is done with the activities that he wanted to perform, he can end the active session by logging out from the portal.
 
-* Masterdata Getting Templates (Execution) - This API is to return terms and conditions and will be invoked by UI for the specific language. This is a Proxy API of master data service for getting templates for template type code and language code. Template type code will be passed in this API from a file named as template_type and the variable used is "templateTypeCode". The id and access token will be used here and can be used multiple times until its valid and not expired.
+* Get Information: Residents can get a list of Registration Centers near them or Registration Centers based on the location hierarchy also residents can get the list of all the supporting documents as Proof of Identity, Proof of Address, Proof of Relationship, etc.
 
-* Share Credential (Execution) - This API is to share the user specified attributes to selected partner in the selected formats along with a purpose. The id and access token will be used here and can be used multiple times until its valid and not expired.
+* Get My UIN: Using this feature, the Resident can download their password-protected UIN card if the UIN card is ready or they can view the status of their Application ID (AID) if the UIN card is still under progress.
 
-* Login (Execution) - Using this API, the resident portal will redirect to the Esignet URL where the validation is performed and login happens.
+* Verify email ID and/ or phone number: Using this feature, the Resident can verify if the email ID/ Phone number given during registration is correct or not. This will be done by verifying the OTP sent over the registered email ID/ Phone number.
 
-* Menu Bar Unread Notification Count (Execution) - API to return the number of unread service notification list. The id and access token will be used here and can be used multiple times until its valid and not expired.
+* Notifications: Residents will be getting bell-icon notifications for the asynchronous events if they have an active session i.e. they have logged into the Resident Portal.
 
-* Menu Bar Bell Notification Click (Execution) - This API is to get the latest date time whenever user clicked on the bell notification icon. The id and access token will be used here and can be used multiple times until its valid and not expired.
+* Profile details of the logged-in user (name, photo, and last login details): The Resident will be able to view the name, and photo of the logged-in user. They will also be able to see the last login details of the Resident.
 
-* Menu Bar Bell Update Time (Execution) - This API is to update latest date-time when user clicked on the bell notification. The id and access token will be used here and can be used multiple times until its valid and not expired.
 
-* Validate OTP (Preparartion) - This thread contains Request OTP API to generate OTP which will be used in the execution part.
-* Validate OTP (Execution) - This API will be used to validate OTP when the resident is trying to verify his phone number or email Id. The generated OTP from the preparation can only be used once, so the samples created in the preparation must be equal or higher in number.
-
-* Download Supporting Docs (Execution) - This API is to convert the List of supporting documents request as a downloadable PDF. The id and access token will be used here and can be used multiple times until its valid and not expired.
-
-* Registration Center List Nearest Location (Execution) - This API will download a PDF of nearest Registration Centers. The Longitude, Latitude and Proximity distance will be passed in this API from a file named as coordinates and the variables used are "longitude", "latitude" and "proximityDistance" respectivily. The id and access token will be used here and can be used multiple times until its valid and not expired.
-
-* Registration Center List Location Hierarchy (Execution)  - This API will download a PDF of Registration Centers list. The Hierarchy level will be passed in this API along with its name from a file named as hirarchy_level and the variables used are "hierarchyLevel" and "name". The id and access token will be used here and can be used multiple times until its valid and not expired. Hierarchy level are followed as 0:Country, 1:Region, 2:Province, 3:City, 4:Zone, 5:Postal Code.
-
-* Track Service Request (Preparation) - This thread contains Auth Lock Unlock API which will generate Event ID in the response and will be used in the execution part. The Event ID will be stored in a file named as eventid_service_request.txt and can be used for multiple runs.
-
-* Track Service Request (Execution) -  This API is to get the details of status for a given Event ID and including its status. The Event ID generated in the preparation will passed from the file with the variable name as "eventId". The id and access token will be used here and can be used multiple times until its valid and not expired.
-
-* Download Service Request (Execution) - This API is to convert the acknowledgement of any service request Event ID as a downloadable PDF. The Event ID stored in the file eventid_service_request.txt can be used here to download the PDF. The id and access token will be used here and can be used multiple times until its valid and not expired.
-
-* Menu Bar Notifications Language Code (Execution) - This API is to get notifictions to the asyncrhonous service requests in a paginated way. The id and access token will be used here and can be used multiple times until its valid and not expired.
-
-* Profile (Execution) - This API is to get User details for the current session. The id and access token will be used here and can be used multiple times until its valid and not expired.
-
-* Channel Verification Status (Preparation) - This thread contains two APIs i.e Request OTP and Validate OTP which are added in a loop controller because we are running both the APIs for otp channel type as "EMAIL" and "PHONE". So will save the individual id and type of channel in a file named as channel_verification_list.txt. Loop count for the loop controller is defined with the variable name "otpChannelTypeLoopCount" which is currenlty set to 2. If required, we can add the channel type to the file and as per the count of otp channel type we can modify the variable defined in the script.
-
-* Channel Verification Status (Execution) - This API is to check if OTP is verified for a channel type for an individual VID. The individual id and channel type will be passed in this API from a file named as channel_verification_list.txt and the variable used are "individualIdVerification" and "channelVerification". 
-
-* Download Card Event (Preparation) - In this thread we are using Request Card VID API from which will get an Event id which is stored in a file named as event_id_download_card.txt. The id and access token will be used here and can be used multiple times until its valid and not expired. In this thread we have also added a constant timer with the variable as delay which is defined in user defined variables. The value for delay is 30 sec.
-
-* Download Card Event (Execution) - This API is to download the UIN card. An Event id is passed from the file generated in the preparation part. The same Event id can't be used for multiple times so the samples created in preparation must be higher in number. The id and access token will be used here and can be used multiple times until its valid and not expired. In this thread also we are using the same delay which is defined in user defined variables.
-
-* Masterdata Get Coordinates (Execution) - This API is to get the longitude, latitude and proximity distance. A file named coordinates is been used to pass the data.
-
-* Masterdata Location Info (Execution) - This API is to get the information about location. We don't have any preparation for this thread. We are passing the location code from a text file regarding which will get the information. 
-
-* Masterdata Registration Centers (Execution) - This API is to get details about a registration center. A file named hierarchy_level is used to pass the hierarchy level and name in the API.
-
-* Masterdata Valid Documents (Execution) - This API is to get the list of supporting documents for a particular document type.
-
-* Masterdata Registration Centers Page (Execution) - This API is to get the details about a registration center. The same file which is used above named hierarchy_level is used to pass the hierarchy level and name in the API.
-
-* Masterdata Location Immediate Children (Execution) - This API is to get the immediate children for a location.
-
-* Masterdata Applicant Type (Execution) - This API is to get the details of the uploaded document based on applicant Id. A file named applicant_id is used to pass the applicant id in the API.

@@ -1,6 +1,3 @@
 ${TemplateType}
-mosip.full.name.template.property
-mosip.date.of.birth.template.property
-mosip.phone.template.property
 mosip.email.template.property
 mosip.address.template.property
