@@ -33,7 +33,7 @@
           </elementProp>
           <elementProp name="clientId" elementType="Argument">
             <stringProp name="Argument.name">clientId</stringProp>
-            <stringProp name="Argument.value">mosip-regproc-client</stringProp>
+            <stringProp name="Argument.value">mosip-admin-client</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="secretKey" elementType="Argument">
@@ -43,12 +43,12 @@
           </elementProp>
           <elementProp name="appId" elementType="Argument">
             <stringProp name="Argument.name">appId</stringProp>
-            <stringProp name="Argument.value">regproc</stringProp>
+            <stringProp name="Argument.value">admin</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="serverIP" elementType="Argument">
             <stringProp name="Argument.name">serverIP</stringProp>
-            <stringProp name="Argument.value">cellbox.mosip.net</stringProp>
+            <stringProp name="Argument.value">api-internal.cellbox1.mosip.net</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="serverPortNo" elementType="Argument">
